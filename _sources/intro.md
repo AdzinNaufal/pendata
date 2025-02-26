@@ -1,4 +1,7 @@
-# Penambangan Data
+# Pengantar
+
+## Penambangan Data
+
 Nama : Muhammad Adzin Naufal Ansori 
 
 NIM : 230411100070
