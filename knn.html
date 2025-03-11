@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Outlier Deteksi &#8212; Penambangan Data</title>
+    <title>Deteksi Outlier dengan K-Nearest Neighbors (KNN) dalam Data Understanding &#8212; Penambangan Data</title>
   
   
   
@@ -57,13 +57,11 @@
     <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'tugas2';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'knn';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Deteksi Outlier dengan K-Nearest Neighbors (KNN) dalam Data Understanding" href="knn.html" />
-    <link rel="prev" title="Data Understanding" href="tugas_1.html" />
+    <link rel="next" title="Local Outlier Factor (LOF)" href="lof.html" />
+    <link rel="prev" title="Outlier Deteksi" href="tugas2.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -183,8 +181,8 @@
         </ul>
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="tugas_1.html">Data Understanding</a></li>
-<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Outlier Deteksi</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="knn.html">Deteksi Outlier dengan K-Nearest Neighbors (KNN) dalam Data Understanding</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="tugas2.html">Outlier Deteksi</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Deteksi Outlier dengan K-Nearest Neighbors (KNN) dalam Data Understanding</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lof.html">Local Outlier Factor (LOF)</a></li>
 </ul>
 </details></li>
@@ -259,7 +257,7 @@
       
       
       
-      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Ftugas2.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fknn.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -289,7 +287,7 @@
       
       
       
-      <li><a href="_sources/tugas2.ipynb" target="_blank"
+      <li><a href="_sources/knn.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -373,7 +371,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Outlier Deteksi</h1>
+    <h1>Deteksi Outlier dengan K-Nearest Neighbors (KNN) dalam Data Understanding</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -383,10 +381,9 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pengertian-outlier-deteksi">Pengertian Outlier Deteksi</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metode-untuk-melakukan-outlier-deteksi">Metode untuk melakukan outlier deteksi</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tahapan-melakukan-outlier-deteksi">Tahapan melakukan outlier deteksi</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contoh-outlier-deteksi">Contoh outlier deteksi</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mengapa-knn-bisa-digunakan-untuk-deteksi-outlier">1. Mengapa KNN Bisa Digunakan untuk Deteksi Outlier?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-langkah-deteksi-outlier-dengan-knn">2. Langkah-Langkah Deteksi Outlier dengan KNN</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contoh-implementasi-knn">Contoh implementasi KNN</a></li>
 </ul>
             </nav>
         </div>
@@ -398,33 +395,40 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="outlier-deteksi">
-<h1>Outlier Deteksi<a class="headerlink" href="#outlier-deteksi" title="Link to this heading">#</a></h1>
-<section id="pengertian-outlier-deteksi">
-<h2>Pengertian Outlier Deteksi<a class="headerlink" href="#pengertian-outlier-deteksi" title="Link to this heading">#</a></h2>
-<p>Outlier merupakan data yang memiliki perbedaan mencolok dibandingkan dengan sebagian besar data lain dalam suatu dataset. Outlier bisa muncul akibat kesalahan dalam pengukuran, kesalahan input, atau memang mencerminkan fenomena unik yang berbeda dari pola umum data lainnya. Keberadaan outlier dapat mempengaruhi hasil analisis dan kinerja model machine learning, sehingga deteksi outlier menjadi langkah penting dalam proses eksplorasi data.</p>
-</section>
-<section id="metode-untuk-melakukan-outlier-deteksi">
-<h2>Metode untuk melakukan outlier deteksi<a class="headerlink" href="#metode-untuk-melakukan-outlier-deteksi" title="Link to this heading">#</a></h2>
-<p>Untuk mendeteksi outlier memiliki 2 metode yaitu:</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="deteksi-outlier-dengan-k-nearest-neighbors-knn-dalam-data-understanding">
+<h1>Deteksi Outlier dengan K-Nearest Neighbors (KNN) dalam Data Understanding<a class="headerlink" href="#deteksi-outlier-dengan-k-nearest-neighbors-knn-dalam-data-understanding" title="Link to this heading">#</a></h1>
+<section id="mengapa-knn-bisa-digunakan-untuk-deteksi-outlier">
+<h2>1. Mengapa KNN Bisa Digunakan untuk Deteksi Outlier?<a class="headerlink" href="#mengapa-knn-bisa-digunakan-untuk-deteksi-outlier" title="Link to this heading">#</a></h2>
+<p>Metode K-Nearest Neighbors (KNN) bekerja dengan prinsip kedekatan antar data, sehingga dapat dimanfaatkan untuk mengidentifikasi outlier. Deteksi outlier menggunakan KNN umumnya didasarkan pada konsep berikut:</p>
 <ul class="simple">
-<li><p>K-Nearest Neighbors (KNN)</p></li>
-<li><p>Local Outlier Factor (LOF)</p></li>
+<li><p>Jika suatu titik data memiliki sedikit tetangga dalam jarak tertentu, kemungkinan besar titik tersebut adalah outlier.</p></li>
+<li><p>Jika rata-rata jarak titik data ke k tetangga terdekatnya cukup besar, maka data tersebut dapat dianggap sebagai outlier.</p></li>
 </ul>
 </section>
-<section id="tahapan-melakukan-outlier-deteksi">
-<h2>Tahapan melakukan outlier deteksi<a class="headerlink" href="#tahapan-melakukan-outlier-deteksi" title="Link to this heading">#</a></h2>
+<section id="langkah-langkah-deteksi-outlier-dengan-knn">
+<h2>2. Langkah-Langkah Deteksi Outlier dengan KNN<a class="headerlink" href="#langkah-langkah-deteksi-outlier-dengan-knn" title="Link to this heading">#</a></h2>
 <ol class="arabic simple">
-<li><p><strong>Pengumpulan Data</strong> – Tahap pertama dalam deteksi outlier adalah mengumpulkan data yang akan dianalisis. Data ini bisa berasal dari berbagai sumber, seperti database, sensor, atau log aktivitas. Data yang digunakan harus memiliki fitur yang relevan dengan tujuan analisis agar hasil deteksi outlier lebih akurat. Selain itu, memastikan kelengkapan dan kualitas data sangat penting agar hasil analisis tidak bias atau salah interpretasi.</p></li>
-<li><p><strong>Pra-Pemrosesan Data</strong> – Sebelum melakukan deteksi outlier, data harus diproses terlebih dahulu. Tahap ini mencakup pembersihan data dari nilai yang hilang, duplikasi, atau inkonsistensi. Jika data memiliki skala yang berbeda-beda, normalisasi atau standarisasi dapat diterapkan agar setiap fitur memiliki pengaruh yang seimbang. Data yang telah diproses dengan baik akan menghasilkan deteksi outlier yang lebih andal dan akurat.</p></li>
-<li><p><strong>Memilih metode untuk deteksi outlier</strong> – Pemilihan metode untuk outlier deteksi tergantung pada karakteristik data. Metode statistik, seperti Z-Score dan Interquartile Range (IQR), cocok untuk data yang mengikuti distribusi normal. Jika distribusi data tidak diketahui, metode berbasis jarak seperti Local Outlier Factor (LOF) atau k-Nearest Neighbors (k-NN) bisa digunakan. Untuk data yang membentuk klaster, metode berbasis klasterisasi seperti DBSCAN dan K-Means dapat diterapkan. Pemilihan metode yang tepat akan meningkatkan efektivitas deteksi anomali.</p></li>
-<li><p><strong>Hitung skor outlier</strong> – Setelah memilih metode yang sesuai, langkah selanjutnya adalah menghitung skor outlier untuk setiap titik data. Skor ini menunjukkan seberapa jauh suatu titik menyimpang dari pola umum dalam dataset. Misalnya, dalam metode Z-Score, skor dihitung berdasarkan jarak suatu titik dari rata-rata dalam satuan standar deviasi. Sementara itu, dalam LOF, skor dihitung berdasarkan kepadatan lokal dibandingkan dengan tetangga terdekatnya.</p></li>
-<li><p><strong>Tentukan ambang batas</strong> – Agar bisa mengidentifikasi outlier, perlu ditentukan ambang batas (threshold) yang membedakan titik normal dan outlier. Misalnya, dalam metode Z-Score, titik dengan nilai lebih besar dari 3 sering dianggap sebagai outlier. Dalam metode LOF, titik dengan nilai LOF di atas 1.5 atau 2 dapat dikategorikan sebagai anomali. Penentuan ambang batas yang sesuai sangat bergantung pada karakteristik dataset dan kebutuhan analisis.</p></li>
-<li><p><strong>Analisis dan Interpretasi</strong> – Agar bisa mengidentifikasi outlier, perlu ditentukan ambang batas (threshold) yang membedakan titik normal dan outlier. Misalnya, dalam metode Z-Score, titik dengan nilai lebih besar dari 3 sering dianggap sebagai outlier. Dalam metode LOF, titik dengan nilai LOF di atas 1.5 atau 2 dapat dikategorikan sebagai anomali. Penentuan ambang batas yang sesuai sangat bergantung pada karakteristik dataset dan kebutuhan analisis.</p></li>
+<li><p>Mengukur Jarak Antar Titik Data<br />
+Jarak antar titik dihitung menggunakan metrik seperti Euclidean Distance, Manhattan Distance, atau Minkowski Distance untuk mengetahui seberapa dekat suatu data dengan yang lainnya.</p></li>
+<li><p>Menentukan nilai K (Jumlah Tetangga Terdekat)<br />
+Pemilihan nilai K berpengaruh terhadap efektivitas outlier deteksi:</p></li>
 </ol>
+<ul class="simple">
+<li><p>Nilai K yang terlalu kecil dapat membuat model terlalu sensitif terhadap noise.</p></li>
+<li><p>Nilai K yang terlalu besar bisa menyebabkan outlier tidak terdeteksi dengan baik.</p></li>
+</ul>
+<ol class="arabic simple" start="3">
+<li><p>Menghitung Skor Kepadatan (Density Score)<br />
+Beberapa metode untuk menilai apakah suatu titik merupakan outlier meliputi:</p></li>
+</ol>
+<ul class="simple">
+<li><p><strong>K-Nearest Neighbor Distance</strong> - Menghitung jarak rata-rata ke K tetangga terdekat. Jika jarak ini terlalu besar, maka titik tersebut dianggap sebagai outlier.</p></li>
+<li><p><strong>Local Outlier Factor (LOF)</strong> - Metode ini membandingkan kepadatan lokal suatu titik dengan kepadatan tetangganya. Jika kepadatan lokal suatu titik lebih rendah dibandingkan tetangganya, maka titik tersebut bisa dianggap sebagai outlier.</p></li>
+<li><p><strong>Distance-Based Outlier Score</strong> - Jika sebuah titik memiliki jumlah tetangga yang sangat sedikit dalam radius tertentu, maka titik tersebut kemungkinan besar adalah outlier.</p></li>
+</ul>
 </section>
-<section id="contoh-outlier-deteksi">
-<h2>Contoh outlier deteksi<a class="headerlink" href="#contoh-outlier-deteksi" title="Link to this heading">#</a></h2>
+<section id="contoh-implementasi-knn">
+<h2>Contoh implementasi KNN<a class="headerlink" href="#contoh-implementasi-knn" title="Link to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">pip</span> install pymysql
@@ -433,7 +437,16 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: pymysql in /usr/local/lib/python3.11/dist-packages (1.1.1)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Collecting pymysql
+  Downloading PyMySQL-1.1.1-py3-none-any.whl.metadata (4.4 kB)
+Downloading PyMySQL-1.1.1-py3-none-any.whl (44 kB)
+?25l   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">0.0/45.0 kB</span> <span class=" -Color -Color-Red">?</span> eta <span class=" -Color -Color-Cyan">-:--:--</span>
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">45.0/45.0 kB</span> <span class=" -Color -Color-Red">1.5 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
+?25h
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Installing collected packages: pymysql
+Successfully installed pymysql-1.1.1
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: psycopg2 in /usr/local/lib/python3.11/dist-packages (2.9.10)
@@ -449,8 +462,8 @@ document.write(`
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">from</span> <span class="nn">scipy.spatial.distance</span> <span class="kn">import</span> <span class="n">euclidean</span>
 <span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">HTML</span>
+<span class="kn">from</span> <span class="nn">sklearn.neighbors</span> <span class="kn">import</span> <span class="n">NearestNeighbors</span>
 </pre></div>
 </div>
 </div>
@@ -501,41 +514,55 @@ document.write(`
 <span class="c1"># Ambil data fitur numerik</span>
 <span class="n">feature_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;petal_length&quot;</span><span class="p">,</span> <span class="s2">&quot;petal_width&quot;</span><span class="p">,</span> <span class="s2">&quot;sepal_length&quot;</span><span class="p">,</span> <span class="s2">&quot;sepal_width&quot;</span><span class="p">]</span>
 <span class="n">data_values</span> <span class="o">=</span> <span class="n">df_merged</span><span class="p">[</span><span class="n">feature_columns</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># KNN Outlier Detection</span>
+<span class="k">def</span> <span class="nf">knn_outlier_detection</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+    <span class="n">neigh</span> <span class="o">=</span> <span class="n">NearestNeighbors</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="n">k</span><span class="p">)</span>
+    <span class="n">neigh</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">distances</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">neigh</span><span class="o">.</span><span class="n">kneighbors</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">avg_distances</span> <span class="o">=</span> <span class="n">distances</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># Ambil jarak k-terjauh sebagai skor</span>
+    <span class="k">return</span> <span class="n">avg_distances</span>
 
-<span class="c1"># Ambil referensi dari baris terakhir (baris ke-152 jika dihitung dari 1, atau index -1)</span>
-<span class="n">reference_point</span> <span class="o">=</span> <span class="n">data_values</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="c1"># Hitung K-NN distance</span>
+<span class="n">df_merged</span><span class="p">[</span><span class="s2">&quot;knn_distance&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">knn_outlier_detection</span><span class="p">(</span><span class="n">data_values</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">compute_distances</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">reference</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">euclidean</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">reference</span><span class="p">)</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">data</span><span class="p">])</span>
+<span class="c1"># Tentukan threshold sebagai nilai rata-rata + 2 standar deviasi</span>
+<span class="n">threshold</span> <span class="o">=</span> <span class="n">df_merged</span><span class="p">[</span><span class="s2">&quot;knn_distance&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">df_merged</span><span class="p">[</span><span class="s2">&quot;knn_distance&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+<span class="n">df_merged</span><span class="p">[</span><span class="s2">&quot;outlier_knn&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_merged</span><span class="p">[</span><span class="s2">&quot;knn_distance&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">threshold</span>
 
-<span class="c1"># Hitung jarak Euclidean dari setiap baris ke referensi</span>
-<span class="n">df_merged</span><span class="p">[</span><span class="s2">&quot;distance&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">compute_distances</span><span class="p">(</span><span class="n">data_values</span><span class="p">,</span> <span class="n">reference_point</span><span class="p">)</span>
+<span class="c1"># Cetak hasil</span>
+<span class="n">df_result</span> <span class="o">=</span> <span class="n">df_merged</span><span class="p">[[</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;class&quot;</span><span class="p">,</span> <span class="s2">&quot;petal_length&quot;</span><span class="p">,</span> <span class="s2">&quot;petal_width&quot;</span><span class="p">,</span> <span class="s2">&quot;sepal_length&quot;</span><span class="p">,</span> <span class="s2">&quot;sepal_width&quot;</span><span class="p">,</span> <span class="s2">&quot;knn_distance&quot;</span><span class="p">,</span> <span class="s2">&quot;outlier_knn&quot;</span><span class="p">]]</span>
+<span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="n">df_result</span><span class="o">.</span><span class="n">to_html</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)))</span>
+<span class="n">num_outliers</span> <span class="o">=</span> <span class="n">df_merged</span><span class="p">[</span><span class="s2">&quot;outlier_knn&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Jumlah outlier: </span><span class="si">{</span><span class="n">num_outliers</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-<span class="c1"># Tentukan threshold outlier berdasarkan persentil ke-95 (bisa disesuaikan)</span>
-<span class="n">threshold</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">df_merged</span><span class="p">[</span><span class="s2">&quot;distance&quot;</span><span class="p">],</span> <span class="mf">99.9</span><span class="p">)</span>
-<span class="n">df_merged</span><span class="p">[</span><span class="s2">&quot;outlier&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_merged</span><span class="p">[</span><span class="s2">&quot;distance&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">threshold</span>
+<span class="c1"># Cetak data outlier</span>
+<span class="n">outliers</span> <span class="o">=</span> <span class="n">df_merged</span><span class="p">[</span><span class="n">df_merged</span><span class="p">[</span><span class="s2">&quot;outlier_knn&quot;</span><span class="p">]]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Data Outlier:&quot;</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="n">outliers</span><span class="o">.</span><span class="n">to_html</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)))</span>
 
-<span class="c1"># Cetak hasil data dengan outlier</span>
-<span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="n">df_merged</span><span class="o">.</span><span class="n">to_html</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)))</span>
-
-<span class="c1"># Visualisasi scatter plot dengan warna berdasarkan outlier</span>
+<span class="c1"># Visualisasi outlier berdasarkan K-NN</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
 <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span>
     <span class="n">x</span><span class="o">=</span><span class="n">df_merged</span><span class="p">[</span><span class="s2">&quot;sepal_length&quot;</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">df_merged</span><span class="p">[</span><span class="s2">&quot;sepal_width&quot;</span><span class="p">],</span>
-    <span class="n">hue</span><span class="o">=</span><span class="n">df_merged</span><span class="p">[</span><span class="s2">&quot;outlier&quot;</span><span class="p">],</span> <span class="n">palette</span><span class="o">=</span><span class="p">{</span><span class="kc">False</span><span class="p">:</span> <span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">:</span> <span class="s2">&quot;red&quot;</span><span class="p">}</span>
+    <span class="n">hue</span><span class="o">=</span><span class="n">df_merged</span><span class="p">[</span><span class="s2">&quot;outlier_knn&quot;</span><span class="p">],</span> <span class="n">palette</span><span class="o">=</span><span class="p">{</span><span class="kc">False</span><span class="p">:</span> <span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">:</span> <span class="s2">&quot;red&quot;</span><span class="p">}</span>
 <span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Outlier Detection (Sepal)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Outlier Detection (Sepal) - KNN&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
 <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span>
     <span class="n">x</span><span class="o">=</span><span class="n">df_merged</span><span class="p">[</span><span class="s2">&quot;petal_length&quot;</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">df_merged</span><span class="p">[</span><span class="s2">&quot;petal_width&quot;</span><span class="p">],</span>
-    <span class="n">hue</span><span class="o">=</span><span class="n">df_merged</span><span class="p">[</span><span class="s2">&quot;outlier&quot;</span><span class="p">],</span> <span class="n">palette</span><span class="o">=</span><span class="p">{</span><span class="kc">False</span><span class="p">:</span> <span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">:</span> <span class="s2">&quot;red&quot;</span><span class="p">}</span>
+    <span class="n">hue</span><span class="o">=</span><span class="n">df_merged</span><span class="p">[</span><span class="s2">&quot;outlier_knn&quot;</span><span class="p">],</span> <span class="n">palette</span><span class="o">=</span><span class="p">{</span><span class="kc">False</span><span class="p">:</span> <span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">:</span> <span class="s2">&quot;red&quot;</span><span class="p">}</span>
 <span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Outlier Detection (Petal)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Outlier Detection (Petal) - KNN&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -550,8 +577,8 @@ document.write(`
       <th>petal_width</th>
       <th>sepal_length</th>
       <th>sepal_width</th>
-      <th>distance</th>
-      <th>outlier</th>
+      <th>knn_distance</th>
+      <th>outlier_knn</th>
     </tr>
   </thead>
   <tbody>
@@ -562,7 +589,7 @@ document.write(`
       <td>0.2</td>
       <td>5.1</td>
       <td>3.5</td>
-      <td>5.424942</td>
+      <td>0.141421</td>
       <td>False</td>
     </tr>
     <tr>
@@ -572,7 +599,7 @@ document.write(`
       <td>2.0</td>
       <td>40.9</td>
       <td>30.0</td>
-      <td>46.407542</td>
+      <td>43.517123</td>
       <td>True</td>
     </tr>
     <tr>
@@ -582,7 +609,7 @@ document.write(`
       <td>0.2</td>
       <td>4.7</td>
       <td>3.2</td>
-      <td>5.430470</td>
+      <td>0.264575</td>
       <td>False</td>
     </tr>
     <tr>
@@ -592,7 +619,7 @@ document.write(`
       <td>0.2</td>
       <td>4.6</td>
       <td>3.1</td>
-      <td>5.273519</td>
+      <td>0.244949</td>
       <td>False</td>
     </tr>
     <tr>
@@ -602,7 +629,7 @@ document.write(`
       <td>0.2</td>
       <td>5.0</td>
       <td>3.6</td>
-      <td>5.485435</td>
+      <td>0.223607</td>
       <td>False</td>
     </tr>
     <tr>
@@ -612,7 +639,7 @@ document.write(`
       <td>0.4</td>
       <td>5.4</td>
       <td>3.9</td>
-      <td>5.288667</td>
+      <td>0.374166</td>
       <td>False</td>
     </tr>
     <tr>
@@ -622,7 +649,7 @@ document.write(`
       <td>0.3</td>
       <td>4.6</td>
       <td>3.4</td>
-      <td>5.412947</td>
+      <td>0.316228</td>
       <td>False</td>
     </tr>
     <tr>
@@ -632,7 +659,7 @@ document.write(`
       <td>0.2</td>
       <td>5.0</td>
       <td>3.4</td>
-      <td>5.325411</td>
+      <td>0.200000</td>
       <td>False</td>
     </tr>
     <tr>
@@ -642,7 +669,7 @@ document.write(`
       <td>0.2</td>
       <td>4.4</td>
       <td>2.9</td>
-      <td>5.316014</td>
+      <td>0.346410</td>
       <td>False</td>
     </tr>
     <tr>
@@ -652,7 +679,7 @@ document.write(`
       <td>0.1</td>
       <td>4.9</td>
       <td>3.1</td>
-      <td>5.271622</td>
+      <td>0.173205</td>
       <td>False</td>
     </tr>
     <tr>
@@ -662,7 +689,7 @@ document.write(`
       <td>0.2</td>
       <td>5.4</td>
       <td>3.7</td>
-      <td>5.423099</td>
+      <td>0.331662</td>
       <td>False</td>
     </tr>
     <tr>
@@ -672,7 +699,7 @@ document.write(`
       <td>0.2</td>
       <td>4.8</td>
       <td>3.4</td>
-      <td>5.292447</td>
+      <td>0.300000</td>
       <td>False</td>
     </tr>
     <tr>
@@ -682,7 +709,7 @@ document.write(`
       <td>0.1</td>
       <td>4.8</td>
       <td>3.0</td>
-      <td>5.319774</td>
+      <td>0.200000</td>
       <td>False</td>
     </tr>
     <tr>
@@ -692,7 +719,7 @@ document.write(`
       <td>0.1</td>
       <td>4.3</td>
       <td>3.0</td>
-      <td>5.644466</td>
+      <td>0.479583</td>
       <td>False</td>
     </tr>
     <tr>
@@ -702,7 +729,7 @@ document.write(`
       <td>0.2</td>
       <td>5.8</td>
       <td>4.0</td>
-      <td>5.762812</td>
+      <td>0.556776</td>
       <td>False</td>
     </tr>
     <tr>
@@ -712,7 +739,7 @@ document.write(`
       <td>0.4</td>
       <td>5.7</td>
       <td>4.4</td>
-      <td>5.689464</td>
+      <td>0.616441</td>
       <td>False</td>
     </tr>
     <tr>
@@ -722,7 +749,7 @@ document.write(`
       <td>0.4</td>
       <td>5.4</td>
       <td>3.9</td>
-      <td>5.554278</td>
+      <td>0.387298</td>
       <td>False</td>
     </tr>
     <tr>
@@ -732,7 +759,7 @@ document.write(`
       <td>0.3</td>
       <td>5.1</td>
       <td>3.5</td>
-      <td>5.370289</td>
+      <td>0.173205</td>
       <td>False</td>
     </tr>
     <tr>
@@ -742,7 +769,7 @@ document.write(`
       <td>0.3</td>
       <td>5.7</td>
       <td>3.8</td>
-      <td>5.274467</td>
+      <td>0.509902</td>
       <td>False</td>
     </tr>
     <tr>
@@ -752,7 +779,7 @@ document.write(`
       <td>0.3</td>
       <td>5.1</td>
       <td>3.8</td>
-      <td>5.449771</td>
+      <td>0.264575</td>
       <td>False</td>
     </tr>
     <tr>
@@ -762,7 +789,7 @@ document.write(`
       <td>0.2</td>
       <td>5.4</td>
       <td>3.4</td>
-      <td>5.145872</td>
+      <td>0.360555</td>
       <td>False</td>
     </tr>
     <tr>
@@ -772,7 +799,7 @@ document.write(`
       <td>0.4</td>
       <td>5.1</td>
       <td>3.7</td>
-      <td>5.346027</td>
+      <td>0.264575</td>
       <td>False</td>
     </tr>
     <tr>
@@ -782,7 +809,7 @@ document.write(`
       <td>0.2</td>
       <td>4.6</td>
       <td>3.6</td>
-      <td>5.831809</td>
+      <td>0.538516</td>
       <td>False</td>
     </tr>
     <tr>
@@ -792,7 +819,7 @@ document.write(`
       <td>0.5</td>
       <td>5.1</td>
       <td>3.3</td>
-      <td>4.962862</td>
+      <td>0.387298</td>
       <td>False</td>
     </tr>
     <tr>
@@ -802,7 +829,7 @@ document.write(`
       <td>0.2</td>
       <td>4.8</td>
       <td>3.4</td>
-      <td>5.099020</td>
+      <td>0.424264</td>
       <td>False</td>
     </tr>
     <tr>
@@ -812,7 +839,7 @@ document.write(`
       <td>0.2</td>
       <td>5.0</td>
       <td>3.0</td>
-      <td>5.088222</td>
+      <td>0.223607</td>
       <td>False</td>
     </tr>
     <tr>
@@ -822,7 +849,7 @@ document.write(`
       <td>0.4</td>
       <td>5.0</td>
       <td>3.4</td>
-      <td>5.146844</td>
+      <td>0.244949</td>
       <td>False</td>
     </tr>
     <tr>
@@ -832,7 +859,7 @@ document.write(`
       <td>0.2</td>
       <td>5.2</td>
       <td>3.5</td>
-      <td>5.345091</td>
+      <td>0.173205</td>
       <td>False</td>
     </tr>
     <tr>
@@ -842,7 +869,7 @@ document.write(`
       <td>0.2</td>
       <td>5.2</td>
       <td>3.4</td>
-      <td>5.367495</td>
+      <td>0.173205</td>
       <td>False</td>
     </tr>
     <tr>
@@ -852,7 +879,7 @@ document.write(`
       <td>0.2</td>
       <td>4.7</td>
       <td>3.2</td>
-      <td>5.224940</td>
+      <td>0.223607</td>
       <td>False</td>
     </tr>
     <tr>
@@ -862,7 +889,7 @@ document.write(`
       <td>0.2</td>
       <td>4.8</td>
       <td>3.1</td>
-      <td>5.163332</td>
+      <td>0.173205</td>
       <td>False</td>
     </tr>
     <tr>
@@ -872,7 +899,7 @@ document.write(`
       <td>0.4</td>
       <td>5.4</td>
       <td>3.4</td>
-      <td>5.169139</td>
+      <td>0.316228</td>
       <td>False</td>
     </tr>
     <tr>
@@ -882,7 +909,7 @@ document.write(`
       <td>0.1</td>
       <td>5.2</td>
       <td>4.1</td>
-      <td>5.704384</td>
+      <td>0.424264</td>
       <td>False</td>
     </tr>
     <tr>
@@ -892,7 +919,7 @@ document.write(`
       <td>0.2</td>
       <td>5.5</td>
       <td>4.2</td>
-      <td>5.746303</td>
+      <td>0.412311</td>
       <td>False</td>
     </tr>
     <tr>
@@ -902,7 +929,7 @@ document.write(`
       <td>0.1</td>
       <td>4.9</td>
       <td>3.1</td>
-      <td>5.271622</td>
+      <td>0.173205</td>
       <td>False</td>
     </tr>
     <tr>
@@ -912,7 +939,7 @@ document.write(`
       <td>0.2</td>
       <td>5.0</td>
       <td>3.2</td>
-      <td>5.448853</td>
+      <td>0.346410</td>
       <td>False</td>
     </tr>
     <tr>
@@ -922,7 +949,7 @@ document.write(`
       <td>0.2</td>
       <td>5.5</td>
       <td>3.5</td>
-      <td>5.457105</td>
+      <td>0.346410</td>
       <td>False</td>
     </tr>
     <tr>
@@ -932,7 +959,7 @@ document.write(`
       <td>0.1</td>
       <td>4.9</td>
       <td>3.1</td>
-      <td>5.271622</td>
+      <td>0.173205</td>
       <td>False</td>
     </tr>
     <tr>
@@ -942,7 +969,7 @@ document.write(`
       <td>0.2</td>
       <td>4.4</td>
       <td>3.0</td>
-      <td>5.422177</td>
+      <td>0.300000</td>
       <td>False</td>
     </tr>
     <tr>
@@ -952,7 +979,7 @@ document.write(`
       <td>0.2</td>
       <td>5.1</td>
       <td>3.4</td>
-      <td>5.311309</td>
+      <td>0.141421</td>
       <td>False</td>
     </tr>
     <tr>
@@ -962,7 +989,7 @@ document.write(`
       <td>0.3</td>
       <td>5.0</td>
       <td>3.5</td>
-      <td>5.453439</td>
+      <td>0.244949</td>
       <td>False</td>
     </tr>
     <tr>
@@ -972,7 +999,7 @@ document.write(`
       <td>0.3</td>
       <td>4.5</td>
       <td>2.3</td>
-      <td>5.121523</td>
+      <td>0.781025</td>
       <td>False</td>
     </tr>
     <tr>
@@ -982,7 +1009,7 @@ document.write(`
       <td>0.2</td>
       <td>4.4</td>
       <td>3.2</td>
-      <td>5.499091</td>
+      <td>0.300000</td>
       <td>False</td>
     </tr>
     <tr>
@@ -992,7 +1019,7 @@ document.write(`
       <td>0.6</td>
       <td>5.0</td>
       <td>3.5</td>
-      <td>5.089204</td>
+      <td>0.374166</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1002,7 +1029,7 @@ document.write(`
       <td>0.4</td>
       <td>5.1</td>
       <td>3.8</td>
-      <td>5.139066</td>
+      <td>0.412311</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1012,7 +1039,7 @@ document.write(`
       <td>0.3</td>
       <td>4.8</td>
       <td>3.0</td>
-      <td>5.205766</td>
+      <td>0.264575</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1022,7 +1049,7 @@ document.write(`
       <td>0.2</td>
       <td>5.1</td>
       <td>3.8</td>
-      <td>5.438750</td>
+      <td>0.300000</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1032,7 +1059,7 @@ document.write(`
       <td>0.2</td>
       <td>4.6</td>
       <td>3.2</td>
-      <td>5.382379</td>
+      <td>0.223607</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1042,7 +1069,7 @@ document.write(`
       <td>0.2</td>
       <td>5.3</td>
       <td>3.7</td>
-      <td>5.431390</td>
+      <td>0.244949</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1052,7 +1079,7 @@ document.write(`
       <td>0.2</td>
       <td>5.0</td>
       <td>3.3</td>
-      <td>5.349766</td>
+      <td>0.223607</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1062,7 +1089,7 @@ document.write(`
       <td>1.4</td>
       <td>7.0</td>
       <td>3.2</td>
-      <td>3.111270</td>
+      <td>0.458258</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1072,7 +1099,7 @@ document.write(`
       <td>1.5</td>
       <td>6.4</td>
       <td>3.2</td>
-      <td>2.906888</td>
+      <td>0.374166</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1082,7 +1109,7 @@ document.write(`
       <td>1.5</td>
       <td>6.9</td>
       <td>3.1</td>
-      <td>2.924038</td>
+      <td>0.346410</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1092,7 +1119,7 @@ document.write(`
       <td>1.3</td>
       <td>5.5</td>
       <td>2.3</td>
-      <td>2.569047</td>
+      <td>0.435890</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1102,7 +1129,7 @@ document.write(`
       <td>1.5</td>
       <td>6.5</td>
       <td>2.8</td>
-      <td>2.621068</td>
+      <td>0.374166</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1112,7 +1139,7 @@ document.write(`
       <td>1.3</td>
       <td>5.7</td>
       <td>2.8</td>
-      <td>2.687006</td>
+      <td>0.331662</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1122,7 +1149,7 @@ document.write(`
       <td>1.6</td>
       <td>6.3</td>
       <td>3.3</td>
-      <td>2.874022</td>
+      <td>0.458258</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1132,7 +1159,7 @@ document.write(`
       <td>1.0</td>
       <td>4.9</td>
       <td>2.4</td>
-      <td>3.293934</td>
+      <td>0.721110</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1142,7 +1169,7 @@ document.write(`
       <td>1.3</td>
       <td>6.6</td>
       <td>2.9</td>
-      <td>2.847806</td>
+      <td>0.316228</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1152,7 +1179,7 @@ document.write(`
       <td>1.4</td>
       <td>5.2</td>
       <td>2.7</td>
-      <td>2.816026</td>
+      <td>0.529150</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1162,7 +1189,7 @@ document.write(`
       <td>1.0</td>
       <td>5.0</td>
       <td>2.0</td>
-      <td>3.006659</td>
+      <td>0.714143</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1172,7 +1199,7 @@ document.write(`
       <td>1.5</td>
       <td>5.9</td>
       <td>3.0</td>
-      <td>2.776689</td>
+      <td>0.360555</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1182,7 +1209,7 @@ document.write(`
       <td>1.0</td>
       <td>6.0</td>
       <td>2.2</td>
-      <td>2.744085</td>
+      <td>0.583095</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1192,7 +1219,7 @@ document.write(`
       <td>1.4</td>
       <td>6.1</td>
       <td>2.9</td>
-      <td>2.664583</td>
+      <td>0.424264</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1202,7 +1229,7 @@ document.write(`
       <td>1.3</td>
       <td>5.6</td>
       <td>2.9</td>
-      <td>3.083829</td>
+      <td>0.519615</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1212,7 +1239,7 @@ document.write(`
       <td>1.4</td>
       <td>6.7</td>
       <td>3.1</td>
-      <td>2.991655</td>
+      <td>0.346410</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1222,7 +1249,7 @@ document.write(`
       <td>1.5</td>
       <td>5.6</td>
       <td>3.0</td>
-      <td>2.700000</td>
+      <td>0.412311</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1232,7 +1259,7 @@ document.write(`
       <td>1.0</td>
       <td>5.8</td>
       <td>2.7</td>
-      <td>2.954657</td>
+      <td>0.360555</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1242,7 +1269,7 @@ document.write(`
       <td>1.5</td>
       <td>6.2</td>
       <td>2.2</td>
-      <td>2.202272</td>
+      <td>0.678233</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1252,7 +1279,7 @@ document.write(`
       <td>1.1</td>
       <td>5.6</td>
       <td>2.5</td>
-      <td>2.853069</td>
+      <td>0.264575</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1262,7 +1289,7 @@ document.write(`
       <td>1.8</td>
       <td>5.9</td>
       <td>3.2</td>
-      <td>2.626785</td>
+      <td>0.424264</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1272,7 +1299,7 @@ document.write(`
       <td>1.3</td>
       <td>6.1</td>
       <td>2.8</td>
-      <td>2.854820</td>
+      <td>0.400000</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1282,7 +1309,7 @@ document.write(`
       <td>1.5</td>
       <td>6.3</td>
       <td>2.5</td>
-      <td>2.330236</td>
+      <td>0.424264</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1292,7 +1319,7 @@ document.write(`
       <td>1.2</td>
       <td>6.1</td>
       <td>2.8</td>
-      <td>2.736786</td>
+      <td>0.435890</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1302,7 +1329,7 @@ document.write(`
       <td>1.3</td>
       <td>6.4</td>
       <td>2.9</td>
-      <td>2.867054</td>
+      <td>0.387298</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1312,7 +1339,7 @@ document.write(`
       <td>1.4</td>
       <td>6.6</td>
       <td>3.0</td>
-      <td>2.893095</td>
+      <td>0.316228</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1322,7 +1349,7 @@ document.write(`
       <td>1.4</td>
       <td>6.8</td>
       <td>2.8</td>
-      <td>2.751363</td>
+      <td>0.374166</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1332,7 +1359,7 @@ document.write(`
       <td>1.7</td>
       <td>6.7</td>
       <td>3.0</td>
-      <td>2.658947</td>
+      <td>0.424264</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1342,7 +1369,7 @@ document.write(`
       <td>1.5</td>
       <td>6.0</td>
       <td>2.9</td>
-      <td>2.626785</td>
+      <td>0.346410</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1352,7 +1379,7 @@ document.write(`
       <td>1.0</td>
       <td>5.7</td>
       <td>2.6</td>
-      <td>3.157531</td>
+      <td>0.447214</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1362,7 +1389,7 @@ document.write(`
       <td>1.1</td>
       <td>5.5</td>
       <td>2.4</td>
-      <td>2.854820</td>
+      <td>0.300000</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1372,7 +1399,7 @@ document.write(`
       <td>1.0</td>
       <td>5.5</td>
       <td>2.4</td>
-      <td>2.974895</td>
+      <td>0.435890</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1382,7 +1409,7 @@ document.write(`
       <td>1.2</td>
       <td>5.8</td>
       <td>2.7</td>
-      <td>2.886174</td>
+      <td>0.300000</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1392,7 +1419,7 @@ document.write(`
       <td>1.6</td>
       <td>6.0</td>
       <td>2.7</td>
-      <td>2.343075</td>
+      <td>0.374166</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1402,7 +1429,7 @@ document.write(`
       <td>1.5</td>
       <td>5.4</td>
       <td>3.0</td>
-      <td>2.722132</td>
+      <td>0.489898</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1412,7 +1439,7 @@ document.write(`
       <td>1.6</td>
       <td>6.0</td>
       <td>3.4</td>
-      <td>2.952965</td>
+      <td>0.469042</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1422,7 +1449,7 @@ document.write(`
       <td>1.5</td>
       <td>6.7</td>
       <td>3.1</td>
-      <td>2.875761</td>
+      <td>0.331662</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1432,7 +1459,7 @@ document.write(`
       <td>1.3</td>
       <td>6.3</td>
       <td>2.3</td>
-      <td>2.457641</td>
+      <td>0.608276</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1442,7 +1469,7 @@ document.write(`
       <td>1.3</td>
       <td>5.6</td>
       <td>3.0</td>
-      <td>2.941088</td>
+      <td>0.316228</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1452,7 +1479,7 @@ document.write(`
       <td>1.3</td>
       <td>5.5</td>
       <td>2.5</td>
-      <td>2.675818</td>
+      <td>0.300000</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1462,7 +1489,7 @@ document.write(`
       <td>1.2</td>
       <td>5.5</td>
       <td>2.6</td>
-      <td>2.672078</td>
+      <td>0.424264</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1472,7 +1499,7 @@ document.write(`
       <td>1.4</td>
       <td>6.1</td>
       <td>3.0</td>
-      <td>2.753180</td>
+      <td>0.346410</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1482,7 +1509,7 @@ document.write(`
       <td>1.2</td>
       <td>5.8</td>
       <td>2.6</td>
-      <td>2.787472</td>
+      <td>0.264575</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1492,7 +1519,7 @@ document.write(`
       <td>1.0</td>
       <td>5.0</td>
       <td>2.3</td>
-      <td>3.226453</td>
+      <td>0.648074</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1502,7 +1529,7 @@ document.write(`
       <td>1.3</td>
       <td>5.6</td>
       <td>2.7</td>
-      <td>2.711088</td>
+      <td>0.300000</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1512,7 +1539,7 @@ document.write(`
       <td>1.2</td>
       <td>5.7</td>
       <td>3.0</td>
-      <td>2.969848</td>
+      <td>0.331662</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1522,7 +1549,7 @@ document.write(`
       <td>1.3</td>
       <td>5.7</td>
       <td>2.9</td>
-      <td>2.835489</td>
+      <td>0.223607</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1532,7 +1559,7 @@ document.write(`
       <td>1.3</td>
       <td>6.2</td>
       <td>2.9</td>
-      <td>2.831960</td>
+      <td>0.346410</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1542,7 +1569,7 @@ document.write(`
       <td>1.1</td>
       <td>5.1</td>
       <td>2.5</td>
-      <td>3.400000</td>
+      <td>0.793725</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1552,7 +1579,7 @@ document.write(`
       <td>1.3</td>
       <td>5.7</td>
       <td>2.8</td>
-      <td>2.803569</td>
+      <td>0.244949</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1562,7 +1589,7 @@ document.write(`
       <td>2.5</td>
       <td>6.3</td>
       <td>3.3</td>
-      <td>2.615339</td>
+      <td>0.556776</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1572,7 +1599,7 @@ document.write(`
       <td>1.9</td>
       <td>5.8</td>
       <td>2.7</td>
-      <td>2.140093</td>
+      <td>0.331662</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1582,7 +1609,7 @@ document.write(`
       <td>2.1</td>
       <td>7.1</td>
       <td>3.0</td>
-      <td>2.745906</td>
+      <td>0.458258</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1592,7 +1619,7 @@ document.write(`
       <td>1.8</td>
       <td>6.3</td>
       <td>2.9</td>
-      <td>2.463737</td>
+      <td>0.387298</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1602,7 +1629,7 @@ document.write(`
       <td>2.2</td>
       <td>6.5</td>
       <td>3.0</td>
-      <td>2.445404</td>
+      <td>0.387298</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1612,7 +1639,7 @@ document.write(`
       <td>2.1</td>
       <td>7.6</td>
       <td>3.0</td>
-      <td>3.271085</td>
+      <td>0.547723</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1622,7 +1649,7 @@ document.write(`
       <td>1.7</td>
       <td>4.9</td>
       <td>2.5</td>
-      <td>2.381176</td>
+      <td>0.877496</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1632,7 +1659,7 @@ document.write(`
       <td>1.8</td>
       <td>7.3</td>
       <td>2.9</td>
-      <td>3.043025</td>
+      <td>0.547723</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1642,7 +1669,7 @@ document.write(`
       <td>1.8</td>
       <td>6.7</td>
       <td>2.5</td>
-      <td>2.347339</td>
+      <td>0.616441</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1652,7 +1679,7 @@ document.write(`
       <td>2.5</td>
       <td>7.2</td>
       <td>3.6</td>
-      <td>3.195309</td>
+      <td>0.754983</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1662,7 +1689,7 @@ document.write(`
       <td>2.0</td>
       <td>6.5</td>
       <td>3.2</td>
-      <td>2.601922</td>
+      <td>0.424264</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1672,7 +1699,7 @@ document.write(`
       <td>1.9</td>
       <td>6.4</td>
       <td>2.7</td>
-      <td>2.231591</td>
+      <td>0.387298</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1682,7 +1709,7 @@ document.write(`
       <td>2.1</td>
       <td>6.8</td>
       <td>3.0</td>
-      <td>2.523886</td>
+      <td>0.374166</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1692,7 +1719,7 @@ document.write(`
       <td>2.0</td>
       <td>5.7</td>
       <td>2.5</td>
-      <td>1.926136</td>
+      <td>0.519615</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1702,7 +1729,7 @@ document.write(`
       <td>2.4</td>
       <td>5.8</td>
       <td>2.8</td>
-      <td>1.969772</td>
+      <td>0.519615</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1712,7 +1739,7 @@ document.write(`
       <td>2.3</td>
       <td>6.4</td>
       <td>3.2</td>
-      <td>2.459675</td>
+      <td>0.387298</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1722,7 +1749,7 @@ document.write(`
       <td>1.8</td>
       <td>6.5</td>
       <td>3.0</td>
-      <td>2.570992</td>
+      <td>0.387298</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1732,7 +1759,7 @@ document.write(`
       <td>2.2</td>
       <td>7.7</td>
       <td>3.8</td>
-      <td>3.874274</td>
+      <td>1.004988</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1742,7 +1769,7 @@ document.write(`
       <td>2.3</td>
       <td>7.7</td>
       <td>2.6</td>
-      <td>3.196873</td>
+      <td>0.927362</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1752,7 +1779,7 @@ document.write(`
       <td>1.5</td>
       <td>6.0</td>
       <td>2.2</td>
-      <td>2.092845</td>
+      <td>0.583095</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1762,7 +1789,7 @@ document.write(`
       <td>2.3</td>
       <td>6.9</td>
       <td>3.2</td>
-      <td>2.687006</td>
+      <td>0.300000</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1772,7 +1799,7 @@ document.write(`
       <td>2.0</td>
       <td>5.6</td>
       <td>2.8</td>
-      <td>2.181742</td>
+      <td>0.458258</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1782,7 +1809,7 @@ document.write(`
       <td>2.0</td>
       <td>7.7</td>
       <td>2.8</td>
-      <td>3.293934</td>
+      <td>0.678233</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1792,7 +1819,7 @@ document.write(`
       <td>1.8</td>
       <td>6.3</td>
       <td>2.7</td>
-      <td>2.267157</td>
+      <td>0.360555</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1802,7 +1829,7 @@ document.write(`
       <td>2.1</td>
       <td>6.7</td>
       <td>3.3</td>
-      <td>2.769476</td>
+      <td>0.374166</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1812,7 +1839,7 @@ document.write(`
       <td>1.8</td>
       <td>7.2</td>
       <td>3.2</td>
-      <td>3.093542</td>
+      <td>0.469042</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1822,7 +1849,7 @@ document.write(`
       <td>1.8</td>
       <td>6.2</td>
       <td>2.8</td>
-      <td>2.334524</td>
+      <td>0.387298</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1832,7 +1859,7 @@ document.write(`
       <td>1.8</td>
       <td>6.1</td>
       <td>3.0</td>
-      <td>2.467793</td>
+      <td>0.300000</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1842,7 +1869,7 @@ document.write(`
       <td>2.1</td>
       <td>6.4</td>
       <td>2.8</td>
-      <td>2.249444</td>
+      <td>0.374166</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1852,7 +1879,7 @@ document.write(`
       <td>1.6</td>
       <td>7.2</td>
       <td>3.0</td>
-      <td>3.001666</td>
+      <td>0.556776</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1862,7 +1889,7 @@ document.write(`
       <td>1.9</td>
       <td>7.4</td>
       <td>2.8</td>
-      <td>2.913760</td>
+      <td>0.509902</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1872,7 +1899,7 @@ document.write(`
       <td>2.0</td>
       <td>7.9</td>
       <td>3.8</td>
-      <td>3.921734</td>
+      <td>0.932738</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1882,7 +1909,7 @@ document.write(`
       <td>2.2</td>
       <td>6.4</td>
       <td>2.8</td>
-      <td>2.202272</td>
+      <td>0.435890</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1892,7 +1919,7 @@ document.write(`
       <td>1.5</td>
       <td>6.3</td>
       <td>2.8</td>
-      <td>2.525866</td>
+      <td>0.435890</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1902,7 +1929,7 @@ document.write(`
       <td>1.4</td>
       <td>6.1</td>
       <td>2.6</td>
-      <td>2.477902</td>
+      <td>0.663325</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1912,7 +1939,7 @@ document.write(`
       <td>2.3</td>
       <td>7.7</td>
       <td>3.0</td>
-      <td>3.069202</td>
+      <td>0.678233</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1922,7 +1949,7 @@ document.write(`
       <td>2.4</td>
       <td>6.3</td>
       <td>3.4</td>
-      <td>2.626785</td>
+      <td>0.435890</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1932,7 +1959,7 @@ document.write(`
       <td>1.8</td>
       <td>6.4</td>
       <td>3.1</td>
-      <td>2.624881</td>
+      <td>0.435890</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1942,7 +1969,7 @@ document.write(`
       <td>1.8</td>
       <td>6.0</td>
       <td>3.0</td>
-      <td>2.467793</td>
+      <td>0.316228</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1952,7 +1979,7 @@ document.write(`
       <td>2.1</td>
       <td>6.9</td>
       <td>3.1</td>
-      <td>2.630589</td>
+      <td>0.374166</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1962,7 +1989,7 @@ document.write(`
       <td>2.4</td>
       <td>6.7</td>
       <td>3.1</td>
-      <td>2.471841</td>
+      <td>0.346410</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1972,7 +1999,7 @@ document.write(`
       <td>2.3</td>
       <td>6.9</td>
       <td>3.1</td>
-      <td>2.535744</td>
+      <td>0.509902</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1982,7 +2009,7 @@ document.write(`
       <td>1.9</td>
       <td>5.8</td>
       <td>2.7</td>
-      <td>2.140093</td>
+      <td>0.331662</td>
       <td>False</td>
     </tr>
     <tr>
@@ -1992,7 +2019,7 @@ document.write(`
       <td>2.3</td>
       <td>6.8</td>
       <td>3.2</td>
-      <td>2.700000</td>
+      <td>0.346410</td>
       <td>False</td>
     </tr>
     <tr>
@@ -2002,7 +2029,7 @@ document.write(`
       <td>2.5</td>
       <td>6.7</td>
       <td>3.3</td>
-      <td>2.636285</td>
+      <td>0.400000</td>
       <td>False</td>
     </tr>
     <tr>
@@ -2012,7 +2039,7 @@ document.write(`
       <td>2.3</td>
       <td>6.7</td>
       <td>3.0</td>
-      <td>2.372762</td>
+      <td>0.374166</td>
       <td>False</td>
     </tr>
     <tr>
@@ -2022,7 +2049,7 @@ document.write(`
       <td>1.9</td>
       <td>6.3</td>
       <td>2.5</td>
-      <td>2.049390</td>
+      <td>0.412311</td>
       <td>False</td>
     </tr>
     <tr>
@@ -2032,7 +2059,7 @@ document.write(`
       <td>2.0</td>
       <td>6.5</td>
       <td>3.0</td>
-      <td>2.437212</td>
+      <td>0.360555</td>
       <td>False</td>
     </tr>
     <tr>
@@ -2042,7 +2069,7 @@ document.write(`
       <td>2.3</td>
       <td>6.2</td>
       <td>3.4</td>
-      <td>2.611513</td>
+      <td>0.616441</td>
       <td>False</td>
     </tr>
     <tr>
@@ -2052,7 +2079,7 @@ document.write(`
       <td>1.8</td>
       <td>5.9</td>
       <td>3.0</td>
-      <td>2.443358</td>
+      <td>0.331662</td>
       <td>False</td>
     </tr>
     <tr>
@@ -2062,37 +2089,51 @@ document.write(`
       <td>3.2</td>
       <td>5.8</td>
       <td>1.0</td>
-      <td>0.000000</td>
+      <td>2.092845</td>
       <td>False</td>
+    </tr>
+  </tbody>
+</table></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah outlier: 1
+
+Data Outlier:
+</pre></div>
+</div>
+<div class="output text_html"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>id</th>
+      <th>class</th>
+      <th>petal_length</th>
+      <th>petal_width</th>
+      <th>sepal_length</th>
+      <th>sepal_width</th>
+      <th>knn_distance</th>
+      <th>outlier_knn</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>2</td>
+      <td>Iris-setosa</td>
+      <td>14.0</td>
+      <td>2.0</td>
+      <td>40.9</td>
+      <td>30.0</td>
+      <td>43.517123</td>
+      <td>True</td>
     </tr>
   </tbody>
 </table></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
 </pre></div>
 </div>
-<img alt="_images/840f7805d3b7eb3416c0b2e3dec88ca2df19adc446dceb007d8d5ded925679a2.png" src="_images/840f7805d3b7eb3416c0b2e3dec88ca2df19adc446dceb007d8d5ded925679a2.png" />
+<img alt="_images/2c38e6718a2ddef2564084d55a7fc60dc400f13ac388bdc997d067845b038617.png" src="_images/2c38e6718a2ddef2564084d55a7fc60dc400f13ac388bdc997d067845b038617.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
 </pre></div>
 </div>
-<img alt="_images/5563bc8b5f96a5d0b2f404f7ccd9e18f5e8bf839746e036dead6f33cdbd7bef9.png" src="_images/5563bc8b5f96a5d0b2f404f7ccd9e18f5e8bf839746e036dead6f33cdbd7bef9.png" />
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Hitung total outlier</span>
-<span class="n">total_outliers</span> <span class="o">=</span> <span class="n">df_merged</span><span class="p">[</span><span class="s2">&quot;outlier&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total Outlier: </span><span class="si">{</span><span class="n">total_outliers</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Total Outlier: 1
-</pre></div>
-</div>
+<img alt="_images/913f1a59a3f34cdc1599127d37069360e23e363497fc7e90784ab3d29bd5ca79.png" src="_images/913f1a59a3f34cdc1599127d37069360e23e363497fc7e90784ab3d29bd5ca79.png" />
 </div>
 </div>
 </section>
-<div class="toctree-wrapper compound">
-</div>
 </section>
 
     <script type="text/x-thebe-config">
@@ -2126,20 +2167,20 @@ document.write(`
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="tugas_1.html"
+       href="tugas2.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Data Understanding</p>
+        <p class="prev-next-title">Outlier Deteksi</p>
       </div>
     </a>
     <a class="right-next"
-       href="knn.html"
+       href="lof.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Deteksi Outlier dengan K-Nearest Neighbors (KNN) dalam Data Understanding</p>
+        <p class="prev-next-title">Local Outlier Factor (LOF)</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -2159,10 +2200,9 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pengertian-outlier-deteksi">Pengertian Outlier Deteksi</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metode-untuk-melakukan-outlier-deteksi">Metode untuk melakukan outlier deteksi</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tahapan-melakukan-outlier-deteksi">Tahapan melakukan outlier deteksi</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contoh-outlier-deteksi">Contoh outlier deteksi</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mengapa-knn-bisa-digunakan-untuk-deteksi-outlier">1. Mengapa KNN Bisa Digunakan untuk Deteksi Outlier?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-langkah-deteksi-outlier-dengan-knn">2. Langkah-Langkah Deteksi Outlier dengan KNN</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contoh-implementasi-knn">Contoh implementasi KNN</a></li>
 </ul>
   </nav></div>
 
