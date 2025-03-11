@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Local Outlier Factor (LOF) &#8212; Penambangan Data</title>
+    <title>Deteksi Outlier dengan Local Outlier Factor (LOF) &#8212; Penambangan Data</title>
   
   
   
@@ -62,7 +62,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'lof';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="Deteksi Outlier dengan K-Nearest Neighbors (KNN) dalam Data Understanding" href="knn.html" />
+    <link rel="prev" title="Deteksi Outlier dengan K-Nearest Neighbors (KNN)" href="knn.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -183,8 +183,8 @@
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="tugas_1.html">Data Understanding</a></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="tugas2.html">Outlier Deteksi</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="knn.html">Deteksi Outlier dengan K-Nearest Neighbors (KNN) dalam Data Understanding</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">Local Outlier Factor (LOF)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="knn.html">Deteksi Outlier dengan K-Nearest Neighbors (KNN)</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Deteksi Outlier dengan Local Outlier Factor (LOF)</a></li>
 </ul>
 </details></li>
 </ul>
@@ -372,7 +372,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Local Outlier Factor (LOF)</h1>
+    <h1>Deteksi Outlier dengan Local Outlier Factor (LOF)</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -397,8 +397,8 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="local-outlier-factor-lof">
-<h1>Local Outlier Factor (LOF)<a class="headerlink" href="#local-outlier-factor-lof" title="Link to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="deteksi-outlier-dengan-local-outlier-factor-lof">
+<h1>Deteksi Outlier dengan Local Outlier Factor (LOF)<a class="headerlink" href="#deteksi-outlier-dengan-local-outlier-factor-lof" title="Link to this heading">#</a></h1>
 <section id="apa-itu-lof">
 <h2>Apa itu LOF?<a class="headerlink" href="#apa-itu-lof" title="Link to this heading">#</a></h2>
 <p>Dalam analisis deteksi anomali, Local Outlier Factor (LOF) adalah sebuah algoritma yang digunakan untuk mengidentifikasi data yang menyimpang dengan menilai seberapa jauh suatu titik data berbeda dari tetangga sekitarnya. Algoritma ini pertama kali diperkenalkan pada tahun 2000 oleh Markus M. Breunig, Hans-Peter Kriegel, Raymond T. Ng, dan Jörg Sander. LOF mengadopsi konsep serupa dengan DBSCAN dan OPTICS, yakni menggunakan “jarak inti” dan “jarak keterjangkauan” untuk memperkirakan kerapatan lokal suatu titik data.</p>
@@ -578,6 +578,8 @@ Karena <strong>LOF = 2</strong> (lebih besar dari 1), titik 3 dianggap <strong>o
 
 <span class="n">num_outliers</span> <span class="o">=</span> <span class="p">(</span><span class="n">label</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Jumlah outlier: </span><span class="si">{</span><span class="n">num_outliers</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 
 <span class="n">outliers</span> <span class="o">=</span> <span class="n">df_merged</span><span class="p">[</span><span class="n">df_merged</span><span class="p">[</span><span class="s2">&quot;outlier_label&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Data Outlier:&quot;</span><span class="p">)</span>
@@ -1961,6 +1963,8 @@ Karena <strong>LOF = 2</strong> (lebih besar dari 1), titik 3 dianggap <strong>o
   </tbody>
 </table></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah outlier: 1
 
+
+
 Data Outlier:
 </pre></div>
 </div>
@@ -2028,7 +2032,7 @@ Data Outlier:
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Deteksi Outlier dengan K-Nearest Neighbors (KNN) dalam Data Understanding</p>
+        <p class="prev-next-title">Deteksi Outlier dengan K-Nearest Neighbors (KNN)</p>
       </div>
     </a>
 </div>

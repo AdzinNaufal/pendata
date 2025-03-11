@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Deteksi Outlier dengan K-Nearest Neighbors (KNN) dalam Data Understanding &#8212; Penambangan Data</title>
+    <title>Deteksi Outlier dengan K-Nearest Neighbors (KNN) &#8212; Penambangan Data</title>
   
   
   
@@ -60,7 +60,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'knn';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Local Outlier Factor (LOF)" href="lof.html" />
+    <link rel="next" title="Deteksi Outlier dengan Local Outlier Factor (LOF)" href="lof.html" />
     <link rel="prev" title="Outlier Deteksi" href="tugas2.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -182,8 +182,8 @@
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="tugas_1.html">Data Understanding</a></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="tugas2.html">Outlier Deteksi</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">Deteksi Outlier dengan K-Nearest Neighbors (KNN) dalam Data Understanding</a></li>
-<li class="toctree-l2"><a class="reference internal" href="lof.html">Local Outlier Factor (LOF)</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Deteksi Outlier dengan K-Nearest Neighbors (KNN)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lof.html">Deteksi Outlier dengan Local Outlier Factor (LOF)</a></li>
 </ul>
 </details></li>
 </ul>
@@ -371,7 +371,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Deteksi Outlier dengan K-Nearest Neighbors (KNN) dalam Data Understanding</h1>
+    <h1>Deteksi Outlier dengan K-Nearest Neighbors (KNN)</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -395,8 +395,8 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="deteksi-outlier-dengan-k-nearest-neighbors-knn-dalam-data-understanding">
-<h1>Deteksi Outlier dengan K-Nearest Neighbors (KNN) dalam Data Understanding<a class="headerlink" href="#deteksi-outlier-dengan-k-nearest-neighbors-knn-dalam-data-understanding" title="Link to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="deteksi-outlier-dengan-k-nearest-neighbors-knn">
+<h1>Deteksi Outlier dengan K-Nearest Neighbors (KNN)<a class="headerlink" href="#deteksi-outlier-dengan-k-nearest-neighbors-knn" title="Link to this heading">#</a></h1>
 <section id="mengapa-knn-bisa-digunakan-untuk-deteksi-outlier">
 <h2>1. Mengapa KNN Bisa Digunakan untuk Deteksi Outlier?<a class="headerlink" href="#mengapa-knn-bisa-digunakan-untuk-deteksi-outlier" title="Link to this heading">#</a></h2>
 <p>Metode K-Nearest Neighbors (KNN) bekerja dengan prinsip kedekatan antar data, sehingga dapat dimanfaatkan untuk mengidentifikasi outlier. Deteksi outlier menggunakan KNN umumnya didasarkan pada konsep berikut:</p>
@@ -441,7 +441,9 @@ Beberapa metode untuk menilai apakah suatu titik merupakan outlier meliputi:</p>
   Downloading PyMySQL-1.1.1-py3-none-any.whl.metadata (4.4 kB)
 Downloading PyMySQL-1.1.1-py3-none-any.whl (44 kB)
 ?25l   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">0.0/45.0 kB</span> <span class=" -Color -Color-Red">?</span> eta <span class=" -Color -Color-Cyan">-:--:--</span>
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">45.0/45.0 kB</span> <span class=" -Color -Color-Red">1.5 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">45.0/45.0 kB</span> <span class=" -Color -Color-Red">1.7 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
 ?25h
 </pre></div>
 </div>
@@ -545,7 +547,6 @@ Successfully installed pymysql-1.1.1
 <span class="n">outliers</span> <span class="o">=</span> <span class="n">df_merged</span><span class="p">[</span><span class="n">df_merged</span><span class="p">[</span><span class="s2">&quot;outlier_knn&quot;</span><span class="p">]]</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Data Outlier:&quot;</span><span class="p">)</span>
 <span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="n">outliers</span><span class="o">.</span><span class="n">to_html</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)))</span>
-
 <span class="c1"># Visualisasi outlier berdasarkan K-NN</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
 <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span>
@@ -2180,7 +2181,7 @@ Data Outlier:
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Local Outlier Factor (LOF)</p>
+        <p class="prev-next-title">Deteksi Outlier dengan Local Outlier Factor (LOF)</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
