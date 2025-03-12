@@ -384,8 +384,21 @@ document.write(`
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#apa-itu-lof">Apa itu LOF?</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tahapan-lof">Tahapan LOF</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contoh-menghitung-manual-lof">CONTOH MENGHITUNG MANUAL LOF</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contoh-implementasi-menggunakan-sklearn-menggunakan-data-iris">Contoh implementasi menggunakan sklearn menggunakan data iris</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contoh-menghitung-manual-lof">CONTOH MENGHITUNG MANUAL LOF</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-baru">1. <strong>Data Baru</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hitung-jarak-euclidean">2. <strong>Hitung Jarak Euclidean</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tentukan-k-tetangga-terdekat-k-2">3. <strong>Tentukan k-Tetangga Terdekat</strong> (k=2)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hitung-reachability-distance">4. <strong>Hitung Reachability Distance</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hitung-local-reachability-density-lrd">5. <strong>Hitung Local Reachability Density (LRD)</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hitung-lof">6. <strong>Hitung LOF</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretasi">7. <strong>Interpretasi</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contoh-implementasi-menggunakan-sklearn">Contoh Implementasi Menggunakan sklearn</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#contoh-implementasi-dengan-contoh-data-10-baris-2-fitur">Contoh implementasi dengan contoh data 10 baris 2 fitur</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#contoh-implementasi-dengan-data-iris">Contoh implementasi dengan data iris</a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -413,14 +426,15 @@ document.write(`
 <li><p><strong>Menghitung Local Outlier Factor (LOF)</strong> – Setelah LRD setiap titik diketahui, nilai Local Outlier Factor (LOF) dihitung dengan membandingkan LRD suatu titik terhadap LRD dari tetangga-tetangganya. Nilai LOF diperoleh dengan menghitung rata-rata rasio LRD tetangga terhadap LRD titik tersebut. Jika LOF mendekati 1, artinya kepadatan titik tersebut sebanding dengan tetangganya dan tidak dianggap sebagai pencilan. Namun, jika LOF jauh lebih besar dari 1, titik tersebut memiliki kepadatan yang jauh lebih rendah dibandingkan dengan lingkungannya dan berpotensi menjadi anomali.</p></li>
 <li><p><strong>Menentukan Anomali Berdasarkan LOF</strong> – Tahap terakhir adalah menetapkan ambang batas LOF untuk mengidentifikasi titik-titik yang dianggap sebagai anomali. Biasanya, titik dengan nilai LOF lebih besar dari 1.5 atau 2 dikategorikan sebagai pencilan, tergantung pada sensitivitas yang diinginkan. Dengan demikian, metode LOF dapat secara efektif mendeteksi anomali dalam dataset yang memiliki kepadatan tidak seragam, seperti klaster dengan ukuran berbeda atau data dengan distribusi yang kompleks.</p></li>
 </ol>
+<p>Berikut adalah versi baru dengan dataset yang memiliki 10 baris data:</p>
 </section>
+<hr class="docutils" />
 <section id="contoh-menghitung-manual-lof">
 <h2>CONTOH MENGHITUNG MANUAL LOF<a class="headerlink" href="#contoh-menghitung-manual-lof" title="Link to this heading">#</a></h2>
-<p>Berikut adalah cara singkat menghitung <strong>Local Outlier Factor (LOF)</strong> untuk satu titik data dengan dua fitur:</p>
-<ol class="arabic simple">
-<li><p><strong>Data</strong>:<br />
-Misalkan data berikut:</p></li>
-</ol>
+<p>Berikut adalah cara menghitung <strong>Local Outlier Factor (LOF)</strong> untuk satu titik data dengan dua fitur:</p>
+<section id="data-baru">
+<h3>1. <strong>Data Baru</strong><a class="headerlink" href="#data-baru" title="Link to this heading">#</a></h3>
+<p>Misalkan kita memiliki dataset berikut:</p>
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>ID</p></th>
@@ -430,61 +444,89 @@ Misalkan data berikut:</p></li>
 </thead>
 <tbody>
 <tr class="row-even"><td><p>1</p></td>
+<td><p>1.0</p></td>
 <td><p>2.0</p></td>
-<td><p>3.0</p></td>
 </tr>
 <tr class="row-odd"><td><p>2</p></td>
-<td><p>4.0</p></td>
-<td><p>5.0</p></td>
+<td><p>2.5</p></td>
+<td><p>3.5</p></td>
 </tr>
 <tr class="row-even"><td><p>3</p></td>
-<td><p>6.0</p></td>
-<td><p>7.0</p></td>
+<td><p>3.0</p></td>
+<td><p>4.0</p></td>
 </tr>
 <tr class="row-odd"><td><p>4</p></td>
-<td><p>8.0</p></td>
-<td><p>9.0</p></td>
+<td><p>4.5</p></td>
+<td><p>5.0</p></td>
 </tr>
 <tr class="row-even"><td><p>5</p></td>
+<td><p>5.0</p></td>
+<td><p>6.0</p></td>
+</tr>
+<tr class="row-odd"><td><p>6</p></td>
+<td><p>6.5</p></td>
+<td><p>7.5</p></td>
+</tr>
+<tr class="row-even"><td><p>7</p></td>
+<td><p>7.0</p></td>
+<td><p>8.0</p></td>
+</tr>
+<tr class="row-odd"><td><p>8</p></td>
+<td><p>8.5</p></td>
+<td><p>9.0</p></td>
+</tr>
+<tr class="row-even"><td><p>9</p></td>
+<td><p>9.0</p></td>
 <td><p>10.0</p></td>
-<td><p>11.0</p></td>
+</tr>
+<tr class="row-odd"><td><p>10</p></td>
+<td><p>20.0</p></td>
+<td><p>22.0</p></td>
 </tr>
 </tbody>
 </table>
 </div>
-<p>Kita akan hitung LOF untuk <strong>titik 3</strong> (6.0, 7.0).</p>
-<ol class="arabic simple" start="2">
-<li><p><strong>Hitung Jarak Euclidean</strong>:<br />
-Jarak antara titik 3 dan titik lainnya:</p>
-<ul class="simple">
-<li><p>Titik 3 ke Titik 2: 1.41</p></li>
-<li><p>Titik 3 ke Titik 4: 1.41</p></li>
-</ul>
-</li>
-<li><p><strong>Tentukan k-Tetangga Terdekat</strong> (k=2):<br />
-Titik 3 memiliki dua tetangga terdekat: titik 2 dan titik 4.</p></li>
-<li><p><strong>Hitung Reachability Distance</strong>:<br />
-Reachability distance antara titik 3 dan tetangga:</p>
-<ul class="simple">
-<li><p>Titik 3 ke Titik 2: 2.83</p></li>
-<li><p>Titik 3 ke Titik 4: 2.83</p></li>
-</ul>
-</li>
-<li><p><strong>Hitung Local Reachability Density (LRD)</strong>:<br />
-<span class="math notranslate nohighlight">\(
-\text{LRD}(3) = \frac{1}{\frac{1}{2} \times (2.83 + 2.83)} = 0.35
-\)</span></p></li>
-<li><p><strong>Hitung LOF</strong>:<br />
-<span class="math notranslate nohighlight">\(
-\text{LOF}(3) = \frac{0.35}{0.35} + \frac{0.35}{0.35} = 2
-\)</span></p></li>
-<li><p><strong>Interpretasi</strong>:<br />
-Karena <strong>LOF = 2</strong> (lebih besar dari 1), titik 3 dianggap <strong>outlier</strong>.</p></li>
-</ol>
-<p>LOF mengukur seberapa terisolasi titik dibandingkan tetangganya. Titik dengan LOF lebih besar dari 1 dianggap outlier.</p>
+<p>Kita akan menghitung LOF untuk <strong>titik 10</strong> (20.0, 22.0).</p>
 </section>
-<section id="contoh-implementasi-menggunakan-sklearn-menggunakan-data-iris">
-<h2>Contoh implementasi menggunakan sklearn menggunakan data iris<a class="headerlink" href="#contoh-implementasi-menggunakan-sklearn-menggunakan-data-iris" title="Link to this heading">#</a></h2>
+<section id="hitung-jarak-euclidean">
+<h3>2. <strong>Hitung Jarak Euclidean</strong><a class="headerlink" href="#hitung-jarak-euclidean" title="Link to this heading">#</a></h3>
+<p>Jarak antara titik 10 dan titik lainnya (hanya ditampilkan beberapa yang terdekat):</p>
+<ul class="simple">
+<li><p>Titik 10 ke Titik 9: <strong>15.56</strong></p></li>
+<li><p>Titik 10 ke Titik 8: <strong>17.99</strong></p></li>
+</ul>
+</section>
+<section id="tentukan-k-tetangga-terdekat-k-2">
+<h3>3. <strong>Tentukan k-Tetangga Terdekat</strong> (k=2)<a class="headerlink" href="#tentukan-k-tetangga-terdekat-k-2" title="Link to this heading">#</a></h3>
+<p>Dua tetangga terdekat untuk titik 10 adalah <strong>titik 9 dan titik 8</strong>.</p>
+</section>
+<section id="hitung-reachability-distance">
+<h3>4. <strong>Hitung Reachability Distance</strong><a class="headerlink" href="#hitung-reachability-distance" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Titik 10 ke Titik 9: <strong>15.56</strong></p></li>
+<li><p>Titik 10 ke Titik 8: <strong>17.99</strong></p></li>
+</ul>
+</section>
+<section id="hitung-local-reachability-density-lrd">
+<h3>5. <strong>Hitung Local Reachability Density (LRD)</strong><a class="headerlink" href="#hitung-local-reachability-density-lrd" title="Link to this heading">#</a></h3>
+<p><span class="math notranslate nohighlight">\(
+\text{LRD}(10) = \frac{1}{\frac{1}{2} \times (15.56 + 17.99)} = 0.06
+\)</span></p>
+</section>
+<section id="hitung-lof">
+<h3>6. <strong>Hitung LOF</strong><a class="headerlink" href="#hitung-lof" title="Link to this heading">#</a></h3>
+<p><span class="math notranslate nohighlight">\(
+\text{LOF}(10) = \frac{0.06}{0.35} + \frac{0.06}{0.35} = 5.71
+\)</span></p>
+</section>
+<section id="interpretasi">
+<h3>7. <strong>Interpretasi</strong><a class="headerlink" href="#interpretasi" title="Link to this heading">#</a></h3>
+<p>Karena <strong>LOF = 5.71</strong> (jauh lebih besar dari 1), titik 10 dianggap <strong>outlier</strong>.</p>
+<p>LOF menunjukkan bahwa titik ini sangat berbeda dibandingkan dengan tetangganya.</p>
+</section>
+</section>
+<section id="contoh-implementasi-menggunakan-sklearn">
+<h2>Contoh Implementasi Menggunakan sklearn<a class="headerlink" href="#contoh-implementasi-menggunakan-sklearn" title="Link to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">pip</span> install pymysql
@@ -514,6 +556,221 @@ Karena <strong>LOF = 2</strong> (lebih besar dari 1), titik 3 dianggap <strong>o
 </div>
 </div>
 </div>
+<section id="contoh-implementasi-dengan-contoh-data-10-baris-2-fitur">
+<h3>Contoh implementasi dengan contoh data 10 baris 2 fitur<a class="headerlink" href="#contoh-implementasi-dengan-contoh-data-10-baris-2-fitur" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Dataset baru dengan 10 baris data</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;Fitur 1&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">6.5</span><span class="p">,</span> <span class="mf">7.0</span><span class="p">,</span> <span class="mf">8.5</span><span class="p">,</span> <span class="mf">9.0</span><span class="p">,</span> <span class="mf">20.0</span><span class="p">],</span>
+    <span class="s1">&#39;Fitur 2&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">6.0</span><span class="p">,</span> <span class="mf">7.5</span><span class="p">,</span> <span class="mf">8.0</span><span class="p">,</span> <span class="mf">9.0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">,</span> <span class="mf">22.0</span><span class="p">]</span>
+<span class="p">}</span>
+
+<span class="c1"># Membuat DataFrame</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="c1"># Mengatur index mulai dari 1</span>
+<span class="n">df</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Inisialisasi model LOF dengan k=2 (2 tetangga terdekat)</span>
+<span class="n">lof</span> <span class="o">=</span> <span class="n">LocalOutlierFactor</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># Fit model LOF dan prediksi label (1 untuk normal, -1 untuk outlier)</span>
+<span class="n">lof_labels</span> <span class="o">=</span> <span class="n">lof</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+
+<span class="c1"># Menambahkan hasil prediksi ke DataFrame</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;LOF Label&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">lof_labels</span>
+
+<span class="c1"># Menampilkan hasil</span>
+<span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">to_html</span><span class="p">()))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="c1"># Menampilkan jumlah outlier</span>
+<span class="n">num_outliers</span> <span class="o">=</span> <span class="p">(</span><span class="n">lof_labels</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Jumlah Outlier: </span><span class="si">{</span><span class="n">num_outliers</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="c1"># Menampilkan data outlier</span>
+<span class="n">outlier</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;LOF Label&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="s2">&quot;Data Outlier:&quot;</span><span class="p">))</span>
+<span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="n">outlier</span><span class="o">.</span><span class="n">to_html</span><span class="p">()))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1">#menampilkan data non-outlier</span>
+<span class="n">non_outliers</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;LOF Label&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="s2">&quot;Data Non-Outlier:&quot;</span><span class="p">))</span>
+<span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="n">non_outliers</span><span class="o">.</span><span class="n">to_html</span><span class="p">()))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Fitur 1</th>
+      <th>Fitur 2</th>
+      <th>LOF Label</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>1.0</td>
+      <td>2.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2.5</td>
+      <td>3.5</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3.0</td>
+      <td>4.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>4.5</td>
+      <td>5.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>5.0</td>
+      <td>6.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>6.5</td>
+      <td>7.5</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>7.0</td>
+      <td>8.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>8.5</td>
+      <td>9.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>9.0</td>
+      <td>10.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>20.0</td>
+      <td>22.0</td>
+      <td>-1</td>
+    </tr>
+  </tbody>
+</table></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output text_html">Jumlah Outlier: 1</div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output text_html">Data Outlier:</div><div class="output text_html"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Fitur 1</th>
+      <th>Fitur 2</th>
+      <th>LOF Label</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>10</th>
+      <td>20.0</td>
+      <td>22.0</td>
+      <td>-1</td>
+    </tr>
+  </tbody>
+</table></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output text_html">Data Non-Outlier:</div><div class="output text_html"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Fitur 1</th>
+      <th>Fitur 2</th>
+      <th>LOF Label</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>1.0</td>
+      <td>2.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2.5</td>
+      <td>3.5</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3.0</td>
+      <td>4.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>4.5</td>
+      <td>5.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>5.0</td>
+      <td>6.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>6.5</td>
+      <td>7.5</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>7.0</td>
+      <td>8.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>8.5</td>
+      <td>9.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>9.0</td>
+      <td>10.0</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table></div></div>
+</div>
+</section>
+<section id="contoh-implementasi-dengan-data-iris">
+<h3>Contoh implementasi dengan data iris<a class="headerlink" href="#contoh-implementasi-dengan-data-iris" title="Link to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_pg_data</span><span class="p">():</span>
@@ -567,7 +824,7 @@ Karena <strong>LOF = 2</strong> (lebih besar dari 1), titik 3 dianggap <strong>o
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Inisialisasi model LOF</span>
-<span class="n">clf</span> <span class="o">=</span> <span class="n">LocalOutlierFactor</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">80</span><span class="p">)</span>
+<span class="n">clf</span> <span class="o">=</span> <span class="n">LocalOutlierFactor</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
 <span class="n">label</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">data_values</span><span class="p">)</span>
 
 <span class="c1"># Tambahkan hasil label ke dataframe</span>
@@ -577,13 +834,22 @@ Karena <strong>LOF = 2</strong> (lebih besar dari 1), titik 3 dianggap <strong>o
 <span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="n">df_merged</span><span class="o">.</span><span class="n">to_html</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)))</span>
 
 <span class="n">num_outliers</span> <span class="o">=</span> <span class="p">(</span><span class="n">label</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Jumlah outlier: </span><span class="si">{</span><span class="n">num_outliers</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Jumlah Outlier: </span><span class="si">{</span><span class="n">num_outliers</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">))</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 
+<span class="c1"># Tampilkan data yang merupakan outlier</span>
 <span class="n">outliers</span> <span class="o">=</span> <span class="n">df_merged</span><span class="p">[</span><span class="n">df_merged</span><span class="p">[</span><span class="s2">&quot;outlier_label&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Data Outlier:&quot;</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="s2">&quot;Data Outlier:&quot;</span><span class="p">))</span>
 <span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="n">outliers</span><span class="o">.</span><span class="n">to_html</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Tampilkan data yang bukan outlier</span>
+<span class="n">non_outliers</span> <span class="o">=</span> <span class="n">df_merged</span><span class="p">[</span><span class="n">df_merged</span><span class="p">[</span><span class="s2">&quot;outlier_label&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="s2">&quot;Data Non-Outlier:&quot;</span><span class="p">))</span>
+<span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="n">non_outliers</span><span class="o">.</span><span class="n">to_html</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)))</span>
 </pre></div>
 </div>
 </div>
@@ -1961,14 +2227,13 @@ Karena <strong>LOF = 2</strong> (lebih besar dari 1), titik 3 dianggap <strong>o
       <td>1</td>
     </tr>
   </tbody>
-</table></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah outlier: 1
-
-
-
-Data Outlier:
+</table></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
 </pre></div>
 </div>
-<div class="output text_html"><table border="1" class="dataframe">
+<div class="output text_html">Jumlah Outlier: 1</div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output text_html">Data Outlier:</div><div class="output text_html"><table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
       <th>id</th>
@@ -1991,8 +2256,1376 @@ Data Outlier:
       <td>-1</td>
     </tr>
   </tbody>
+</table></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output text_html">Data Non-Outlier:</div><div class="output text_html"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>id</th>
+      <th>class</th>
+      <th>petal_length</th>
+      <th>petal_width</th>
+      <th>sepal_length</th>
+      <th>sepal_width</th>
+      <th>outlier_label</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>Iris-setosa</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>5.1</td>
+      <td>3.5</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>Iris-setosa</td>
+      <td>1.3</td>
+      <td>0.2</td>
+      <td>4.7</td>
+      <td>3.2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>Iris-setosa</td>
+      <td>1.5</td>
+      <td>0.2</td>
+      <td>4.6</td>
+      <td>3.1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>Iris-setosa</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>5.0</td>
+      <td>3.6</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>Iris-setosa</td>
+      <td>1.7</td>
+      <td>0.4</td>
+      <td>5.4</td>
+      <td>3.9</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>Iris-setosa</td>
+      <td>1.4</td>
+      <td>0.3</td>
+      <td>4.6</td>
+      <td>3.4</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>Iris-setosa</td>
+      <td>1.5</td>
+      <td>0.2</td>
+      <td>5.0</td>
+      <td>3.4</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td>Iris-setosa</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>4.4</td>
+      <td>2.9</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>Iris-setosa</td>
+      <td>1.5</td>
+      <td>0.1</td>
+      <td>4.9</td>
+      <td>3.1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>11</td>
+      <td>Iris-setosa</td>
+      <td>1.5</td>
+      <td>0.2</td>
+      <td>5.4</td>
+      <td>3.7</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>12</td>
+      <td>Iris-setosa</td>
+      <td>1.6</td>
+      <td>0.2</td>
+      <td>4.8</td>
+      <td>3.4</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>13</td>
+      <td>Iris-setosa</td>
+      <td>1.4</td>
+      <td>0.1</td>
+      <td>4.8</td>
+      <td>3.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>14</td>
+      <td>Iris-setosa</td>
+      <td>1.1</td>
+      <td>0.1</td>
+      <td>4.3</td>
+      <td>3.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>15</td>
+      <td>Iris-setosa</td>
+      <td>1.2</td>
+      <td>0.2</td>
+      <td>5.8</td>
+      <td>4.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>16</td>
+      <td>Iris-setosa</td>
+      <td>1.5</td>
+      <td>0.4</td>
+      <td>5.7</td>
+      <td>4.4</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>17</td>
+      <td>Iris-setosa</td>
+      <td>1.3</td>
+      <td>0.4</td>
+      <td>5.4</td>
+      <td>3.9</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>18</td>
+      <td>Iris-setosa</td>
+      <td>1.4</td>
+      <td>0.3</td>
+      <td>5.1</td>
+      <td>3.5</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>19</td>
+      <td>Iris-setosa</td>
+      <td>1.7</td>
+      <td>0.3</td>
+      <td>5.7</td>
+      <td>3.8</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>20</td>
+      <td>Iris-setosa</td>
+      <td>1.5</td>
+      <td>0.3</td>
+      <td>5.1</td>
+      <td>3.8</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>21</td>
+      <td>Iris-setosa</td>
+      <td>1.7</td>
+      <td>0.2</td>
+      <td>5.4</td>
+      <td>3.4</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>22</td>
+      <td>Iris-setosa</td>
+      <td>1.5</td>
+      <td>0.4</td>
+      <td>5.1</td>
+      <td>3.7</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>23</td>
+      <td>Iris-setosa</td>
+      <td>1.0</td>
+      <td>0.2</td>
+      <td>4.6</td>
+      <td>3.6</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>24</td>
+      <td>Iris-setosa</td>
+      <td>1.7</td>
+      <td>0.5</td>
+      <td>5.1</td>
+      <td>3.3</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>25</td>
+      <td>Iris-setosa</td>
+      <td>1.9</td>
+      <td>0.2</td>
+      <td>4.8</td>
+      <td>3.4</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>26</td>
+      <td>Iris-setosa</td>
+      <td>1.6</td>
+      <td>0.2</td>
+      <td>5.0</td>
+      <td>3.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>27</td>
+      <td>Iris-setosa</td>
+      <td>1.6</td>
+      <td>0.4</td>
+      <td>5.0</td>
+      <td>3.4</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>28</td>
+      <td>Iris-setosa</td>
+      <td>1.5</td>
+      <td>0.2</td>
+      <td>5.2</td>
+      <td>3.5</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>29</td>
+      <td>Iris-setosa</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>5.2</td>
+      <td>3.4</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>30</td>
+      <td>Iris-setosa</td>
+      <td>1.6</td>
+      <td>0.2</td>
+      <td>4.7</td>
+      <td>3.2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>31</td>
+      <td>Iris-setosa</td>
+      <td>1.6</td>
+      <td>0.2</td>
+      <td>4.8</td>
+      <td>3.1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>32</td>
+      <td>Iris-setosa</td>
+      <td>1.5</td>
+      <td>0.4</td>
+      <td>5.4</td>
+      <td>3.4</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>33</td>
+      <td>Iris-setosa</td>
+      <td>1.5</td>
+      <td>0.1</td>
+      <td>5.2</td>
+      <td>4.1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>34</td>
+      <td>Iris-setosa</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>5.5</td>
+      <td>4.2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>35</td>
+      <td>Iris-setosa</td>
+      <td>1.5</td>
+      <td>0.1</td>
+      <td>4.9</td>
+      <td>3.1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>36</td>
+      <td>Iris-setosa</td>
+      <td>1.2</td>
+      <td>0.2</td>
+      <td>5.0</td>
+      <td>3.2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>37</td>
+      <td>Iris-setosa</td>
+      <td>1.3</td>
+      <td>0.2</td>
+      <td>5.5</td>
+      <td>3.5</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>38</td>
+      <td>Iris-setosa</td>
+      <td>1.5</td>
+      <td>0.1</td>
+      <td>4.9</td>
+      <td>3.1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>39</td>
+      <td>Iris-setosa</td>
+      <td>1.3</td>
+      <td>0.2</td>
+      <td>4.4</td>
+      <td>3.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>40</td>
+      <td>Iris-setosa</td>
+      <td>1.5</td>
+      <td>0.2</td>
+      <td>5.1</td>
+      <td>3.4</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>41</td>
+      <td>Iris-setosa</td>
+      <td>1.3</td>
+      <td>0.3</td>
+      <td>5.0</td>
+      <td>3.5</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>42</td>
+      <td>Iris-setosa</td>
+      <td>1.3</td>
+      <td>0.3</td>
+      <td>4.5</td>
+      <td>2.3</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>43</td>
+      <td>Iris-setosa</td>
+      <td>1.3</td>
+      <td>0.2</td>
+      <td>4.4</td>
+      <td>3.2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>44</td>
+      <td>Iris-setosa</td>
+      <td>1.6</td>
+      <td>0.6</td>
+      <td>5.0</td>
+      <td>3.5</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>45</td>
+      <td>Iris-setosa</td>
+      <td>1.9</td>
+      <td>0.4</td>
+      <td>5.1</td>
+      <td>3.8</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>46</td>
+      <td>Iris-setosa</td>
+      <td>1.4</td>
+      <td>0.3</td>
+      <td>4.8</td>
+      <td>3.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>47</td>
+      <td>Iris-setosa</td>
+      <td>1.6</td>
+      <td>0.2</td>
+      <td>5.1</td>
+      <td>3.8</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>48</td>
+      <td>Iris-setosa</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>4.6</td>
+      <td>3.2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>49</td>
+      <td>Iris-setosa</td>
+      <td>1.5</td>
+      <td>0.2</td>
+      <td>5.3</td>
+      <td>3.7</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>50</td>
+      <td>Iris-setosa</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>5.0</td>
+      <td>3.3</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>51</td>
+      <td>Iris-versicolor</td>
+      <td>4.7</td>
+      <td>1.4</td>
+      <td>7.0</td>
+      <td>3.2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>52</td>
+      <td>Iris-versicolor</td>
+      <td>4.5</td>
+      <td>1.5</td>
+      <td>6.4</td>
+      <td>3.2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>53</td>
+      <td>Iris-versicolor</td>
+      <td>4.9</td>
+      <td>1.5</td>
+      <td>6.9</td>
+      <td>3.1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>54</td>
+      <td>Iris-versicolor</td>
+      <td>4.0</td>
+      <td>1.3</td>
+      <td>5.5</td>
+      <td>2.3</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>55</td>
+      <td>Iris-versicolor</td>
+      <td>4.6</td>
+      <td>1.5</td>
+      <td>6.5</td>
+      <td>2.8</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>56</td>
+      <td>Iris-versicolor</td>
+      <td>4.5</td>
+      <td>1.3</td>
+      <td>5.7</td>
+      <td>2.8</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>57</td>
+      <td>Iris-versicolor</td>
+      <td>4.7</td>
+      <td>1.6</td>
+      <td>6.3</td>
+      <td>3.3</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>58</td>
+      <td>Iris-versicolor</td>
+      <td>3.3</td>
+      <td>1.0</td>
+      <td>4.9</td>
+      <td>2.4</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>59</td>
+      <td>Iris-versicolor</td>
+      <td>4.6</td>
+      <td>1.3</td>
+      <td>6.6</td>
+      <td>2.9</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>60</td>
+      <td>Iris-versicolor</td>
+      <td>3.9</td>
+      <td>1.4</td>
+      <td>5.2</td>
+      <td>2.7</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>61</td>
+      <td>Iris-versicolor</td>
+      <td>3.5</td>
+      <td>1.0</td>
+      <td>5.0</td>
+      <td>2.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>62</td>
+      <td>Iris-versicolor</td>
+      <td>4.2</td>
+      <td>1.5</td>
+      <td>5.9</td>
+      <td>3.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>63</td>
+      <td>Iris-versicolor</td>
+      <td>4.0</td>
+      <td>1.0</td>
+      <td>6.0</td>
+      <td>2.2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>64</td>
+      <td>Iris-versicolor</td>
+      <td>4.7</td>
+      <td>1.4</td>
+      <td>6.1</td>
+      <td>2.9</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>65</td>
+      <td>Iris-versicolor</td>
+      <td>3.6</td>
+      <td>1.3</td>
+      <td>5.6</td>
+      <td>2.9</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>66</td>
+      <td>Iris-versicolor</td>
+      <td>4.4</td>
+      <td>1.4</td>
+      <td>6.7</td>
+      <td>3.1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>67</td>
+      <td>Iris-versicolor</td>
+      <td>4.5</td>
+      <td>1.5</td>
+      <td>5.6</td>
+      <td>3.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>68</td>
+      <td>Iris-versicolor</td>
+      <td>4.1</td>
+      <td>1.0</td>
+      <td>5.8</td>
+      <td>2.7</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>69</td>
+      <td>Iris-versicolor</td>
+      <td>4.5</td>
+      <td>1.5</td>
+      <td>6.2</td>
+      <td>2.2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>70</td>
+      <td>Iris-versicolor</td>
+      <td>3.9</td>
+      <td>1.1</td>
+      <td>5.6</td>
+      <td>2.5</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>71</td>
+      <td>Iris-versicolor</td>
+      <td>4.8</td>
+      <td>1.8</td>
+      <td>5.9</td>
+      <td>3.2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>72</td>
+      <td>Iris-versicolor</td>
+      <td>4.0</td>
+      <td>1.3</td>
+      <td>6.1</td>
+      <td>2.8</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>73</td>
+      <td>Iris-versicolor</td>
+      <td>4.9</td>
+      <td>1.5</td>
+      <td>6.3</td>
+      <td>2.5</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>74</td>
+      <td>Iris-versicolor</td>
+      <td>4.7</td>
+      <td>1.2</td>
+      <td>6.1</td>
+      <td>2.8</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>75</td>
+      <td>Iris-versicolor</td>
+      <td>4.3</td>
+      <td>1.3</td>
+      <td>6.4</td>
+      <td>2.9</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>76</td>
+      <td>Iris-versicolor</td>
+      <td>4.4</td>
+      <td>1.4</td>
+      <td>6.6</td>
+      <td>3.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>77</td>
+      <td>Iris-versicolor</td>
+      <td>4.8</td>
+      <td>1.4</td>
+      <td>6.8</td>
+      <td>2.8</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>78</td>
+      <td>Iris-versicolor</td>
+      <td>5.0</td>
+      <td>1.7</td>
+      <td>6.7</td>
+      <td>3.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>79</td>
+      <td>Iris-versicolor</td>
+      <td>4.5</td>
+      <td>1.5</td>
+      <td>6.0</td>
+      <td>2.9</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>80</td>
+      <td>Iris-versicolor</td>
+      <td>3.5</td>
+      <td>1.0</td>
+      <td>5.7</td>
+      <td>2.6</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>81</td>
+      <td>Iris-versicolor</td>
+      <td>3.8</td>
+      <td>1.1</td>
+      <td>5.5</td>
+      <td>2.4</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>82</td>
+      <td>Iris-versicolor</td>
+      <td>3.7</td>
+      <td>1.0</td>
+      <td>5.5</td>
+      <td>2.4</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>83</td>
+      <td>Iris-versicolor</td>
+      <td>3.9</td>
+      <td>1.2</td>
+      <td>5.8</td>
+      <td>2.7</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>84</td>
+      <td>Iris-versicolor</td>
+      <td>5.1</td>
+      <td>1.6</td>
+      <td>6.0</td>
+      <td>2.7</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>85</td>
+      <td>Iris-versicolor</td>
+      <td>4.5</td>
+      <td>1.5</td>
+      <td>5.4</td>
+      <td>3.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>86</td>
+      <td>Iris-versicolor</td>
+      <td>4.5</td>
+      <td>1.6</td>
+      <td>6.0</td>
+      <td>3.4</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>87</td>
+      <td>Iris-versicolor</td>
+      <td>4.7</td>
+      <td>1.5</td>
+      <td>6.7</td>
+      <td>3.1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>88</td>
+      <td>Iris-versicolor</td>
+      <td>4.4</td>
+      <td>1.3</td>
+      <td>6.3</td>
+      <td>2.3</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>89</td>
+      <td>Iris-versicolor</td>
+      <td>4.1</td>
+      <td>1.3</td>
+      <td>5.6</td>
+      <td>3.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>90</td>
+      <td>Iris-versicolor</td>
+      <td>4.0</td>
+      <td>1.3</td>
+      <td>5.5</td>
+      <td>2.5</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>91</td>
+      <td>Iris-versicolor</td>
+      <td>4.4</td>
+      <td>1.2</td>
+      <td>5.5</td>
+      <td>2.6</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>92</td>
+      <td>Iris-versicolor</td>
+      <td>4.6</td>
+      <td>1.4</td>
+      <td>6.1</td>
+      <td>3.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>93</td>
+      <td>Iris-versicolor</td>
+      <td>4.0</td>
+      <td>1.2</td>
+      <td>5.8</td>
+      <td>2.6</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>94</td>
+      <td>Iris-versicolor</td>
+      <td>3.3</td>
+      <td>1.0</td>
+      <td>5.0</td>
+      <td>2.3</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>95</td>
+      <td>Iris-versicolor</td>
+      <td>4.2</td>
+      <td>1.3</td>
+      <td>5.6</td>
+      <td>2.7</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>96</td>
+      <td>Iris-versicolor</td>
+      <td>4.2</td>
+      <td>1.2</td>
+      <td>5.7</td>
+      <td>3.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>97</td>
+      <td>Iris-versicolor</td>
+      <td>4.2</td>
+      <td>1.3</td>
+      <td>5.7</td>
+      <td>2.9</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>98</td>
+      <td>Iris-versicolor</td>
+      <td>4.3</td>
+      <td>1.3</td>
+      <td>6.2</td>
+      <td>2.9</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>99</td>
+      <td>Iris-versicolor</td>
+      <td>3.0</td>
+      <td>1.1</td>
+      <td>5.1</td>
+      <td>2.5</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>100</td>
+      <td>Iris-versicolor</td>
+      <td>4.1</td>
+      <td>1.3</td>
+      <td>5.7</td>
+      <td>2.8</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>101</td>
+      <td>Iris-virginica</td>
+      <td>6.0</td>
+      <td>2.5</td>
+      <td>6.3</td>
+      <td>3.3</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>102</td>
+      <td>Iris-virginica</td>
+      <td>5.1</td>
+      <td>1.9</td>
+      <td>5.8</td>
+      <td>2.7</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>103</td>
+      <td>Iris-virginica</td>
+      <td>5.9</td>
+      <td>2.1</td>
+      <td>7.1</td>
+      <td>3.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>104</td>
+      <td>Iris-virginica</td>
+      <td>5.6</td>
+      <td>1.8</td>
+      <td>6.3</td>
+      <td>2.9</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>105</td>
+      <td>Iris-virginica</td>
+      <td>5.8</td>
+      <td>2.2</td>
+      <td>6.5</td>
+      <td>3.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>106</td>
+      <td>Iris-virginica</td>
+      <td>6.6</td>
+      <td>2.1</td>
+      <td>7.6</td>
+      <td>3.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>107</td>
+      <td>Iris-virginica</td>
+      <td>4.5</td>
+      <td>1.7</td>
+      <td>4.9</td>
+      <td>2.5</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>108</td>
+      <td>Iris-virginica</td>
+      <td>6.3</td>
+      <td>1.8</td>
+      <td>7.3</td>
+      <td>2.9</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>109</td>
+      <td>Iris-virginica</td>
+      <td>5.8</td>
+      <td>1.8</td>
+      <td>6.7</td>
+      <td>2.5</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>110</td>
+      <td>Iris-virginica</td>
+      <td>6.1</td>
+      <td>2.5</td>
+      <td>7.2</td>
+      <td>3.6</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>111</td>
+      <td>Iris-virginica</td>
+      <td>5.1</td>
+      <td>2.0</td>
+      <td>6.5</td>
+      <td>3.2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>112</td>
+      <td>Iris-virginica</td>
+      <td>5.3</td>
+      <td>1.9</td>
+      <td>6.4</td>
+      <td>2.7</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>113</td>
+      <td>Iris-virginica</td>
+      <td>5.5</td>
+      <td>2.1</td>
+      <td>6.8</td>
+      <td>3.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>114</td>
+      <td>Iris-virginica</td>
+      <td>5.0</td>
+      <td>2.0</td>
+      <td>5.7</td>
+      <td>2.5</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>115</td>
+      <td>Iris-virginica</td>
+      <td>5.1</td>
+      <td>2.4</td>
+      <td>5.8</td>
+      <td>2.8</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>116</td>
+      <td>Iris-virginica</td>
+      <td>5.3</td>
+      <td>2.3</td>
+      <td>6.4</td>
+      <td>3.2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>117</td>
+      <td>Iris-virginica</td>
+      <td>5.5</td>
+      <td>1.8</td>
+      <td>6.5</td>
+      <td>3.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>118</td>
+      <td>Iris-virginica</td>
+      <td>6.7</td>
+      <td>2.2</td>
+      <td>7.7</td>
+      <td>3.8</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>119</td>
+      <td>Iris-virginica</td>
+      <td>6.9</td>
+      <td>2.3</td>
+      <td>7.7</td>
+      <td>2.6</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>120</td>
+      <td>Iris-virginica</td>
+      <td>5.0</td>
+      <td>1.5</td>
+      <td>6.0</td>
+      <td>2.2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>121</td>
+      <td>Iris-virginica</td>
+      <td>5.7</td>
+      <td>2.3</td>
+      <td>6.9</td>
+      <td>3.2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>122</td>
+      <td>Iris-virginica</td>
+      <td>4.9</td>
+      <td>2.0</td>
+      <td>5.6</td>
+      <td>2.8</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>123</td>
+      <td>Iris-virginica</td>
+      <td>6.7</td>
+      <td>2.0</td>
+      <td>7.7</td>
+      <td>2.8</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>124</td>
+      <td>Iris-virginica</td>
+      <td>4.9</td>
+      <td>1.8</td>
+      <td>6.3</td>
+      <td>2.7</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>125</td>
+      <td>Iris-virginica</td>
+      <td>5.7</td>
+      <td>2.1</td>
+      <td>6.7</td>
+      <td>3.3</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>126</td>
+      <td>Iris-virginica</td>
+      <td>6.0</td>
+      <td>1.8</td>
+      <td>7.2</td>
+      <td>3.2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>127</td>
+      <td>Iris-virginica</td>
+      <td>4.8</td>
+      <td>1.8</td>
+      <td>6.2</td>
+      <td>2.8</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>128</td>
+      <td>Iris-virginica</td>
+      <td>4.9</td>
+      <td>1.8</td>
+      <td>6.1</td>
+      <td>3.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>129</td>
+      <td>Iris-virginica</td>
+      <td>5.6</td>
+      <td>2.1</td>
+      <td>6.4</td>
+      <td>2.8</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>130</td>
+      <td>Iris-virginica</td>
+      <td>5.8</td>
+      <td>1.6</td>
+      <td>7.2</td>
+      <td>3.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>131</td>
+      <td>Iris-virginica</td>
+      <td>6.1</td>
+      <td>1.9</td>
+      <td>7.4</td>
+      <td>2.8</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>132</td>
+      <td>Iris-virginica</td>
+      <td>6.4</td>
+      <td>2.0</td>
+      <td>7.9</td>
+      <td>3.8</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>133</td>
+      <td>Iris-virginica</td>
+      <td>5.6</td>
+      <td>2.2</td>
+      <td>6.4</td>
+      <td>2.8</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>134</td>
+      <td>Iris-virginica</td>
+      <td>5.1</td>
+      <td>1.5</td>
+      <td>6.3</td>
+      <td>2.8</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>135</td>
+      <td>Iris-virginica</td>
+      <td>5.6</td>
+      <td>1.4</td>
+      <td>6.1</td>
+      <td>2.6</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>136</td>
+      <td>Iris-virginica</td>
+      <td>6.1</td>
+      <td>2.3</td>
+      <td>7.7</td>
+      <td>3.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>137</td>
+      <td>Iris-virginica</td>
+      <td>5.6</td>
+      <td>2.4</td>
+      <td>6.3</td>
+      <td>3.4</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>138</td>
+      <td>Iris-virginica</td>
+      <td>5.5</td>
+      <td>1.8</td>
+      <td>6.4</td>
+      <td>3.1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>139</td>
+      <td>Iris-virginica</td>
+      <td>4.8</td>
+      <td>1.8</td>
+      <td>6.0</td>
+      <td>3.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>140</td>
+      <td>Iris-virginica</td>
+      <td>5.4</td>
+      <td>2.1</td>
+      <td>6.9</td>
+      <td>3.1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>141</td>
+      <td>Iris-virginica</td>
+      <td>5.6</td>
+      <td>2.4</td>
+      <td>6.7</td>
+      <td>3.1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>142</td>
+      <td>Iris-virginica</td>
+      <td>5.1</td>
+      <td>2.3</td>
+      <td>6.9</td>
+      <td>3.1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>143</td>
+      <td>Iris-virginica</td>
+      <td>5.1</td>
+      <td>1.9</td>
+      <td>5.8</td>
+      <td>2.7</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>144</td>
+      <td>Iris-virginica</td>
+      <td>5.9</td>
+      <td>2.3</td>
+      <td>6.8</td>
+      <td>3.2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>145</td>
+      <td>Iris-virginica</td>
+      <td>5.7</td>
+      <td>2.5</td>
+      <td>6.7</td>
+      <td>3.3</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>146</td>
+      <td>Iris-virginica</td>
+      <td>5.2</td>
+      <td>2.3</td>
+      <td>6.7</td>
+      <td>3.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>147</td>
+      <td>Iris-virginica</td>
+      <td>5.0</td>
+      <td>1.9</td>
+      <td>6.3</td>
+      <td>2.5</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>148</td>
+      <td>Iris-virginica</td>
+      <td>5.2</td>
+      <td>2.0</td>
+      <td>6.5</td>
+      <td>3.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>149</td>
+      <td>Iris-virginica</td>
+      <td>5.4</td>
+      <td>2.3</td>
+      <td>6.2</td>
+      <td>3.4</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>150</td>
+      <td>Iris-virginica</td>
+      <td>5.1</td>
+      <td>1.8</td>
+      <td>5.9</td>
+      <td>3.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>151</td>
+      <td>?????</td>
+      <td>5.1</td>
+      <td>3.2</td>
+      <td>5.8</td>
+      <td>1.0</td>
+      <td>1</td>
+    </tr>
+  </tbody>
 </table></div></div>
 </div>
+</section>
 </section>
 </section>
 
@@ -2053,8 +3686,21 @@ Data Outlier:
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#apa-itu-lof">Apa itu LOF?</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tahapan-lof">Tahapan LOF</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contoh-menghitung-manual-lof">CONTOH MENGHITUNG MANUAL LOF</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contoh-implementasi-menggunakan-sklearn-menggunakan-data-iris">Contoh implementasi menggunakan sklearn menggunakan data iris</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contoh-menghitung-manual-lof">CONTOH MENGHITUNG MANUAL LOF</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-baru">1. <strong>Data Baru</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hitung-jarak-euclidean">2. <strong>Hitung Jarak Euclidean</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tentukan-k-tetangga-terdekat-k-2">3. <strong>Tentukan k-Tetangga Terdekat</strong> (k=2)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hitung-reachability-distance">4. <strong>Hitung Reachability Distance</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hitung-local-reachability-density-lrd">5. <strong>Hitung Local Reachability Density (LRD)</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hitung-lof">6. <strong>Hitung LOF</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretasi">7. <strong>Interpretasi</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contoh-implementasi-menggunakan-sklearn">Contoh Implementasi Menggunakan sklearn</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#contoh-implementasi-dengan-contoh-data-10-baris-2-fitur">Contoh implementasi dengan contoh data 10 baris 2 fitur</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#contoh-implementasi-dengan-data-iris">Contoh implementasi dengan data iris</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 
