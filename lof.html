@@ -385,7 +385,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#apa-itu-lof">Apa itu LOF?</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tahapan-lof">Tahapan LOF</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contoh-menghitung-manual-lof">CONTOH MENGHITUNG MANUAL LOF</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-baru">1. <strong>Data Baru</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dataset">1. <strong>Dataset</strong></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hitung-jarak-euclidean">2. <strong>Hitung Jarak Euclidean</strong></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tentukan-k-tetangga-terdekat-k-2">3. <strong>Tentukan k-Tetangga Terdekat</strong> (k=2)</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hitung-reachability-distance">4. <strong>Hitung Reachability Distance</strong></a></li>
@@ -426,14 +426,12 @@ document.write(`
 <li><p><strong>Menghitung Local Outlier Factor (LOF)</strong> – Setelah LRD setiap titik diketahui, nilai Local Outlier Factor (LOF) dihitung dengan membandingkan LRD suatu titik terhadap LRD dari tetangga-tetangganya. Nilai LOF diperoleh dengan menghitung rata-rata rasio LRD tetangga terhadap LRD titik tersebut. Jika LOF mendekati 1, artinya kepadatan titik tersebut sebanding dengan tetangganya dan tidak dianggap sebagai pencilan. Namun, jika LOF jauh lebih besar dari 1, titik tersebut memiliki kepadatan yang jauh lebih rendah dibandingkan dengan lingkungannya dan berpotensi menjadi anomali.</p></li>
 <li><p><strong>Menentukan Anomali Berdasarkan LOF</strong> – Tahap terakhir adalah menetapkan ambang batas LOF untuk mengidentifikasi titik-titik yang dianggap sebagai anomali. Biasanya, titik dengan nilai LOF lebih besar dari 1.5 atau 2 dikategorikan sebagai pencilan, tergantung pada sensitivitas yang diinginkan. Dengan demikian, metode LOF dapat secara efektif mendeteksi anomali dalam dataset yang memiliki kepadatan tidak seragam, seperti klaster dengan ukuran berbeda atau data dengan distribusi yang kompleks.</p></li>
 </ol>
-<p>Berikut adalah versi baru dengan dataset yang memiliki 10 baris data:</p>
 </section>
-<hr class="docutils" />
 <section id="contoh-menghitung-manual-lof">
 <h2>CONTOH MENGHITUNG MANUAL LOF<a class="headerlink" href="#contoh-menghitung-manual-lof" title="Link to this heading">#</a></h2>
 <p>Berikut adalah cara menghitung <strong>Local Outlier Factor (LOF)</strong> untuk satu titik data dengan dua fitur:</p>
-<section id="data-baru">
-<h3>1. <strong>Data Baru</strong><a class="headerlink" href="#data-baru" title="Link to this heading">#</a></h3>
+<section id="dataset">
+<h3>1. <strong>Dataset</strong><a class="headerlink" href="#dataset" title="Link to this heading">#</a></h3>
 <p>Misalkan kita memiliki dataset berikut:</p>
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
@@ -535,7 +533,16 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: pymysql in /usr/local/lib/python3.11/dist-packages (1.1.1)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Collecting pymysql
+  Downloading PyMySQL-1.1.1-py3-none-any.whl.metadata (4.4 kB)
+Downloading PyMySQL-1.1.1-py3-none-any.whl (44 kB)
+?25l   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">0.0/45.0 kB</span> <span class=" -Color -Color-Red">?</span> eta <span class=" -Color -Color-Cyan">-:--:--</span>
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">45.0/45.0 kB</span> <span class=" -Color -Color-Red">1.8 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
+?25h
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Installing collected packages: pymysql
+Successfully installed pymysql-1.1.1
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: psycopg2 in /usr/local/lib/python3.11/dist-packages (2.9.10)
@@ -3719,7 +3726,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#apa-itu-lof">Apa itu LOF?</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tahapan-lof">Tahapan LOF</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contoh-menghitung-manual-lof">CONTOH MENGHITUNG MANUAL LOF</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-baru">1. <strong>Data Baru</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dataset">1. <strong>Dataset</strong></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hitung-jarak-euclidean">2. <strong>Hitung Jarak Euclidean</strong></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tentukan-k-tetangga-terdekat-k-2">3. <strong>Tentukan k-Tetangga Terdekat</strong> (k=2)</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hitung-reachability-distance">4. <strong>Hitung Reachability Distance</strong></a></li>
