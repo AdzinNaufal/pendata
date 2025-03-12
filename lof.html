@@ -588,13 +588,10 @@ document.write(`
 <span class="n">num_outliers</span> <span class="o">=</span> <span class="p">(</span><span class="n">lof_labels</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
 <span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Jumlah Outlier: </span><span class="si">{</span><span class="n">num_outliers</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">))</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="c1"># Menampilkan data outlier</span>
 <span class="n">outlier</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;LOF Label&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 <span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="s2">&quot;Data Outlier:&quot;</span><span class="p">))</span>
 <span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="n">outlier</span><span class="o">.</span><span class="n">to_html</span><span class="p">()))</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 
 <span class="c1">#menampilkan data non-outlier</span>
 <span class="n">non_outliers</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;LOF Label&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
@@ -678,10 +675,7 @@ document.write(`
 </table></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
 </pre></div>
 </div>
-<div class="output text_html">Jumlah Outlier: 1</div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
-<div class="output text_html">Data Outlier:</div><div class="output text_html"><table border="1" class="dataframe">
+<div class="output text_html">Jumlah Outlier: 1</div><div class="output text_html">Data Outlier:</div><div class="output text_html"><table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -698,10 +692,7 @@ document.write(`
       <td>-1</td>
     </tr>
   </tbody>
-</table></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
-<div class="output text_html">Data Non-Outlier:</div><div class="output text_html"><table border="1" class="dataframe">
+</table></div><div class="output text_html">Data Non-Outlier:</div><div class="output text_html"><table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -834,17 +825,12 @@ document.write(`
 <span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="n">df_merged</span><span class="o">.</span><span class="n">to_html</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)))</span>
 
 <span class="n">num_outliers</span> <span class="o">=</span> <span class="p">(</span><span class="n">label</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Jumlah Outlier: </span><span class="si">{</span><span class="n">num_outliers</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">))</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 
 <span class="c1"># Tampilkan data yang merupakan outlier</span>
 <span class="n">outliers</span> <span class="o">=</span> <span class="n">df_merged</span><span class="p">[</span><span class="n">df_merged</span><span class="p">[</span><span class="s2">&quot;outlier_label&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 <span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="s2">&quot;Data Outlier:&quot;</span><span class="p">))</span>
 <span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="n">outliers</span><span class="o">.</span><span class="n">to_html</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)))</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 
 <span class="c1"># Tampilkan data yang bukan outlier</span>
 <span class="n">non_outliers</span> <span class="o">=</span> <span class="n">df_merged</span><span class="p">[</span><span class="n">df_merged</span><span class="p">[</span><span class="s2">&quot;outlier_label&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
@@ -2227,13 +2213,7 @@ document.write(`
       <td>1</td>
     </tr>
   </tbody>
-</table></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
-<div class="output text_html">Jumlah Outlier: 1</div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
-<div class="output text_html">Data Outlier:</div><div class="output text_html"><table border="1" class="dataframe">
+</table></div><div class="output text_html">Jumlah Outlier: 1</div><div class="output text_html">Data Outlier:</div><div class="output text_html"><table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
       <th>id</th>
@@ -2256,10 +2236,7 @@ document.write(`
       <td>-1</td>
     </tr>
   </tbody>
-</table></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
-<div class="output text_html">Data Non-Outlier:</div><div class="output text_html"><table border="1" class="dataframe">
+</table></div><div class="output text_html">Data Non-Outlier:</div><div class="output text_html"><table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
       <th>id</th>
