@@ -488,10 +488,28 @@ document.write(`
 </section>
 <section id="hitung-jarak-euclidean">
 <h3>2. <strong>Hitung Jarak Euclidean</strong><a class="headerlink" href="#hitung-jarak-euclidean" title="Link to this heading">#</a></h3>
-<p>Jarak antara titik 10 dan titik lainnya (hanya ditampilkan beberapa yang terdekat):</p>
+<p>Jarak Euclidean antara dua titik <strong>(x1, y1)</strong> dan <strong>(x2, y2)</strong> dihitung dengan rumus:</p>
+<p><span class="math notranslate nohighlight">\(
+D = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}
+\)</span></p>
+<p>Menghitung jarak antara titik 10 dan titik lainnya:</p>
 <ul class="simple">
-<li><p>Titik 10 ke Titik 9: <strong>15.56</strong></p></li>
-<li><p>Titik 10 ke Titik 8: <strong>17.99</strong></p></li>
+<li><p>Titik 10 ke Titik 9:
+<span class="math notranslate nohighlight">\(
+D = \sqrt{(20.0 - 9.0)^2 + (22.0 - 10.0)^2}
+  = \sqrt{11^2 + 12^2}
+  = \sqrt{121 + 144}
+  = \sqrt{265}
+  \approx 16.28
+\)</span></p></li>
+<li><p>Titik 10 ke Titik 8:
+<span class="math notranslate nohighlight">\(
+D = \sqrt{(20.0 - 8.5)^2 + (22.0 - 9.0)^2}
+  = \sqrt{11.5^2 + 13^2}
+  = \sqrt{132.25 + 169}
+  = \sqrt{301.25}
+  \approx 17.36
+\)</span></p></li>
 </ul>
 </section>
 <section id="tentukan-k-tetangga-terdekat-k-2">
@@ -501,14 +519,19 @@ document.write(`
 <section id="hitung-reachability-distance">
 <h3>4. <strong>Hitung Reachability Distance</strong><a class="headerlink" href="#hitung-reachability-distance" title="Link to this heading">#</a></h3>
 <ul class="simple">
-<li><p>Titik 10 ke Titik 9: <strong>15.56</strong></p></li>
-<li><p>Titik 10 ke Titik 8: <strong>17.99</strong></p></li>
+<li><p>Titik 10 ke Titik 9: <strong>16.28</strong></p></li>
+<li><p>Titik 10 ke Titik 8: <strong>17.36</strong></p></li>
 </ul>
 </section>
 <section id="hitung-local-reachability-density-lrd">
 <h3>5. <strong>Hitung Local Reachability Density (LRD)</strong><a class="headerlink" href="#hitung-local-reachability-density-lrd" title="Link to this heading">#</a></h3>
 <p><span class="math notranslate nohighlight">\(
-\text{LRD}(10) = \frac{1}{\frac{1}{2} \times (15.56 + 17.99)} = 0.06
+\text{LRD}(10) = \frac{1}{\frac{1}{2} \times (16.28 + 17.36)}
+\)</span></p>
+<p><span class="math notranslate nohighlight">\(
+= \frac{1}{\frac{1}{2} \times 33.64}
+= \frac{1}{16.82}
+\approx 0.06
 \)</span></p>
 </section>
 <section id="hitung-lof">
@@ -537,7 +560,7 @@ document.write(`
   Downloading PyMySQL-1.1.1-py3-none-any.whl.metadata (4.4 kB)
 Downloading PyMySQL-1.1.1-py3-none-any.whl (44 kB)
 ?25l   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">0.0/45.0 kB</span> <span class=" -Color -Color-Red">?</span> eta <span class=" -Color -Color-Cyan">-:--:--</span>
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">45.0/45.0 kB</span> <span class=" -Color -Color-Red">1.8 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">45.0/45.0 kB</span> <span class=" -Color -Color-Red">1.7 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
 ?25h
 </pre></div>
 </div>
