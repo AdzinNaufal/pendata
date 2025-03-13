@@ -516,9 +516,23 @@ D = \sqrt{(20.0 - 8.5)^2 + (22.0 - 9.0)^2}
 </section>
 <section id="hitung-reachability-distance">
 <h3>4. <strong>Hitung Reachability Distance</strong><a class="headerlink" href="#hitung-reachability-distance" title="Link to this heading">#</a></h3>
+<p>Reachability distance dihitung dengan rumus:</p>
+<p><span class="math notranslate nohighlight">\(
+\text{reach-dist}(p, o) = \max(\text{k-distance}(o), \text{distance}(p, o))
+\)</span></p>
+<p>Dengan asumsi bahwa <strong>k-distance</strong> untuk titik 9 dan titik 8 adalah jarak dari mereka ke tetangga terdekat kedua mereka:</p>
 <ul class="simple">
-<li><p>Titik 10 ke Titik 9: <strong>16.28</strong></p></li>
-<li><p>Titik 10 ke Titik 8: <strong>17.36</strong></p></li>
+<li><p>Misalkan <strong>k-distance(9) = 1.5</strong></p></li>
+<li><p>Misalkan <strong>k-distance(8) = 2.0</strong></p></li>
+</ul>
+<p>Maka:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(
+\text{reach-dist}(10,9) = \max(1.5, 16.28) = 16.28
+\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(
+\text{reach-dist}(10,8) = \max(2.0, 17.36) = 17.36
+\)</span></p></li>
 </ul>
 </section>
 <section id="hitung-local-reachability-density-lrd">
