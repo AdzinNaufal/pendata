@@ -394,16 +394,6 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretasi">7. <strong>Interpretasi</strong></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">CONTOH MENGHITUNG MANUAL LOF</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">1. <strong>Dataset</strong></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">2. <strong>Hitung Jarak Euclidean</strong></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">3. <strong>Tentukan k-Tetangga Terdekat</strong> (k=2)</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">4. <strong>Hitung Reachability Distance</strong></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">5. <strong>Hitung Local Reachability Density (LRD)</strong></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">6. <strong>Hitung LOF</strong></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">7. <strong>Interpretasi</strong></a></li>
-</ul>
-</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contoh-implementasi-menggunakan-sklearn">Contoh Implementasi Menggunakan sklearn</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#contoh-implementasi-dengan-contoh-data-10-baris-2-fitur">Contoh implementasi dengan contoh data 10 baris 2 fitur</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#contoh-implementasi-dengan-data-iris">Contoh implementasi dengan data iris</a></li>
@@ -498,116 +488,6 @@ document.write(`
 </section>
 <section id="hitung-jarak-euclidean">
 <h3>2. <strong>Hitung Jarak Euclidean</strong><a class="headerlink" href="#hitung-jarak-euclidean" title="Link to this heading">#</a></h3>
-</section>
-<section id="tentukan-k-tetangga-terdekat-k-2">
-<h3>3. <strong>Tentukan k-Tetangga Terdekat</strong> (k=2)<a class="headerlink" href="#tentukan-k-tetangga-terdekat-k-2" title="Link to this heading">#</a></h3>
-<p>Dua tetangga terdekat untuk titik 10 adalah <strong>titik 9 dan titik 8</strong>.</p>
-</section>
-<section id="hitung-reachability-distance">
-<h3>4. <strong>Hitung Reachability Distance</strong><a class="headerlink" href="#hitung-reachability-distance" title="Link to this heading">#</a></h3>
-<p>Reachability distance dihitung dengan rumus:</p>
-<p>[
-\text{reach-dist}(p, o) = \max(\text{k-distance}(o), \text{distance}(p, o))
-]</p>
-<p>Dengan asumsi bahwa <strong>k-distance</strong> untuk titik 9 dan titik 8 adalah jarak dari mereka ke tetangga terdekat kedua mereka:</p>
-<ul class="simple">
-<li><p>Misalkan <strong>k-distance(9) = 1.5</strong></p></li>
-<li><p>Misalkan <strong>k-distance(8) = 2.0</strong></p></li>
-</ul>
-<p>Maka:</p>
-<ul class="simple">
-<li><p>[
-\text{reach-dist}(10,9) = \max(1.5, 16.28) = 16.28
-]</p></li>
-<li><p>[
-\text{reach-dist}(10,8) = \max(2.0, 17.36) = 17.36
-]</p></li>
-</ul>
-</section>
-<section id="hitung-local-reachability-density-lrd">
-<h3>5. <strong>Hitung Local Reachability Density (LRD)</strong><a class="headerlink" href="#hitung-local-reachability-density-lrd" title="Link to this heading">#</a></h3>
-<p>[
-\text{LRD}(10) = \frac{1}{\frac{1}{2} \times (16.28 + 17.36)}
-]</p>
-<p>[
-= \frac{1}{\frac{1}{2} \times 33.64}
-= \frac{1}{16.82}
-\approx 0.06
-]</p>
-</section>
-<section id="hitung-lof">
-<h3>6. <strong>Hitung LOF</strong><a class="headerlink" href="#hitung-lof" title="Link to this heading">#</a></h3>
-<p>[
-\text{LOF}(10) = \frac{0.06}{0.35} + \frac{0.06}{0.35} = 5.71
-]</p>
-</section>
-<section id="interpretasi">
-<h3>7. <strong>Interpretasi</strong><a class="headerlink" href="#interpretasi" title="Link to this heading">#</a></h3>
-<p>Karena <strong>LOF = 5.71</strong> (jauh lebih besar dari 1), titik 10 dianggap <strong>outlier</strong>.</p>
-<p>LOF menunjukkan bahwa titik ini sangat berbeda dibandingkan dengan tetangganya.</p>
-</section>
-</section>
-<section id="id1">
-<h2>CONTOH MENGHITUNG MANUAL LOF<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
-<p>Berikut adalah cara menghitung <strong>Local Outlier Factor (LOF)</strong> untuk satu titik data dengan dua fitur:</p>
-<section id="id2">
-<h3>1. <strong>Dataset</strong><a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
-<p>Misalkan kita memiliki dataset berikut:</p>
-<div class="pst-scrollable-table-container"><table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p>ID</p></th>
-<th class="head"><p>Feature1</p></th>
-<th class="head"><p>Feature2</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>1</p></td>
-<td><p>1.0</p></td>
-<td><p>2.0</p></td>
-</tr>
-<tr class="row-odd"><td><p>2</p></td>
-<td><p>2.5</p></td>
-<td><p>3.5</p></td>
-</tr>
-<tr class="row-even"><td><p>3</p></td>
-<td><p>3.0</p></td>
-<td><p>4.0</p></td>
-</tr>
-<tr class="row-odd"><td><p>4</p></td>
-<td><p>4.5</p></td>
-<td><p>5.0</p></td>
-</tr>
-<tr class="row-even"><td><p>5</p></td>
-<td><p>5.0</p></td>
-<td><p>6.0</p></td>
-</tr>
-<tr class="row-odd"><td><p>6</p></td>
-<td><p>6.5</p></td>
-<td><p>7.5</p></td>
-</tr>
-<tr class="row-even"><td><p>7</p></td>
-<td><p>7.0</p></td>
-<td><p>8.0</p></td>
-</tr>
-<tr class="row-odd"><td><p>8</p></td>
-<td><p>8.5</p></td>
-<td><p>9.0</p></td>
-</tr>
-<tr class="row-even"><td><p>9</p></td>
-<td><p>9.0</p></td>
-<td><p>10.0</p></td>
-</tr>
-<tr class="row-odd"><td><p>10</p></td>
-<td><p>20.0</p></td>
-<td><p>22.0</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>Kita akan menghitung LOF untuk <strong>titik 10</strong> (20.0, 22.0).</p>
-</section>
-<section id="id3">
-<h3>2. <strong>Hitung Jarak Euclidean</strong><a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
 <p>Jarak Euclidean antara dua titik <strong>(x1, y1)</strong> dan <strong>(x2, y2)</strong> dihitung dengan rumus:</p>
 <p><span class="math notranslate nohighlight">\(
 D = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}
@@ -679,12 +559,12 @@ D = \sqrt{(20.0 - 9.0)^2 + (22.0 - 10.0)^2}
 \)</span></p></li>
 </ul>
 </section>
-<section id="id4">
-<h3>3. <strong>Tentukan k-Tetangga Terdekat</strong> (k=2)<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
+<section id="tentukan-k-tetangga-terdekat-k-2">
+<h3>3. <strong>Tentukan k-Tetangga Terdekat</strong> (k=2)<a class="headerlink" href="#tentukan-k-tetangga-terdekat-k-2" title="Link to this heading">#</a></h3>
 <p>Dua tetangga terdekat untuk titik 10 adalah <strong>titik 9 dan titik 8</strong>.</p>
 </section>
-<section id="id5">
-<h3>4. <strong>Hitung Reachability Distance</strong><a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
+<section id="hitung-reachability-distance">
+<h3>4. <strong>Hitung Reachability Distance</strong><a class="headerlink" href="#hitung-reachability-distance" title="Link to this heading">#</a></h3>
 <p>Reachability distance dihitung dengan rumus:</p>
 <p><span class="math notranslate nohighlight">\(
 \text{reach-dist}(p, o) = \max(\text{k-distance}(o), \text{distance}(p, o))
@@ -704,8 +584,8 @@ D = \sqrt{(20.0 - 9.0)^2 + (22.0 - 10.0)^2}
 \)</span></p></li>
 </ul>
 </section>
-<section id="id6">
-<h3>5. <strong>Hitung Local Reachability Density (LRD)</strong><a class="headerlink" href="#id6" title="Link to this heading">#</a></h3>
+<section id="hitung-local-reachability-density-lrd">
+<h3>5. <strong>Hitung Local Reachability Density (LRD)</strong><a class="headerlink" href="#hitung-local-reachability-density-lrd" title="Link to this heading">#</a></h3>
 <p><span class="math notranslate nohighlight">\(
 \text{LRD}(10) = \frac{1}{\frac{1}{2} \times (16.28 + 17.36)}
 \)</span></p>
@@ -715,14 +595,14 @@ D = \sqrt{(20.0 - 9.0)^2 + (22.0 - 10.0)^2}
 \approx 0.06
 \)</span></p>
 </section>
-<section id="id7">
-<h3>6. <strong>Hitung LOF</strong><a class="headerlink" href="#id7" title="Link to this heading">#</a></h3>
+<section id="hitung-lof">
+<h3>6. <strong>Hitung LOF</strong><a class="headerlink" href="#hitung-lof" title="Link to this heading">#</a></h3>
 <p><span class="math notranslate nohighlight">\(
 \text{LOF}(10) = \frac{0.06}{0.35} + \frac{0.06}{0.35} = 5.71
 \)</span></p>
 </section>
-<section id="id8">
-<h3>7. <strong>Interpretasi</strong><a class="headerlink" href="#id8" title="Link to this heading">#</a></h3>
+<section id="interpretasi">
+<h3>7. <strong>Interpretasi</strong><a class="headerlink" href="#interpretasi" title="Link to this heading">#</a></h3>
 <p>Karena <strong>LOF = 5.71</strong> (jauh lebih besar dari 1), titik 10 dianggap <strong>outlier</strong>.</p>
 <p>LOF menunjukkan bahwa titik ini sangat berbeda dibandingkan dengan tetangganya.</p>
 </section>
@@ -737,16 +617,7 @@ D = \sqrt{(20.0 - 9.0)^2 + (22.0 - 10.0)^2}
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Collecting pymysql
-  Downloading PyMySQL-1.1.1-py3-none-any.whl.metadata (4.4 kB)
-Downloading PyMySQL-1.1.1-py3-none-any.whl (44 kB)
-?25l   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">0.0/45.0 kB</span> <span class=" -Color -Color-Red">?</span> eta <span class=" -Color -Color-Cyan">-:--:--</span>
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">45.0/45.0 kB</span> <span class=" -Color -Color-Red">2.4 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
-?25h
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Installing collected packages: pymysql
-Successfully installed pymysql-1.1.1
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: pymysql in /usr/local/lib/python3.11/dist-packages (1.1.1)
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: psycopg2 in /usr/local/lib/python3.11/dist-packages (2.9.10)
@@ -3937,16 +3808,6 @@ Successfully installed pymysql-1.1.1
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hitung-local-reachability-density-lrd">5. <strong>Hitung Local Reachability Density (LRD)</strong></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hitung-lof">6. <strong>Hitung LOF</strong></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretasi">7. <strong>Interpretasi</strong></a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">CONTOH MENGHITUNG MANUAL LOF</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">1. <strong>Dataset</strong></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">2. <strong>Hitung Jarak Euclidean</strong></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">3. <strong>Tentukan k-Tetangga Terdekat</strong> (k=2)</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">4. <strong>Hitung Reachability Distance</strong></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">5. <strong>Hitung Local Reachability Density (LRD)</strong></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">6. <strong>Hitung LOF</strong></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">7. <strong>Interpretasi</strong></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contoh-implementasi-menggunakan-sklearn">Contoh Implementasi Menggunakan sklearn</a><ul class="nav section-nav flex-column">
