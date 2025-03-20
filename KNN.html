@@ -385,6 +385,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-langkah-deteksi-outlier-dengan-knn">2. Langkah-Langkah Deteksi Outlier dengan KNN</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#memisahkan-outlier-dari-data"><strong>Memisahkan outlier dari data</strong></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#menghitung-akurasi-dari-data"><strong>Menghitung Akurasi dari data</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisasi-data">Visualisasi Data</a></li>
 </ul>
             </nav>
         </div>
@@ -439,7 +440,7 @@ Beberapa metode untuk menilai apakah suatu titik merupakan outlier meliputi:</p>
   Downloading PyMySQL-1.1.1-py3-none-any.whl.metadata (4.4 kB)
 Downloading PyMySQL-1.1.1-py3-none-any.whl (44 kB)
 ?25l   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">0.0/45.0 kB</span> <span class=" -Color -Color-Red">?</span> eta <span class=" -Color -Color-Cyan">-:--:--</span>
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">45.0/45.0 kB</span> <span class=" -Color -Color-Red">2.1 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">45.0/45.0 kB</span> <span class=" -Color -Color-Red">2.9 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
 ?25h
 </pre></div>
 </div>
@@ -544,7 +545,7 @@ Successfully installed pymysql-1.1.1
 <span class="n">df_filtered</span> <span class="o">=</span> <span class="n">df_merged</span><span class="p">[</span><span class="n">df_merged</span><span class="p">[</span><span class="s2">&quot;outlier_knn&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="kc">True</span><span class="p">]</span>
 
 <span class="c1"># Cetak hasil setelah outlier dihapus</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">df_filtered</span><span class="o">.</span><span class="n">to_string</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+<span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="n">df_filtered</span><span class="o">.</span><span class="n">to_html</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)))</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
 <span class="n">num_outliers</span> <span class="o">=</span> <span class="n">df_merged</span><span class="p">[</span><span class="s2">&quot;outlier_knn&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
@@ -553,495 +554,1372 @@ Successfully installed pymysql-1.1.1
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> id           class  petal_length  petal_width  sepal_length  sepal_width  knn_distance  outlier_knn
-  1     Iris-setosa           1.4          0.2           5.1          3.5      0.141421        False
-  3     Iris-setosa           1.3          0.2           4.7          3.2      0.264575        False
-  5     Iris-setosa           1.4          0.2           5.0          3.6      0.223607        False
-  6     Iris-setosa           1.7          0.4           5.4          3.9      0.374166        False
-  7     Iris-setosa           1.4          0.3           4.6          3.4      0.316228        False
-  8     Iris-setosa           1.5          0.2           5.0          3.4      0.200000        False
-  9     Iris-setosa           1.4          0.2           4.4          2.9      0.360555        False
- 10     Iris-setosa           1.5          0.1           4.9          3.1      0.173205        False
- 11     Iris-setosa           1.5          0.2           5.4          3.7      0.331662        False
- 13     Iris-setosa           1.4          0.1           4.8          3.0      0.200000        False
- 14     Iris-setosa           1.1          0.1           4.3          3.0      0.479583        False
- 15     Iris-setosa           1.2          0.2           5.8          4.0      0.556776        False
- 16     Iris-setosa           1.5          0.4           5.7          4.4      0.616441        False
- 17     Iris-setosa           1.3          0.4           5.4          3.9      0.387298        False
- 18     Iris-setosa           1.4          0.3           5.1          3.5      0.173205        False
- 19     Iris-setosa           1.7          0.3           5.7          3.8      0.519615        False
- 20     Iris-setosa           1.5          0.3           5.1          3.8      0.316228        False
- 23     Iris-setosa           1.0          0.2           4.6          3.6      0.538516        False
- 24     Iris-setosa           1.7          0.5           5.1          3.3      0.387298        False
- 25     Iris-setosa           1.9          0.2           4.8          3.4      0.447214        False
- 26     Iris-setosa           1.6          0.2           5.0          3.0      0.223607        False
- 27     Iris-setosa           1.6          0.4           5.0          3.4      0.244949        False
- 28     Iris-setosa           1.5          0.2           5.2          3.5      0.173205        False
- 29     Iris-setosa           1.4          0.2           5.2          3.4      0.173205        False
- 30     Iris-setosa           1.6          0.2           4.7          3.2      0.264575        False
- 31     Iris-setosa           1.6          0.2           4.8          3.1      0.173205        False
- 32     Iris-setosa           1.5          0.4           5.4          3.4      0.346410        False
- 33     Iris-setosa           1.5          0.1           5.2          4.1      0.424264        False
- 34     Iris-setosa           1.4          0.2           5.5          4.2      0.412311        False
- 35     Iris-setosa           1.5          0.1           4.9          3.1      0.173205        False
- 36     Iris-setosa           1.2          0.2           5.0          3.2      0.346410        False
- 37     Iris-setosa           1.3          0.2           5.5          3.5      0.346410        False
- 38     Iris-setosa           1.5          0.1           4.9          3.1      0.173205        False
- 39     Iris-setosa           1.3          0.2           4.4          3.0      0.300000        False
- 40     Iris-setosa           1.5          0.2           5.1          3.4      0.141421        False
- 41     Iris-setosa           1.3          0.3           5.0          3.5      0.244949        False
- 42     Iris-setosa           1.3          0.3           4.5          2.3      0.781025        False
- 43     Iris-setosa           1.3          0.2           4.4          3.2      0.316228        False
- 44     Iris-setosa           1.6          0.6           5.0          3.5      0.424264        False
- 45     Iris-setosa           1.9          0.4           5.1          3.8      0.479583        False
- 46     Iris-setosa           1.4          0.3           4.8          3.0      0.264575        False
- 47     Iris-setosa           1.6          0.2           5.1          3.8      0.331662        False
- 48     Iris-setosa           1.4          0.2           4.6          3.2      0.223607        False
- 49     Iris-setosa           1.5          0.2           5.3          3.7      0.244949        False
- 50     Iris-setosa           1.4          0.2           5.0          3.3      0.223607        False
- 51 Iris-versicolor           4.7          1.4           7.0          3.2      0.458258        False
- 52 Iris-versicolor           4.5          1.5           6.4          3.2      0.374166        False
- 53 Iris-versicolor           4.9          1.5           6.9          3.1      0.547723        False
- 54 Iris-versicolor           4.0          1.3           5.5          2.3      0.435890        False
- 55 Iris-versicolor           4.6          1.5           6.5          2.8      0.387298        False
- 56 Iris-versicolor           4.5          1.3           5.7          2.8      0.374166        False
- 57 Iris-versicolor           4.7          1.6           6.3          3.3      0.458258        False
- 58 Iris-versicolor           3.3          1.0           4.9          2.4      0.836660        False
- 60 Iris-versicolor           3.9          1.4           5.2          2.7      0.529150        False
- 62 Iris-versicolor           4.2          1.5           5.9          3.0      0.360555        False
- 63 Iris-versicolor           4.0          1.0           6.0          2.2      0.583095        False
- 64 Iris-versicolor           4.7          1.4           6.1          2.9      0.424264        False
- 65 Iris-versicolor           3.6          1.3           5.6          2.9      0.519615        False
- 66 Iris-versicolor           4.4          1.4           6.7          3.1      0.387298        False
- 68 Iris-versicolor           4.1          1.0           5.8          2.7      0.360555        False
- 69 Iris-versicolor           4.5          1.5           6.2          2.2      0.678233        False
- 70 Iris-versicolor           3.9          1.1           5.6          2.5      0.264575        False
- 71 Iris-versicolor           4.8          1.8           5.9          3.2      0.424264        False
- 72 Iris-versicolor           4.0          1.3           6.1          2.8      0.400000        False
- 73 Iris-versicolor           4.9          1.5           6.3          2.5      0.424264        False
- 74 Iris-versicolor           4.7          1.2           6.1          2.8      0.435890        False
- 75 Iris-versicolor           4.3          1.3           6.4          2.9      0.387298        False
- 76 Iris-versicolor           4.4          1.4           6.6          3.0      0.316228        False
- 77 Iris-versicolor           4.8          1.4           6.8          2.8      0.458258        False
- 79 Iris-versicolor           4.5          1.5           6.0          2.9      0.346410        False
- 80 Iris-versicolor           3.5          1.0           5.7          2.6      0.447214        False
- 81 Iris-versicolor           3.8          1.1           5.5          2.4      0.300000        False
- 82 Iris-versicolor           3.7          1.0           5.5          2.4      0.435890        False
- 83 Iris-versicolor           3.9          1.2           5.8          2.7      0.300000        False
- 84 Iris-versicolor           5.1          1.6           6.0          2.7      0.374166        False
- 85 Iris-versicolor           4.5          1.5           5.4          3.0      0.509902        False
- 86 Iris-versicolor           4.5          1.6           6.0          3.4      0.469042        False
- 87 Iris-versicolor           4.7          1.5           6.7          3.1      0.346410        False
- 88 Iris-versicolor           4.4          1.3           6.3          2.3      0.608276        False
- 89 Iris-versicolor           4.1          1.3           5.6          3.0      0.316228        False
- 90 Iris-versicolor           4.0          1.3           5.5          2.5      0.300000        False
- 91 Iris-versicolor           4.4          1.2           5.5          2.6      0.424264        False
- 92 Iris-versicolor           4.6          1.4           6.1          3.0      0.346410        False
- 93 Iris-versicolor           4.0          1.2           5.8          2.6      0.264575        False
- 95 Iris-versicolor           4.2          1.3           5.6          2.7      0.300000        False
- 96 Iris-versicolor           4.2          1.2           5.7          3.0      0.331662        False
- 97 Iris-versicolor           4.2          1.3           5.7          2.9      0.223607        False
- 98 Iris-versicolor           4.3          1.3           6.2          2.9      0.346410        False
- 99 Iris-versicolor           3.0          1.1           5.1          2.5      0.900000        False
-100 Iris-versicolor           4.1          1.3           5.7          2.8      0.244949        False
-101  Iris-virginica           6.0          2.5           6.3          3.3      0.556776        False
-102  Iris-virginica           5.1          1.9           5.8          2.7      0.331662        False
-103  Iris-virginica           5.9          2.1           7.1          3.0      0.458258        False
-104  Iris-virginica           5.6          1.8           6.3          2.9      0.387298        False
-105  Iris-virginica           5.8          2.2           6.5          3.0      0.387298        False
-107  Iris-virginica           4.5          1.7           4.9          2.5      0.877496        False
-108  Iris-virginica           6.3          1.8           7.3          2.9      0.556776        False
-109  Iris-virginica           5.8          1.8           6.7          2.5      0.616441        False
-111  Iris-virginica           5.1          2.0           6.5          3.2      0.469042        False
-112  Iris-virginica           5.3          1.9           6.4          2.7      0.387298        False
-113  Iris-virginica           5.5          2.1           6.8          3.0      0.374166        False
-114  Iris-virginica           5.0          2.0           5.7          2.5      0.519615        False
-115  Iris-virginica           5.1          2.4           5.8          2.8      0.519615        False
-116  Iris-virginica           5.3          2.3           6.4          3.2      0.387298        False
-117  Iris-virginica           5.5          1.8           6.5          3.0      0.387298        False
-119  Iris-virginica           6.9          2.3           7.7          2.6      0.964365        False
-120  Iris-virginica           5.0          1.5           6.0          2.2      0.583095        False
-121  Iris-virginica           5.7          2.3           6.9          3.2      0.300000        False
-122  Iris-virginica           4.9          2.0           5.6          2.8      0.458258        False
-123  Iris-virginica           6.7          2.0           7.7          2.8      0.700000        False
-124  Iris-virginica           4.9          1.8           6.3          2.7      0.374166        False
-125  Iris-virginica           5.7          2.1           6.7          3.3      0.374166        False
-126  Iris-virginica           6.0          1.8           7.2          3.2      0.469042        False
-128  Iris-virginica           4.9          1.8           6.1          3.0      0.360555        False
-129  Iris-virginica           5.6          2.1           6.4          2.8      0.374166        False
-130  Iris-virginica           5.8          1.6           7.2          3.0      0.556776        False
-131  Iris-virginica           6.1          1.9           7.4          2.8      0.509902        False
-133  Iris-virginica           5.6          2.2           6.4          2.8      0.435890        False
-134  Iris-virginica           5.1          1.5           6.3          2.8      0.458258        False
-135  Iris-virginica           5.6          1.4           6.1          2.6      0.663325        False
-136  Iris-virginica           6.1          2.3           7.7          3.0      0.700000        False
-137  Iris-virginica           5.6          2.4           6.3          3.4      0.435890        False
-138  Iris-virginica           5.5          1.8           6.4          3.1      0.435890        False
-139  Iris-virginica           4.8          1.8           6.0          3.0      0.435890        False
-140  Iris-virginica           5.4          2.1           6.9          3.1      0.374166        False
-141  Iris-virginica           5.6          2.4           6.7          3.1      0.346410        False
-142  Iris-virginica           5.1          2.3           6.9          3.1      0.509902        False
-143  Iris-virginica           5.1          1.9           5.8          2.7      0.331662        False
-144  Iris-virginica           5.9          2.3           6.8          3.2      0.346410        False
-145  Iris-virginica           5.7          2.5           6.7          3.3      0.400000        False
-146  Iris-virginica           5.2          2.3           6.7          3.0      0.374166        False
-147  Iris-virginica           5.0          1.9           6.3          2.5      0.479583        False
-148  Iris-virginica           5.2          2.0           6.5          3.0      0.360555        False
-149  Iris-virginica           5.4          2.3           6.2          3.4      0.616441        False
-150  Iris-virginica           5.1          1.8           5.9          3.0      0.331662        False
-
-
-Jumlah Outlier: 15
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-<section id="memisahkan-outlier-dari-data">
-<h2><strong>Memisahkan outlier dari data</strong><a class="headerlink" href="#memisahkan-outlier-dari-data" title="Link to this heading">#</a></h2>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Gabungkan berdasarkan kolom &#39;id&#39; dan &#39;class&#39;</span>
-<span class="n">df_merge</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">df_mysql</span><span class="p">,</span> <span class="n">df_postgresql</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;class&quot;</span><span class="p">],</span> <span class="n">how</span><span class="o">=</span><span class="s2">&quot;inner&quot;</span><span class="p">)</span>
-
-<span class="c1"># Ambil data fitur numerik tanpa kolom &#39;class&#39;</span>
-<span class="n">feature_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;petal_length&quot;</span><span class="p">,</span> <span class="s2">&quot;petal_width&quot;</span><span class="p">,</span> <span class="s2">&quot;sepal_length&quot;</span><span class="p">,</span> <span class="s2">&quot;sepal_width&quot;</span><span class="p">]</span>
-<span class="n">data_values</span> <span class="o">=</span> <span class="n">df_merge</span><span class="p">[</span><span class="n">feature_columns</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
-
-<span class="c1"># Inisialisasi model LOF</span>
-<span class="n">clf</span> <span class="o">=</span> <span class="n">LocalOutlierFactor</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
-<span class="n">label</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">data_values</span><span class="p">)</span>
-
-<span class="c1"># Tambahkan hasil label ke dataframe</span>
-<span class="n">df_merge</span><span class="p">[</span><span class="s2">&quot;outlier_label&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">label</span>
-
-<span class="c1"># Cetak hasil dengan ID dan class</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">df_merge</span><span class="o">.</span><span class="n">to_string</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
-
-<span class="n">num_outliers</span> <span class="o">=</span> <span class="p">(</span><span class="n">label</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Jumlah outlier: </span><span class="si">{</span><span class="n">num_outliers</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="n">df_filtered</span> <span class="o">=</span> <span class="n">df_merge</span><span class="p">[</span><span class="n">label</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;outlier_label&quot;</span><span class="p">],</span> <span class="n">errors</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
-<span class="n">outliers</span> <span class="o">=</span> <span class="n">df_merge</span><span class="p">[</span><span class="n">label</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;outlier_label&quot;</span><span class="p">],</span> <span class="n">errors</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Data Outlier:&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">outliers</span><span class="o">.</span><span class="n">to_string</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Jumlah data setelah dihapus : &quot;</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">df_filtered</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Data tidak outlier :&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">df_filtered</span><span class="o">.</span><span class="n">to_string</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> id           class  petal_length  petal_width  sepal_length  sepal_width  outlier_label
-  1     Iris-setosa           1.4          0.2           5.1          3.5              1
-  2     Iris-setosa          14.0          2.0          40.9         30.0             -1
-  3     Iris-setosa           1.3          0.2           4.7          3.2              1
-  4     Iris-setosa          15.0         20.0          46.0         31.0             -1
-  5     Iris-setosa           1.4          0.2           5.0          3.6              1
-  6     Iris-setosa           1.7          0.4           5.4          3.9              1
-  7     Iris-setosa           1.4          0.3           4.6          3.4              1
-  8     Iris-setosa           1.5          0.2           5.0          3.4              1
-  9     Iris-setosa           1.4          0.2           4.4          2.9              1
- 10     Iris-setosa           1.5          0.1           4.9          3.1              1
- 11     Iris-setosa           1.5          0.2           5.4          3.7              1
- 12     Iris-setosa          16.0          2.0          48.0         34.0             -1
- 13     Iris-setosa           1.4          0.1           4.8          3.0              1
- 14     Iris-setosa           1.1          0.1           4.3          3.0              1
- 15     Iris-setosa           1.2          0.2           5.8          4.0              1
- 16     Iris-setosa           1.5          0.4           5.7          4.4              1
- 17     Iris-setosa           1.3          0.4           5.4          3.9              1
- 18     Iris-setosa           1.4          0.3           5.1          3.5              1
- 19     Iris-setosa           1.7          0.3           5.7          3.8              1
- 20     Iris-setosa           1.5          0.3           5.1          3.8              1
- 21     Iris-setosa          17.0          2.0          54.0         34.0             -1
- 22     Iris-setosa          15.0          4.0          51.0         37.0             -1
- 23     Iris-setosa           1.0          0.2           4.6          3.6              1
- 24     Iris-setosa           1.7          0.5           5.1          3.3              1
- 25     Iris-setosa           1.9          0.2           4.8          3.4              1
- 26     Iris-setosa           1.6          0.2           5.0          3.0              1
- 27     Iris-setosa           1.6          0.4           5.0          3.4              1
- 28     Iris-setosa           1.5          0.2           5.2          3.5              1
- 29     Iris-setosa           1.4          0.2           5.2          3.4              1
- 30     Iris-setosa           1.6          0.2           4.7          3.2              1
- 31     Iris-setosa           1.6          0.2           4.8          3.1              1
- 32     Iris-setosa           1.5          0.4           5.4          3.4              1
- 33     Iris-setosa           1.5          0.1           5.2          4.1              1
- 34     Iris-setosa           1.4          0.2           5.5          4.2              1
- 35     Iris-setosa           1.5          0.1           4.9          3.1              1
- 36     Iris-setosa           1.2          0.2           5.0          3.2              1
- 37     Iris-setosa           1.3          0.2           5.5          3.5              1
- 38     Iris-setosa           1.5          0.1           4.9          3.1              1
- 39     Iris-setosa           1.3          0.2           4.4          3.0              1
- 40     Iris-setosa           1.5          0.2           5.1          3.4              1
- 41     Iris-setosa           1.3          0.3           5.0          3.5              1
- 42     Iris-setosa           1.3          0.3           4.5          2.3              1
- 43     Iris-setosa           1.3          0.2           4.4          3.2              1
- 44     Iris-setosa           1.6          0.6           5.0          3.5              1
- 45     Iris-setosa           1.9          0.4           5.1          3.8              1
- 46     Iris-setosa           1.4          0.3           4.8          3.0              1
- 47     Iris-setosa           1.6          0.2           5.1          3.8              1
- 48     Iris-setosa           1.4          0.2           4.6          3.2              1
- 49     Iris-setosa           1.5          0.2           5.3          3.7              1
- 50     Iris-setosa           1.4          0.2           5.0          3.3              1
- 51 Iris-versicolor           4.7          1.4           7.0          3.2              1
- 52 Iris-versicolor           4.5          1.5           6.4          3.2              1
- 53 Iris-versicolor           4.9          1.5           6.9          3.1              1
- 54 Iris-versicolor           4.0          1.3           5.5          2.3              1
- 55 Iris-versicolor           4.6          1.5           6.5          2.8              1
- 56 Iris-versicolor           4.5          1.3           5.7          2.8              1
- 57 Iris-versicolor           4.7          1.6           6.3          3.3              1
- 58 Iris-versicolor           3.3          1.0           4.9          2.4              1
- 59 Iris-versicolor          46.0         13.0          66.0         29.0             -1
- 60 Iris-versicolor           3.9          1.4           5.2          2.7              1
- 61 Iris-versicolor          35.0         10.0          50.0         20.0             -1
- 62 Iris-versicolor           4.2          1.5           5.9          3.0              1
- 63 Iris-versicolor           4.0          1.0           6.0          2.2              1
- 64 Iris-versicolor           4.7          1.4           6.1          2.9              1
- 65 Iris-versicolor           3.6          1.3           5.6          2.9              1
- 66 Iris-versicolor           4.4          1.4           6.7          3.1              1
- 67 Iris-versicolor          45.0         15.0          56.0         30.0             -1
- 68 Iris-versicolor           4.1          1.0           5.8          2.7              1
- 69 Iris-versicolor           4.5          1.5           6.2          2.2              1
- 70 Iris-versicolor           3.9          1.1           5.6          2.5              1
- 71 Iris-versicolor           4.8          1.8           5.9          3.2              1
- 72 Iris-versicolor           4.0          1.3           6.1          2.8              1
- 73 Iris-versicolor           4.9          1.5           6.3          2.5              1
- 74 Iris-versicolor           4.7          1.2           6.1          2.8              1
- 75 Iris-versicolor           4.3          1.3           6.4          2.9              1
- 76 Iris-versicolor           4.4          1.4           6.6          3.0              1
- 77 Iris-versicolor           4.8          1.4           6.8          2.8              1
- 78 Iris-versicolor          50.0         17.0          67.0         30.0             -1
- 79 Iris-versicolor           4.5          1.5           6.0          2.9              1
- 80 Iris-versicolor           3.5          1.0           5.7          2.6              1
- 81 Iris-versicolor           3.8          1.1           5.5          2.4              1
- 82 Iris-versicolor           3.7          1.0           5.5          2.4              1
- 83 Iris-versicolor           3.9          1.2           5.8          2.7              1
- 84 Iris-versicolor           5.1          1.6           6.0          2.7              1
- 85 Iris-versicolor           4.5          1.5           5.4          3.0              1
- 86 Iris-versicolor           4.5          1.6           6.0          3.4              1
- 87 Iris-versicolor           4.7          1.5           6.7          3.1              1
- 88 Iris-versicolor           4.4          1.3           6.3          2.3              1
- 89 Iris-versicolor           4.1          1.3           5.6          3.0              1
- 90 Iris-versicolor           4.0          1.3           5.5          2.5              1
- 91 Iris-versicolor           4.4          1.2           5.5          2.6              1
- 92 Iris-versicolor           4.6          1.4           6.1          3.0              1
- 93 Iris-versicolor           4.0          1.2           5.8          2.6              1
- 94 Iris-versicolor          33.0         10.0          50.0         23.0             -1
- 95 Iris-versicolor           4.2          1.3           5.6          2.7              1
- 96 Iris-versicolor           4.2          1.2           5.7          3.0              1
- 97 Iris-versicolor           4.2          1.3           5.7          2.9              1
- 98 Iris-versicolor           4.3          1.3           6.2          2.9              1
- 99 Iris-versicolor           3.0          1.1           5.1          2.5              1
-100 Iris-versicolor           4.1          1.3           5.7          2.8              1
-101  Iris-virginica           6.0          2.5           6.3          3.3              1
-102  Iris-virginica           5.1          1.9           5.8          2.7              1
-103  Iris-virginica           5.9          2.1           7.1          3.0              1
-104  Iris-virginica           5.6          1.8           6.3          2.9              1
-105  Iris-virginica           5.8          2.2           6.5          3.0              1
-106  Iris-virginica          66.0         21.0          76.0         30.0             -1
-107  Iris-virginica           4.5          1.7           4.9          2.5              1
-108  Iris-virginica           6.3          1.8           7.3          2.9              1
-109  Iris-virginica           5.8          1.8           6.7          2.5              1
-110  Iris-virginica          61.0         25.0          72.0         36.0             -1
-111  Iris-virginica           5.1          2.0           6.5          3.2              1
-112  Iris-virginica           5.3          1.9           6.4          2.7              1
-113  Iris-virginica           5.5          2.1           6.8          3.0              1
-114  Iris-virginica           5.0          2.0           5.7          2.5              1
-115  Iris-virginica           5.1          2.4           5.8          2.8              1
-116  Iris-virginica           5.3          2.3           6.4          3.2              1
-117  Iris-virginica           5.5          1.8           6.5          3.0              1
-118  Iris-virginica          67.0         22.0          77.0         38.0             -1
-119  Iris-virginica           6.9          2.3           7.7          2.6              1
-120  Iris-virginica           5.0          1.5           6.0          2.2              1
-121  Iris-virginica           5.7          2.3           6.9          3.2              1
-122  Iris-virginica           4.9          2.0           5.6          2.8              1
-123  Iris-virginica           6.7          2.0           7.7          2.8              1
-124  Iris-virginica           4.9          1.8           6.3          2.7              1
-125  Iris-virginica           5.7          2.1           6.7          3.3              1
-126  Iris-virginica           6.0          1.8           7.2          3.2              1
-127  Iris-virginica          48.0         18.0          62.0         28.0             -1
-128  Iris-virginica           4.9          1.8           6.1          3.0              1
-129  Iris-virginica           5.6          2.1           6.4          2.8              1
-130  Iris-virginica           5.8          1.6           7.2          3.0              1
-131  Iris-virginica           6.1          1.9           7.4          2.8              1
-132  Iris-virginica          64.0         20.0          79.0         38.0             -1
-133  Iris-virginica           5.6          2.2           6.4          2.8              1
-134  Iris-virginica           5.1          1.5           6.3          2.8              1
-135  Iris-virginica           5.6          1.4           6.1          2.6              1
-136  Iris-virginica           6.1          2.3           7.7          3.0              1
-137  Iris-virginica           5.6          2.4           6.3          3.4              1
-138  Iris-virginica           5.5          1.8           6.4          3.1              1
-139  Iris-virginica           4.8          1.8           6.0          3.0              1
-140  Iris-virginica           5.4          2.1           6.9          3.1              1
-141  Iris-virginica           5.6          2.4           6.7          3.1              1
-142  Iris-virginica           5.1          2.3           6.9          3.1              1
-143  Iris-virginica           5.1          1.9           5.8          2.7              1
-144  Iris-virginica           5.9          2.3           6.8          3.2              1
-145  Iris-virginica           5.7          2.5           6.7          3.3              1
-146  Iris-virginica           5.2          2.3           6.7          3.0              1
-147  Iris-virginica           5.0          1.9           6.3          2.5              1
-148  Iris-virginica           5.2          2.0           6.5          3.0              1
-149  Iris-virginica           5.4          2.3           6.2          3.4              1
-150  Iris-virginica           5.1          1.8           5.9          3.0              1
-
-Jumlah outlier: 15
-
-Data Outlier:
- id           class  petal_length  petal_width  sepal_length  sepal_width
-  2     Iris-setosa          14.0          2.0          40.9         30.0
-  4     Iris-setosa          15.0         20.0          46.0         31.0
- 12     Iris-setosa          16.0          2.0          48.0         34.0
- 21     Iris-setosa          17.0          2.0          54.0         34.0
- 22     Iris-setosa          15.0          4.0          51.0         37.0
- 59 Iris-versicolor          46.0         13.0          66.0         29.0
- 61 Iris-versicolor          35.0         10.0          50.0         20.0
- 67 Iris-versicolor          45.0         15.0          56.0         30.0
- 78 Iris-versicolor          50.0         17.0          67.0         30.0
- 94 Iris-versicolor          33.0         10.0          50.0         23.0
-106  Iris-virginica          66.0         21.0          76.0         30.0
-110  Iris-virginica          61.0         25.0          72.0         36.0
-118  Iris-virginica          67.0         22.0          77.0         38.0
-127  Iris-virginica          48.0         18.0          62.0         28.0
-132  Iris-virginica          64.0         20.0          79.0         38.0
-
-Jumlah data setelah dihapus :  135
-
-Data tidak outlier :
- id           class  petal_length  petal_width  sepal_length  sepal_width
-  1     Iris-setosa           1.4          0.2           5.1          3.5
-  3     Iris-setosa           1.3          0.2           4.7          3.2
-  5     Iris-setosa           1.4          0.2           5.0          3.6
-  6     Iris-setosa           1.7          0.4           5.4          3.9
-  7     Iris-setosa           1.4          0.3           4.6          3.4
-  8     Iris-setosa           1.5          0.2           5.0          3.4
-  9     Iris-setosa           1.4          0.2           4.4          2.9
- 10     Iris-setosa           1.5          0.1           4.9          3.1
- 11     Iris-setosa           1.5          0.2           5.4          3.7
- 13     Iris-setosa           1.4          0.1           4.8          3.0
- 14     Iris-setosa           1.1          0.1           4.3          3.0
- 15     Iris-setosa           1.2          0.2           5.8          4.0
- 16     Iris-setosa           1.5          0.4           5.7          4.4
- 17     Iris-setosa           1.3          0.4           5.4          3.9
- 18     Iris-setosa           1.4          0.3           5.1          3.5
- 19     Iris-setosa           1.7          0.3           5.7          3.8
- 20     Iris-setosa           1.5          0.3           5.1          3.8
- 23     Iris-setosa           1.0          0.2           4.6          3.6
- 24     Iris-setosa           1.7          0.5           5.1          3.3
- 25     Iris-setosa           1.9          0.2           4.8          3.4
- 26     Iris-setosa           1.6          0.2           5.0          3.0
- 27     Iris-setosa           1.6          0.4           5.0          3.4
- 28     Iris-setosa           1.5          0.2           5.2          3.5
- 29     Iris-setosa           1.4          0.2           5.2          3.4
- 30     Iris-setosa           1.6          0.2           4.7          3.2
- 31     Iris-setosa           1.6          0.2           4.8          3.1
- 32     Iris-setosa           1.5          0.4           5.4          3.4
- 33     Iris-setosa           1.5          0.1           5.2          4.1
- 34     Iris-setosa           1.4          0.2           5.5          4.2
- 35     Iris-setosa           1.5          0.1           4.9          3.1
- 36     Iris-setosa           1.2          0.2           5.0          3.2
- 37     Iris-setosa           1.3          0.2           5.5          3.5
- 38     Iris-setosa           1.5          0.1           4.9          3.1
- 39     Iris-setosa           1.3          0.2           4.4          3.0
- 40     Iris-setosa           1.5          0.2           5.1          3.4
- 41     Iris-setosa           1.3          0.3           5.0          3.5
- 42     Iris-setosa           1.3          0.3           4.5          2.3
- 43     Iris-setosa           1.3          0.2           4.4          3.2
- 44     Iris-setosa           1.6          0.6           5.0          3.5
- 45     Iris-setosa           1.9          0.4           5.1          3.8
- 46     Iris-setosa           1.4          0.3           4.8          3.0
- 47     Iris-setosa           1.6          0.2           5.1          3.8
- 48     Iris-setosa           1.4          0.2           4.6          3.2
- 49     Iris-setosa           1.5          0.2           5.3          3.7
- 50     Iris-setosa           1.4          0.2           5.0          3.3
- 51 Iris-versicolor           4.7          1.4           7.0          3.2
- 52 Iris-versicolor           4.5          1.5           6.4          3.2
- 53 Iris-versicolor           4.9          1.5           6.9          3.1
- 54 Iris-versicolor           4.0          1.3           5.5          2.3
- 55 Iris-versicolor           4.6          1.5           6.5          2.8
- 56 Iris-versicolor           4.5          1.3           5.7          2.8
- 57 Iris-versicolor           4.7          1.6           6.3          3.3
- 58 Iris-versicolor           3.3          1.0           4.9          2.4
- 60 Iris-versicolor           3.9          1.4           5.2          2.7
- 62 Iris-versicolor           4.2          1.5           5.9          3.0
- 63 Iris-versicolor           4.0          1.0           6.0          2.2
- 64 Iris-versicolor           4.7          1.4           6.1          2.9
- 65 Iris-versicolor           3.6          1.3           5.6          2.9
- 66 Iris-versicolor           4.4          1.4           6.7          3.1
- 68 Iris-versicolor           4.1          1.0           5.8          2.7
- 69 Iris-versicolor           4.5          1.5           6.2          2.2
- 70 Iris-versicolor           3.9          1.1           5.6          2.5
- 71 Iris-versicolor           4.8          1.8           5.9          3.2
- 72 Iris-versicolor           4.0          1.3           6.1          2.8
- 73 Iris-versicolor           4.9          1.5           6.3          2.5
- 74 Iris-versicolor           4.7          1.2           6.1          2.8
- 75 Iris-versicolor           4.3          1.3           6.4          2.9
- 76 Iris-versicolor           4.4          1.4           6.6          3.0
- 77 Iris-versicolor           4.8          1.4           6.8          2.8
- 79 Iris-versicolor           4.5          1.5           6.0          2.9
- 80 Iris-versicolor           3.5          1.0           5.7          2.6
- 81 Iris-versicolor           3.8          1.1           5.5          2.4
- 82 Iris-versicolor           3.7          1.0           5.5          2.4
- 83 Iris-versicolor           3.9          1.2           5.8          2.7
- 84 Iris-versicolor           5.1          1.6           6.0          2.7
- 85 Iris-versicolor           4.5          1.5           5.4          3.0
- 86 Iris-versicolor           4.5          1.6           6.0          3.4
- 87 Iris-versicolor           4.7          1.5           6.7          3.1
- 88 Iris-versicolor           4.4          1.3           6.3          2.3
- 89 Iris-versicolor           4.1          1.3           5.6          3.0
- 90 Iris-versicolor           4.0          1.3           5.5          2.5
- 91 Iris-versicolor           4.4          1.2           5.5          2.6
- 92 Iris-versicolor           4.6          1.4           6.1          3.0
- 93 Iris-versicolor           4.0          1.2           5.8          2.6
- 95 Iris-versicolor           4.2          1.3           5.6          2.7
- 96 Iris-versicolor           4.2          1.2           5.7          3.0
- 97 Iris-versicolor           4.2          1.3           5.7          2.9
- 98 Iris-versicolor           4.3          1.3           6.2          2.9
- 99 Iris-versicolor           3.0          1.1           5.1          2.5
-100 Iris-versicolor           4.1          1.3           5.7          2.8
-101  Iris-virginica           6.0          2.5           6.3          3.3
-102  Iris-virginica           5.1          1.9           5.8          2.7
-103  Iris-virginica           5.9          2.1           7.1          3.0
-104  Iris-virginica           5.6          1.8           6.3          2.9
-105  Iris-virginica           5.8          2.2           6.5          3.0
-107  Iris-virginica           4.5          1.7           4.9          2.5
-108  Iris-virginica           6.3          1.8           7.3          2.9
-109  Iris-virginica           5.8          1.8           6.7          2.5
-111  Iris-virginica           5.1          2.0           6.5          3.2
-112  Iris-virginica           5.3          1.9           6.4          2.7
-113  Iris-virginica           5.5          2.1           6.8          3.0
-114  Iris-virginica           5.0          2.0           5.7          2.5
-115  Iris-virginica           5.1          2.4           5.8          2.8
-116  Iris-virginica           5.3          2.3           6.4          3.2
-117  Iris-virginica           5.5          1.8           6.5          3.0
-119  Iris-virginica           6.9          2.3           7.7          2.6
-120  Iris-virginica           5.0          1.5           6.0          2.2
-121  Iris-virginica           5.7          2.3           6.9          3.2
-122  Iris-virginica           4.9          2.0           5.6          2.8
-123  Iris-virginica           6.7          2.0           7.7          2.8
-124  Iris-virginica           4.9          1.8           6.3          2.7
-125  Iris-virginica           5.7          2.1           6.7          3.3
-126  Iris-virginica           6.0          1.8           7.2          3.2
-128  Iris-virginica           4.9          1.8           6.1          3.0
-129  Iris-virginica           5.6          2.1           6.4          2.8
-130  Iris-virginica           5.8          1.6           7.2          3.0
-131  Iris-virginica           6.1          1.9           7.4          2.8
-133  Iris-virginica           5.6          2.2           6.4          2.8
-134  Iris-virginica           5.1          1.5           6.3          2.8
-135  Iris-virginica           5.6          1.4           6.1          2.6
-136  Iris-virginica           6.1          2.3           7.7          3.0
-137  Iris-virginica           5.6          2.4           6.3          3.4
-138  Iris-virginica           5.5          1.8           6.4          3.1
-139  Iris-virginica           4.8          1.8           6.0          3.0
-140  Iris-virginica           5.4          2.1           6.9          3.1
-141  Iris-virginica           5.6          2.4           6.7          3.1
-142  Iris-virginica           5.1          2.3           6.9          3.1
-143  Iris-virginica           5.1          1.9           5.8          2.7
-144  Iris-virginica           5.9          2.3           6.8          3.2
-145  Iris-virginica           5.7          2.5           6.7          3.3
-146  Iris-virginica           5.2          2.3           6.7          3.0
-147  Iris-virginica           5.0          1.9           6.3          2.5
-148  Iris-virginica           5.2          2.0           6.5          3.0
-149  Iris-virginica           5.4          2.3           6.2          3.4
-150  Iris-virginica           5.1          1.8           5.9          3.0
+<div class="output text_html"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>id</th>
+      <th>class</th>
+      <th>petal_length</th>
+      <th>petal_width</th>
+      <th>sepal_length</th>
+      <th>sepal_width</th>
+      <th>knn_distance</th>
+      <th>outlier_knn</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>Iris-setosa</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>5.1</td>
+      <td>3.5</td>
+      <td>0.141421</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>Iris-setosa</td>
+      <td>1.3</td>
+      <td>0.2</td>
+      <td>4.7</td>
+      <td>3.2</td>
+      <td>0.264575</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>Iris-setosa</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>5.0</td>
+      <td>3.6</td>
+      <td>0.223607</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>Iris-setosa</td>
+      <td>1.7</td>
+      <td>0.4</td>
+      <td>5.4</td>
+      <td>3.9</td>
+      <td>0.374166</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>Iris-setosa</td>
+      <td>1.4</td>
+      <td>0.3</td>
+      <td>4.6</td>
+      <td>3.4</td>
+      <td>0.316228</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>Iris-setosa</td>
+      <td>1.5</td>
+      <td>0.2</td>
+      <td>5.0</td>
+      <td>3.4</td>
+      <td>0.200000</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td>Iris-setosa</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>4.4</td>
+      <td>2.9</td>
+      <td>0.360555</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>Iris-setosa</td>
+      <td>1.5</td>
+      <td>0.1</td>
+      <td>4.9</td>
+      <td>3.1</td>
+      <td>0.173205</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>11</td>
+      <td>Iris-setosa</td>
+      <td>1.5</td>
+      <td>0.2</td>
+      <td>5.4</td>
+      <td>3.7</td>
+      <td>0.331662</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>13</td>
+      <td>Iris-setosa</td>
+      <td>1.4</td>
+      <td>0.1</td>
+      <td>4.8</td>
+      <td>3.0</td>
+      <td>0.200000</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>14</td>
+      <td>Iris-setosa</td>
+      <td>1.1</td>
+      <td>0.1</td>
+      <td>4.3</td>
+      <td>3.0</td>
+      <td>0.479583</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>15</td>
+      <td>Iris-setosa</td>
+      <td>1.2</td>
+      <td>0.2</td>
+      <td>5.8</td>
+      <td>4.0</td>
+      <td>0.556776</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>16</td>
+      <td>Iris-setosa</td>
+      <td>1.5</td>
+      <td>0.4</td>
+      <td>5.7</td>
+      <td>4.4</td>
+      <td>0.616441</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>17</td>
+      <td>Iris-setosa</td>
+      <td>1.3</td>
+      <td>0.4</td>
+      <td>5.4</td>
+      <td>3.9</td>
+      <td>0.387298</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>18</td>
+      <td>Iris-setosa</td>
+      <td>1.4</td>
+      <td>0.3</td>
+      <td>5.1</td>
+      <td>3.5</td>
+      <td>0.173205</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>19</td>
+      <td>Iris-setosa</td>
+      <td>1.7</td>
+      <td>0.3</td>
+      <td>5.7</td>
+      <td>3.8</td>
+      <td>0.519615</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>20</td>
+      <td>Iris-setosa</td>
+      <td>1.5</td>
+      <td>0.3</td>
+      <td>5.1</td>
+      <td>3.8</td>
+      <td>0.316228</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>23</td>
+      <td>Iris-setosa</td>
+      <td>1.0</td>
+      <td>0.2</td>
+      <td>4.6</td>
+      <td>3.6</td>
+      <td>0.538516</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>24</td>
+      <td>Iris-setosa</td>
+      <td>1.7</td>
+      <td>0.5</td>
+      <td>5.1</td>
+      <td>3.3</td>
+      <td>0.387298</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>25</td>
+      <td>Iris-setosa</td>
+      <td>1.9</td>
+      <td>0.2</td>
+      <td>4.8</td>
+      <td>3.4</td>
+      <td>0.447214</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>26</td>
+      <td>Iris-setosa</td>
+      <td>1.6</td>
+      <td>0.2</td>
+      <td>5.0</td>
+      <td>3.0</td>
+      <td>0.223607</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>27</td>
+      <td>Iris-setosa</td>
+      <td>1.6</td>
+      <td>0.4</td>
+      <td>5.0</td>
+      <td>3.4</td>
+      <td>0.244949</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>28</td>
+      <td>Iris-setosa</td>
+      <td>1.5</td>
+      <td>0.2</td>
+      <td>5.2</td>
+      <td>3.5</td>
+      <td>0.173205</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>29</td>
+      <td>Iris-setosa</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>5.2</td>
+      <td>3.4</td>
+      <td>0.173205</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>30</td>
+      <td>Iris-setosa</td>
+      <td>1.6</td>
+      <td>0.2</td>
+      <td>4.7</td>
+      <td>3.2</td>
+      <td>0.264575</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>31</td>
+      <td>Iris-setosa</td>
+      <td>1.6</td>
+      <td>0.2</td>
+      <td>4.8</td>
+      <td>3.1</td>
+      <td>0.173205</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>32</td>
+      <td>Iris-setosa</td>
+      <td>1.5</td>
+      <td>0.4</td>
+      <td>5.4</td>
+      <td>3.4</td>
+      <td>0.346410</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>33</td>
+      <td>Iris-setosa</td>
+      <td>1.5</td>
+      <td>0.1</td>
+      <td>5.2</td>
+      <td>4.1</td>
+      <td>0.424264</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>34</td>
+      <td>Iris-setosa</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>5.5</td>
+      <td>4.2</td>
+      <td>0.412311</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>35</td>
+      <td>Iris-setosa</td>
+      <td>1.5</td>
+      <td>0.1</td>
+      <td>4.9</td>
+      <td>3.1</td>
+      <td>0.173205</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>36</td>
+      <td>Iris-setosa</td>
+      <td>1.2</td>
+      <td>0.2</td>
+      <td>5.0</td>
+      <td>3.2</td>
+      <td>0.346410</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>37</td>
+      <td>Iris-setosa</td>
+      <td>1.3</td>
+      <td>0.2</td>
+      <td>5.5</td>
+      <td>3.5</td>
+      <td>0.346410</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>38</td>
+      <td>Iris-setosa</td>
+      <td>1.5</td>
+      <td>0.1</td>
+      <td>4.9</td>
+      <td>3.1</td>
+      <td>0.173205</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>39</td>
+      <td>Iris-setosa</td>
+      <td>1.3</td>
+      <td>0.2</td>
+      <td>4.4</td>
+      <td>3.0</td>
+      <td>0.300000</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>40</td>
+      <td>Iris-setosa</td>
+      <td>1.5</td>
+      <td>0.2</td>
+      <td>5.1</td>
+      <td>3.4</td>
+      <td>0.141421</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>41</td>
+      <td>Iris-setosa</td>
+      <td>1.3</td>
+      <td>0.3</td>
+      <td>5.0</td>
+      <td>3.5</td>
+      <td>0.244949</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>42</td>
+      <td>Iris-setosa</td>
+      <td>1.3</td>
+      <td>0.3</td>
+      <td>4.5</td>
+      <td>2.3</td>
+      <td>0.781025</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>43</td>
+      <td>Iris-setosa</td>
+      <td>1.3</td>
+      <td>0.2</td>
+      <td>4.4</td>
+      <td>3.2</td>
+      <td>0.316228</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>44</td>
+      <td>Iris-setosa</td>
+      <td>1.6</td>
+      <td>0.6</td>
+      <td>5.0</td>
+      <td>3.5</td>
+      <td>0.424264</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>45</td>
+      <td>Iris-setosa</td>
+      <td>1.9</td>
+      <td>0.4</td>
+      <td>5.1</td>
+      <td>3.8</td>
+      <td>0.479583</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>46</td>
+      <td>Iris-setosa</td>
+      <td>1.4</td>
+      <td>0.3</td>
+      <td>4.8</td>
+      <td>3.0</td>
+      <td>0.264575</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>47</td>
+      <td>Iris-setosa</td>
+      <td>1.6</td>
+      <td>0.2</td>
+      <td>5.1</td>
+      <td>3.8</td>
+      <td>0.331662</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>48</td>
+      <td>Iris-setosa</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>4.6</td>
+      <td>3.2</td>
+      <td>0.223607</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>49</td>
+      <td>Iris-setosa</td>
+      <td>1.5</td>
+      <td>0.2</td>
+      <td>5.3</td>
+      <td>3.7</td>
+      <td>0.244949</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>50</td>
+      <td>Iris-setosa</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>5.0</td>
+      <td>3.3</td>
+      <td>0.223607</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>51</td>
+      <td>Iris-versicolor</td>
+      <td>4.7</td>
+      <td>1.4</td>
+      <td>7.0</td>
+      <td>3.2</td>
+      <td>0.458258</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>52</td>
+      <td>Iris-versicolor</td>
+      <td>4.5</td>
+      <td>1.5</td>
+      <td>6.4</td>
+      <td>3.2</td>
+      <td>0.374166</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>53</td>
+      <td>Iris-versicolor</td>
+      <td>4.9</td>
+      <td>1.5</td>
+      <td>6.9</td>
+      <td>3.1</td>
+      <td>0.547723</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>54</td>
+      <td>Iris-versicolor</td>
+      <td>4.0</td>
+      <td>1.3</td>
+      <td>5.5</td>
+      <td>2.3</td>
+      <td>0.435890</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>55</td>
+      <td>Iris-versicolor</td>
+      <td>4.6</td>
+      <td>1.5</td>
+      <td>6.5</td>
+      <td>2.8</td>
+      <td>0.387298</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>56</td>
+      <td>Iris-versicolor</td>
+      <td>4.5</td>
+      <td>1.3</td>
+      <td>5.7</td>
+      <td>2.8</td>
+      <td>0.374166</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>57</td>
+      <td>Iris-versicolor</td>
+      <td>4.7</td>
+      <td>1.6</td>
+      <td>6.3</td>
+      <td>3.3</td>
+      <td>0.458258</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>58</td>
+      <td>Iris-versicolor</td>
+      <td>3.3</td>
+      <td>1.0</td>
+      <td>4.9</td>
+      <td>2.4</td>
+      <td>0.836660</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>60</td>
+      <td>Iris-versicolor</td>
+      <td>3.9</td>
+      <td>1.4</td>
+      <td>5.2</td>
+      <td>2.7</td>
+      <td>0.529150</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>62</td>
+      <td>Iris-versicolor</td>
+      <td>4.2</td>
+      <td>1.5</td>
+      <td>5.9</td>
+      <td>3.0</td>
+      <td>0.360555</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>63</td>
+      <td>Iris-versicolor</td>
+      <td>4.0</td>
+      <td>1.0</td>
+      <td>6.0</td>
+      <td>2.2</td>
+      <td>0.583095</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>64</td>
+      <td>Iris-versicolor</td>
+      <td>4.7</td>
+      <td>1.4</td>
+      <td>6.1</td>
+      <td>2.9</td>
+      <td>0.424264</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>65</td>
+      <td>Iris-versicolor</td>
+      <td>3.6</td>
+      <td>1.3</td>
+      <td>5.6</td>
+      <td>2.9</td>
+      <td>0.519615</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>66</td>
+      <td>Iris-versicolor</td>
+      <td>4.4</td>
+      <td>1.4</td>
+      <td>6.7</td>
+      <td>3.1</td>
+      <td>0.387298</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>68</td>
+      <td>Iris-versicolor</td>
+      <td>4.1</td>
+      <td>1.0</td>
+      <td>5.8</td>
+      <td>2.7</td>
+      <td>0.360555</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>69</td>
+      <td>Iris-versicolor</td>
+      <td>4.5</td>
+      <td>1.5</td>
+      <td>6.2</td>
+      <td>2.2</td>
+      <td>0.678233</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>70</td>
+      <td>Iris-versicolor</td>
+      <td>3.9</td>
+      <td>1.1</td>
+      <td>5.6</td>
+      <td>2.5</td>
+      <td>0.264575</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>71</td>
+      <td>Iris-versicolor</td>
+      <td>4.8</td>
+      <td>1.8</td>
+      <td>5.9</td>
+      <td>3.2</td>
+      <td>0.424264</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>72</td>
+      <td>Iris-versicolor</td>
+      <td>4.0</td>
+      <td>1.3</td>
+      <td>6.1</td>
+      <td>2.8</td>
+      <td>0.400000</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>73</td>
+      <td>Iris-versicolor</td>
+      <td>4.9</td>
+      <td>1.5</td>
+      <td>6.3</td>
+      <td>2.5</td>
+      <td>0.424264</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>74</td>
+      <td>Iris-versicolor</td>
+      <td>4.7</td>
+      <td>1.2</td>
+      <td>6.1</td>
+      <td>2.8</td>
+      <td>0.435890</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>75</td>
+      <td>Iris-versicolor</td>
+      <td>4.3</td>
+      <td>1.3</td>
+      <td>6.4</td>
+      <td>2.9</td>
+      <td>0.387298</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>76</td>
+      <td>Iris-versicolor</td>
+      <td>4.4</td>
+      <td>1.4</td>
+      <td>6.6</td>
+      <td>3.0</td>
+      <td>0.316228</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>77</td>
+      <td>Iris-versicolor</td>
+      <td>4.8</td>
+      <td>1.4</td>
+      <td>6.8</td>
+      <td>2.8</td>
+      <td>0.458258</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>79</td>
+      <td>Iris-versicolor</td>
+      <td>4.5</td>
+      <td>1.5</td>
+      <td>6.0</td>
+      <td>2.9</td>
+      <td>0.346410</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>80</td>
+      <td>Iris-versicolor</td>
+      <td>3.5</td>
+      <td>1.0</td>
+      <td>5.7</td>
+      <td>2.6</td>
+      <td>0.447214</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>81</td>
+      <td>Iris-versicolor</td>
+      <td>3.8</td>
+      <td>1.1</td>
+      <td>5.5</td>
+      <td>2.4</td>
+      <td>0.300000</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>82</td>
+      <td>Iris-versicolor</td>
+      <td>3.7</td>
+      <td>1.0</td>
+      <td>5.5</td>
+      <td>2.4</td>
+      <td>0.435890</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>83</td>
+      <td>Iris-versicolor</td>
+      <td>3.9</td>
+      <td>1.2</td>
+      <td>5.8</td>
+      <td>2.7</td>
+      <td>0.300000</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>84</td>
+      <td>Iris-versicolor</td>
+      <td>5.1</td>
+      <td>1.6</td>
+      <td>6.0</td>
+      <td>2.7</td>
+      <td>0.374166</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>85</td>
+      <td>Iris-versicolor</td>
+      <td>4.5</td>
+      <td>1.5</td>
+      <td>5.4</td>
+      <td>3.0</td>
+      <td>0.509902</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>86</td>
+      <td>Iris-versicolor</td>
+      <td>4.5</td>
+      <td>1.6</td>
+      <td>6.0</td>
+      <td>3.4</td>
+      <td>0.469042</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>87</td>
+      <td>Iris-versicolor</td>
+      <td>4.7</td>
+      <td>1.5</td>
+      <td>6.7</td>
+      <td>3.1</td>
+      <td>0.346410</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>88</td>
+      <td>Iris-versicolor</td>
+      <td>4.4</td>
+      <td>1.3</td>
+      <td>6.3</td>
+      <td>2.3</td>
+      <td>0.608276</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>89</td>
+      <td>Iris-versicolor</td>
+      <td>4.1</td>
+      <td>1.3</td>
+      <td>5.6</td>
+      <td>3.0</td>
+      <td>0.316228</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>90</td>
+      <td>Iris-versicolor</td>
+      <td>4.0</td>
+      <td>1.3</td>
+      <td>5.5</td>
+      <td>2.5</td>
+      <td>0.300000</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>91</td>
+      <td>Iris-versicolor</td>
+      <td>4.4</td>
+      <td>1.2</td>
+      <td>5.5</td>
+      <td>2.6</td>
+      <td>0.424264</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>92</td>
+      <td>Iris-versicolor</td>
+      <td>4.6</td>
+      <td>1.4</td>
+      <td>6.1</td>
+      <td>3.0</td>
+      <td>0.346410</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>93</td>
+      <td>Iris-versicolor</td>
+      <td>4.0</td>
+      <td>1.2</td>
+      <td>5.8</td>
+      <td>2.6</td>
+      <td>0.264575</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>95</td>
+      <td>Iris-versicolor</td>
+      <td>4.2</td>
+      <td>1.3</td>
+      <td>5.6</td>
+      <td>2.7</td>
+      <td>0.300000</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>96</td>
+      <td>Iris-versicolor</td>
+      <td>4.2</td>
+      <td>1.2</td>
+      <td>5.7</td>
+      <td>3.0</td>
+      <td>0.331662</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>97</td>
+      <td>Iris-versicolor</td>
+      <td>4.2</td>
+      <td>1.3</td>
+      <td>5.7</td>
+      <td>2.9</td>
+      <td>0.223607</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>98</td>
+      <td>Iris-versicolor</td>
+      <td>4.3</td>
+      <td>1.3</td>
+      <td>6.2</td>
+      <td>2.9</td>
+      <td>0.346410</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>99</td>
+      <td>Iris-versicolor</td>
+      <td>3.0</td>
+      <td>1.1</td>
+      <td>5.1</td>
+      <td>2.5</td>
+      <td>0.900000</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>100</td>
+      <td>Iris-versicolor</td>
+      <td>4.1</td>
+      <td>1.3</td>
+      <td>5.7</td>
+      <td>2.8</td>
+      <td>0.244949</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>101</td>
+      <td>Iris-virginica</td>
+      <td>6.0</td>
+      <td>2.5</td>
+      <td>6.3</td>
+      <td>3.3</td>
+      <td>0.556776</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>102</td>
+      <td>Iris-virginica</td>
+      <td>5.1</td>
+      <td>1.9</td>
+      <td>5.8</td>
+      <td>2.7</td>
+      <td>0.331662</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>103</td>
+      <td>Iris-virginica</td>
+      <td>5.9</td>
+      <td>2.1</td>
+      <td>7.1</td>
+      <td>3.0</td>
+      <td>0.458258</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>104</td>
+      <td>Iris-virginica</td>
+      <td>5.6</td>
+      <td>1.8</td>
+      <td>6.3</td>
+      <td>2.9</td>
+      <td>0.387298</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>105</td>
+      <td>Iris-virginica</td>
+      <td>5.8</td>
+      <td>2.2</td>
+      <td>6.5</td>
+      <td>3.0</td>
+      <td>0.387298</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>107</td>
+      <td>Iris-virginica</td>
+      <td>4.5</td>
+      <td>1.7</td>
+      <td>4.9</td>
+      <td>2.5</td>
+      <td>0.877496</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>108</td>
+      <td>Iris-virginica</td>
+      <td>6.3</td>
+      <td>1.8</td>
+      <td>7.3</td>
+      <td>2.9</td>
+      <td>0.556776</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>109</td>
+      <td>Iris-virginica</td>
+      <td>5.8</td>
+      <td>1.8</td>
+      <td>6.7</td>
+      <td>2.5</td>
+      <td>0.616441</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>111</td>
+      <td>Iris-virginica</td>
+      <td>5.1</td>
+      <td>2.0</td>
+      <td>6.5</td>
+      <td>3.2</td>
+      <td>0.469042</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>112</td>
+      <td>Iris-virginica</td>
+      <td>5.3</td>
+      <td>1.9</td>
+      <td>6.4</td>
+      <td>2.7</td>
+      <td>0.387298</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>113</td>
+      <td>Iris-virginica</td>
+      <td>5.5</td>
+      <td>2.1</td>
+      <td>6.8</td>
+      <td>3.0</td>
+      <td>0.374166</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>114</td>
+      <td>Iris-virginica</td>
+      <td>5.0</td>
+      <td>2.0</td>
+      <td>5.7</td>
+      <td>2.5</td>
+      <td>0.519615</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>115</td>
+      <td>Iris-virginica</td>
+      <td>5.1</td>
+      <td>2.4</td>
+      <td>5.8</td>
+      <td>2.8</td>
+      <td>0.519615</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>116</td>
+      <td>Iris-virginica</td>
+      <td>5.3</td>
+      <td>2.3</td>
+      <td>6.4</td>
+      <td>3.2</td>
+      <td>0.387298</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>117</td>
+      <td>Iris-virginica</td>
+      <td>5.5</td>
+      <td>1.8</td>
+      <td>6.5</td>
+      <td>3.0</td>
+      <td>0.387298</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>119</td>
+      <td>Iris-virginica</td>
+      <td>6.9</td>
+      <td>2.3</td>
+      <td>7.7</td>
+      <td>2.6</td>
+      <td>0.964365</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>120</td>
+      <td>Iris-virginica</td>
+      <td>5.0</td>
+      <td>1.5</td>
+      <td>6.0</td>
+      <td>2.2</td>
+      <td>0.583095</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>121</td>
+      <td>Iris-virginica</td>
+      <td>5.7</td>
+      <td>2.3</td>
+      <td>6.9</td>
+      <td>3.2</td>
+      <td>0.300000</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>122</td>
+      <td>Iris-virginica</td>
+      <td>4.9</td>
+      <td>2.0</td>
+      <td>5.6</td>
+      <td>2.8</td>
+      <td>0.458258</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>123</td>
+      <td>Iris-virginica</td>
+      <td>6.7</td>
+      <td>2.0</td>
+      <td>7.7</td>
+      <td>2.8</td>
+      <td>0.700000</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>124</td>
+      <td>Iris-virginica</td>
+      <td>4.9</td>
+      <td>1.8</td>
+      <td>6.3</td>
+      <td>2.7</td>
+      <td>0.374166</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>125</td>
+      <td>Iris-virginica</td>
+      <td>5.7</td>
+      <td>2.1</td>
+      <td>6.7</td>
+      <td>3.3</td>
+      <td>0.374166</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>126</td>
+      <td>Iris-virginica</td>
+      <td>6.0</td>
+      <td>1.8</td>
+      <td>7.2</td>
+      <td>3.2</td>
+      <td>0.469042</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>128</td>
+      <td>Iris-virginica</td>
+      <td>4.9</td>
+      <td>1.8</td>
+      <td>6.1</td>
+      <td>3.0</td>
+      <td>0.360555</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>129</td>
+      <td>Iris-virginica</td>
+      <td>5.6</td>
+      <td>2.1</td>
+      <td>6.4</td>
+      <td>2.8</td>
+      <td>0.374166</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>130</td>
+      <td>Iris-virginica</td>
+      <td>5.8</td>
+      <td>1.6</td>
+      <td>7.2</td>
+      <td>3.0</td>
+      <td>0.556776</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>131</td>
+      <td>Iris-virginica</td>
+      <td>6.1</td>
+      <td>1.9</td>
+      <td>7.4</td>
+      <td>2.8</td>
+      <td>0.509902</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>133</td>
+      <td>Iris-virginica</td>
+      <td>5.6</td>
+      <td>2.2</td>
+      <td>6.4</td>
+      <td>2.8</td>
+      <td>0.435890</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>134</td>
+      <td>Iris-virginica</td>
+      <td>5.1</td>
+      <td>1.5</td>
+      <td>6.3</td>
+      <td>2.8</td>
+      <td>0.458258</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>135</td>
+      <td>Iris-virginica</td>
+      <td>5.6</td>
+      <td>1.4</td>
+      <td>6.1</td>
+      <td>2.6</td>
+      <td>0.663325</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>136</td>
+      <td>Iris-virginica</td>
+      <td>6.1</td>
+      <td>2.3</td>
+      <td>7.7</td>
+      <td>3.0</td>
+      <td>0.700000</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>137</td>
+      <td>Iris-virginica</td>
+      <td>5.6</td>
+      <td>2.4</td>
+      <td>6.3</td>
+      <td>3.4</td>
+      <td>0.435890</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>138</td>
+      <td>Iris-virginica</td>
+      <td>5.5</td>
+      <td>1.8</td>
+      <td>6.4</td>
+      <td>3.1</td>
+      <td>0.435890</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>139</td>
+      <td>Iris-virginica</td>
+      <td>4.8</td>
+      <td>1.8</td>
+      <td>6.0</td>
+      <td>3.0</td>
+      <td>0.435890</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>140</td>
+      <td>Iris-virginica</td>
+      <td>5.4</td>
+      <td>2.1</td>
+      <td>6.9</td>
+      <td>3.1</td>
+      <td>0.374166</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>141</td>
+      <td>Iris-virginica</td>
+      <td>5.6</td>
+      <td>2.4</td>
+      <td>6.7</td>
+      <td>3.1</td>
+      <td>0.346410</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>142</td>
+      <td>Iris-virginica</td>
+      <td>5.1</td>
+      <td>2.3</td>
+      <td>6.9</td>
+      <td>3.1</td>
+      <td>0.509902</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>143</td>
+      <td>Iris-virginica</td>
+      <td>5.1</td>
+      <td>1.9</td>
+      <td>5.8</td>
+      <td>2.7</td>
+      <td>0.331662</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>144</td>
+      <td>Iris-virginica</td>
+      <td>5.9</td>
+      <td>2.3</td>
+      <td>6.8</td>
+      <td>3.2</td>
+      <td>0.346410</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>145</td>
+      <td>Iris-virginica</td>
+      <td>5.7</td>
+      <td>2.5</td>
+      <td>6.7</td>
+      <td>3.3</td>
+      <td>0.400000</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>146</td>
+      <td>Iris-virginica</td>
+      <td>5.2</td>
+      <td>2.3</td>
+      <td>6.7</td>
+      <td>3.0</td>
+      <td>0.374166</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>147</td>
+      <td>Iris-virginica</td>
+      <td>5.0</td>
+      <td>1.9</td>
+      <td>6.3</td>
+      <td>2.5</td>
+      <td>0.479583</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>148</td>
+      <td>Iris-virginica</td>
+      <td>5.2</td>
+      <td>2.0</td>
+      <td>6.5</td>
+      <td>3.0</td>
+      <td>0.360555</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>149</td>
+      <td>Iris-virginica</td>
+      <td>5.4</td>
+      <td>2.3</td>
+      <td>6.2</td>
+      <td>3.4</td>
+      <td>0.616441</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>150</td>
+      <td>Iris-virginica</td>
+      <td>5.1</td>
+      <td>1.8</td>
+      <td>5.9</td>
+      <td>3.0</td>
+      <td>0.331662</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah Outlier: 15
 </pre></div>
 </div>
 </div>
@@ -1074,6 +1952,2643 @@ Data tidak outlier :
 </div>
 <img alt="_images/3fbcdaa3f2fa2b3c4d08dc9fa5b7274e23e3f1b3ff98c5967140af0bbd670f24.png" src="_images/3fbcdaa3f2fa2b3c4d08dc9fa5b7274e23e3f1b3ff98c5967140af0bbd670f24.png" />
 </div>
+</div>
+</section>
+<section id="memisahkan-outlier-dari-data">
+<h2><strong>Memisahkan outlier dari data</strong><a class="headerlink" href="#memisahkan-outlier-dari-data" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Gabungkan berdasarkan kolom &#39;id&#39; dan &#39;class&#39;</span>
+<span class="n">df_merge</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">df_mysql</span><span class="p">,</span> <span class="n">df_postgresql</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;class&quot;</span><span class="p">],</span> <span class="n">how</span><span class="o">=</span><span class="s2">&quot;inner&quot;</span><span class="p">)</span>
+
+<span class="c1"># Ambil data fitur numerik tanpa kolom &#39;class&#39;</span>
+<span class="n">feature_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;petal_length&quot;</span><span class="p">,</span> <span class="s2">&quot;petal_width&quot;</span><span class="p">,</span> <span class="s2">&quot;sepal_length&quot;</span><span class="p">,</span> <span class="s2">&quot;sepal_width&quot;</span><span class="p">]</span>
+<span class="n">data_values</span> <span class="o">=</span> <span class="n">df_merge</span><span class="p">[</span><span class="n">feature_columns</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+
+<span class="c1"># Inisialisasi model LOF</span>
+<span class="n">clf</span> <span class="o">=</span> <span class="n">LocalOutlierFactor</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
+<span class="n">label</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">data_values</span><span class="p">)</span>
+
+<span class="c1"># Tambahkan hasil label ke dataframe</span>
+<span class="n">df_merge</span><span class="p">[</span><span class="s2">&quot;outlier_label&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">label</span>
+
+<span class="c1"># Cetak hasil dengan ID dan class</span>
+<span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="n">df_merge</span><span class="o">.</span><span class="n">to_html</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)))</span>
+
+<span class="n">num_outliers</span> <span class="o">=</span> <span class="p">(</span><span class="n">label</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Jumlah outlier: </span><span class="si">{</span><span class="n">num_outliers</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">df_filtered</span> <span class="o">=</span> <span class="n">df_merge</span><span class="p">[</span><span class="n">label</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;outlier_label&quot;</span><span class="p">],</span> <span class="n">errors</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+<span class="n">outliers</span> <span class="o">=</span> <span class="n">df_merge</span><span class="p">[</span><span class="n">label</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;outlier_label&quot;</span><span class="p">],</span> <span class="n">errors</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Data Outlier:&quot;</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="n">outliers</span><span class="o">.</span><span class="n">to_html</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Jumlah data setelah dihapus : &quot;</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">df_filtered</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Data tidak outlier :&quot;</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="n">df_filtered</span><span class="o">.</span><span class="n">to_html</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>id</th>
+      <th>class</th>
+      <th>petal_length</th>
+      <th>petal_width</th>
+      <th>sepal_length</th>
+      <th>sepal_width</th>
+      <th>outlier_label</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>Iris-setosa</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>5.1</td>
+      <td>3.5</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Iris-setosa</td>
+      <td>14.0</td>
+      <td>2.0</td>
+      <td>40.9</td>
+      <td>30.0</td>
+      <td>-1</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>Iris-setosa</td>
+      <td>1.3</td>
+      <td>0.2</td>
+      <td>4.7</td>
+      <td>3.2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>Iris-setosa</td>
+      <td>15.0</td>
+      <td>20.0</td>
+      <td>46.0</td>
+      <td>31.0</td>
+      <td>-1</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>Iris-setosa</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>5.0</td>
+      <td>3.6</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>Iris-setosa</td>
+      <td>1.7</td>
+      <td>0.4</td>
+      <td>5.4</td>
+      <td>3.9</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>Iris-setosa</td>
+      <td>1.4</td>
+      <td>0.3</td>
+      <td>4.6</td>
+      <td>3.4</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>Iris-setosa</td>
+      <td>1.5</td>
+      <td>0.2</td>
+      <td>5.0</td>
+      <td>3.4</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td>Iris-setosa</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>4.4</td>
+      <td>2.9</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>Iris-setosa</td>
+      <td>1.5</td>
+      <td>0.1</td>
+      <td>4.9</td>
+      <td>3.1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>11</td>
+      <td>Iris-setosa</td>
+      <td>1.5</td>
+      <td>0.2</td>
+      <td>5.4</td>
+      <td>3.7</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>12</td>
+      <td>Iris-setosa</td>
+      <td>16.0</td>
+      <td>2.0</td>
+      <td>48.0</td>
+      <td>34.0</td>
+      <td>-1</td>
+    </tr>
+    <tr>
+      <td>13</td>
+      <td>Iris-setosa</td>
+      <td>1.4</td>
+      <td>0.1</td>
+      <td>4.8</td>
+      <td>3.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>14</td>
+      <td>Iris-setosa</td>
+      <td>1.1</td>
+      <td>0.1</td>
+      <td>4.3</td>
+      <td>3.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>15</td>
+      <td>Iris-setosa</td>
+      <td>1.2</td>
+      <td>0.2</td>
+      <td>5.8</td>
+      <td>4.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>16</td>
+      <td>Iris-setosa</td>
+      <td>1.5</td>
+      <td>0.4</td>
+      <td>5.7</td>
+      <td>4.4</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>17</td>
+      <td>Iris-setosa</td>
+      <td>1.3</td>
+      <td>0.4</td>
+      <td>5.4</td>
+      <td>3.9</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>18</td>
+      <td>Iris-setosa</td>
+      <td>1.4</td>
+      <td>0.3</td>
+      <td>5.1</td>
+      <td>3.5</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>19</td>
+      <td>Iris-setosa</td>
+      <td>1.7</td>
+      <td>0.3</td>
+      <td>5.7</td>
+      <td>3.8</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>20</td>
+      <td>Iris-setosa</td>
+      <td>1.5</td>
+      <td>0.3</td>
+      <td>5.1</td>
+      <td>3.8</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>21</td>
+      <td>Iris-setosa</td>
+      <td>17.0</td>
+      <td>2.0</td>
+      <td>54.0</td>
+      <td>34.0</td>
+      <td>-1</td>
+    </tr>
+    <tr>
+      <td>22</td>
+      <td>Iris-setosa</td>
+      <td>15.0</td>
+      <td>4.0</td>
+      <td>51.0</td>
+      <td>37.0</td>
+      <td>-1</td>
+    </tr>
+    <tr>
+      <td>23</td>
+      <td>Iris-setosa</td>
+      <td>1.0</td>
+      <td>0.2</td>
+      <td>4.6</td>
+      <td>3.6</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>24</td>
+      <td>Iris-setosa</td>
+      <td>1.7</td>
+      <td>0.5</td>
+      <td>5.1</td>
+      <td>3.3</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>25</td>
+      <td>Iris-setosa</td>
+      <td>1.9</td>
+      <td>0.2</td>
+      <td>4.8</td>
+      <td>3.4</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>26</td>
+      <td>Iris-setosa</td>
+      <td>1.6</td>
+      <td>0.2</td>
+      <td>5.0</td>
+      <td>3.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>27</td>
+      <td>Iris-setosa</td>
+      <td>1.6</td>
+      <td>0.4</td>
+      <td>5.0</td>
+      <td>3.4</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>28</td>
+      <td>Iris-setosa</td>
+      <td>1.5</td>
+      <td>0.2</td>
+      <td>5.2</td>
+      <td>3.5</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>29</td>
+      <td>Iris-setosa</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>5.2</td>
+      <td>3.4</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>30</td>
+      <td>Iris-setosa</td>
+      <td>1.6</td>
+      <td>0.2</td>
+      <td>4.7</td>
+      <td>3.2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>31</td>
+      <td>Iris-setosa</td>
+      <td>1.6</td>
+      <td>0.2</td>
+      <td>4.8</td>
+      <td>3.1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>32</td>
+      <td>Iris-setosa</td>
+      <td>1.5</td>
+      <td>0.4</td>
+      <td>5.4</td>
+      <td>3.4</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>33</td>
+      <td>Iris-setosa</td>
+      <td>1.5</td>
+      <td>0.1</td>
+      <td>5.2</td>
+      <td>4.1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>34</td>
+      <td>Iris-setosa</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>5.5</td>
+      <td>4.2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>35</td>
+      <td>Iris-setosa</td>
+      <td>1.5</td>
+      <td>0.1</td>
+      <td>4.9</td>
+      <td>3.1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>36</td>
+      <td>Iris-setosa</td>
+      <td>1.2</td>
+      <td>0.2</td>
+      <td>5.0</td>
+      <td>3.2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>37</td>
+      <td>Iris-setosa</td>
+      <td>1.3</td>
+      <td>0.2</td>
+      <td>5.5</td>
+      <td>3.5</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>38</td>
+      <td>Iris-setosa</td>
+      <td>1.5</td>
+      <td>0.1</td>
+      <td>4.9</td>
+      <td>3.1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>39</td>
+      <td>Iris-setosa</td>
+      <td>1.3</td>
+      <td>0.2</td>
+      <td>4.4</td>
+      <td>3.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>40</td>
+      <td>Iris-setosa</td>
+      <td>1.5</td>
+      <td>0.2</td>
+      <td>5.1</td>
+      <td>3.4</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>41</td>
+      <td>Iris-setosa</td>
+      <td>1.3</td>
+      <td>0.3</td>
+      <td>5.0</td>
+      <td>3.5</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>42</td>
+      <td>Iris-setosa</td>
+      <td>1.3</td>
+      <td>0.3</td>
+      <td>4.5</td>
+      <td>2.3</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>43</td>
+      <td>Iris-setosa</td>
+      <td>1.3</td>
+      <td>0.2</td>
+      <td>4.4</td>
+      <td>3.2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>44</td>
+      <td>Iris-setosa</td>
+      <td>1.6</td>
+      <td>0.6</td>
+      <td>5.0</td>
+      <td>3.5</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>45</td>
+      <td>Iris-setosa</td>
+      <td>1.9</td>
+      <td>0.4</td>
+      <td>5.1</td>
+      <td>3.8</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>46</td>
+      <td>Iris-setosa</td>
+      <td>1.4</td>
+      <td>0.3</td>
+      <td>4.8</td>
+      <td>3.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>47</td>
+      <td>Iris-setosa</td>
+      <td>1.6</td>
+      <td>0.2</td>
+      <td>5.1</td>
+      <td>3.8</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>48</td>
+      <td>Iris-setosa</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>4.6</td>
+      <td>3.2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>49</td>
+      <td>Iris-setosa</td>
+      <td>1.5</td>
+      <td>0.2</td>
+      <td>5.3</td>
+      <td>3.7</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>50</td>
+      <td>Iris-setosa</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>5.0</td>
+      <td>3.3</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>51</td>
+      <td>Iris-versicolor</td>
+      <td>4.7</td>
+      <td>1.4</td>
+      <td>7.0</td>
+      <td>3.2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>52</td>
+      <td>Iris-versicolor</td>
+      <td>4.5</td>
+      <td>1.5</td>
+      <td>6.4</td>
+      <td>3.2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>53</td>
+      <td>Iris-versicolor</td>
+      <td>4.9</td>
+      <td>1.5</td>
+      <td>6.9</td>
+      <td>3.1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>54</td>
+      <td>Iris-versicolor</td>
+      <td>4.0</td>
+      <td>1.3</td>
+      <td>5.5</td>
+      <td>2.3</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>55</td>
+      <td>Iris-versicolor</td>
+      <td>4.6</td>
+      <td>1.5</td>
+      <td>6.5</td>
+      <td>2.8</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>56</td>
+      <td>Iris-versicolor</td>
+      <td>4.5</td>
+      <td>1.3</td>
+      <td>5.7</td>
+      <td>2.8</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>57</td>
+      <td>Iris-versicolor</td>
+      <td>4.7</td>
+      <td>1.6</td>
+      <td>6.3</td>
+      <td>3.3</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>58</td>
+      <td>Iris-versicolor</td>
+      <td>3.3</td>
+      <td>1.0</td>
+      <td>4.9</td>
+      <td>2.4</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>59</td>
+      <td>Iris-versicolor</td>
+      <td>46.0</td>
+      <td>13.0</td>
+      <td>66.0</td>
+      <td>29.0</td>
+      <td>-1</td>
+    </tr>
+    <tr>
+      <td>60</td>
+      <td>Iris-versicolor</td>
+      <td>3.9</td>
+      <td>1.4</td>
+      <td>5.2</td>
+      <td>2.7</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>61</td>
+      <td>Iris-versicolor</td>
+      <td>35.0</td>
+      <td>10.0</td>
+      <td>50.0</td>
+      <td>20.0</td>
+      <td>-1</td>
+    </tr>
+    <tr>
+      <td>62</td>
+      <td>Iris-versicolor</td>
+      <td>4.2</td>
+      <td>1.5</td>
+      <td>5.9</td>
+      <td>3.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>63</td>
+      <td>Iris-versicolor</td>
+      <td>4.0</td>
+      <td>1.0</td>
+      <td>6.0</td>
+      <td>2.2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>64</td>
+      <td>Iris-versicolor</td>
+      <td>4.7</td>
+      <td>1.4</td>
+      <td>6.1</td>
+      <td>2.9</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>65</td>
+      <td>Iris-versicolor</td>
+      <td>3.6</td>
+      <td>1.3</td>
+      <td>5.6</td>
+      <td>2.9</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>66</td>
+      <td>Iris-versicolor</td>
+      <td>4.4</td>
+      <td>1.4</td>
+      <td>6.7</td>
+      <td>3.1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>67</td>
+      <td>Iris-versicolor</td>
+      <td>45.0</td>
+      <td>15.0</td>
+      <td>56.0</td>
+      <td>30.0</td>
+      <td>-1</td>
+    </tr>
+    <tr>
+      <td>68</td>
+      <td>Iris-versicolor</td>
+      <td>4.1</td>
+      <td>1.0</td>
+      <td>5.8</td>
+      <td>2.7</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>69</td>
+      <td>Iris-versicolor</td>
+      <td>4.5</td>
+      <td>1.5</td>
+      <td>6.2</td>
+      <td>2.2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>70</td>
+      <td>Iris-versicolor</td>
+      <td>3.9</td>
+      <td>1.1</td>
+      <td>5.6</td>
+      <td>2.5</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>71</td>
+      <td>Iris-versicolor</td>
+      <td>4.8</td>
+      <td>1.8</td>
+      <td>5.9</td>
+      <td>3.2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>72</td>
+      <td>Iris-versicolor</td>
+      <td>4.0</td>
+      <td>1.3</td>
+      <td>6.1</td>
+      <td>2.8</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>73</td>
+      <td>Iris-versicolor</td>
+      <td>4.9</td>
+      <td>1.5</td>
+      <td>6.3</td>
+      <td>2.5</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>74</td>
+      <td>Iris-versicolor</td>
+      <td>4.7</td>
+      <td>1.2</td>
+      <td>6.1</td>
+      <td>2.8</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>75</td>
+      <td>Iris-versicolor</td>
+      <td>4.3</td>
+      <td>1.3</td>
+      <td>6.4</td>
+      <td>2.9</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>76</td>
+      <td>Iris-versicolor</td>
+      <td>4.4</td>
+      <td>1.4</td>
+      <td>6.6</td>
+      <td>3.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>77</td>
+      <td>Iris-versicolor</td>
+      <td>4.8</td>
+      <td>1.4</td>
+      <td>6.8</td>
+      <td>2.8</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>78</td>
+      <td>Iris-versicolor</td>
+      <td>50.0</td>
+      <td>17.0</td>
+      <td>67.0</td>
+      <td>30.0</td>
+      <td>-1</td>
+    </tr>
+    <tr>
+      <td>79</td>
+      <td>Iris-versicolor</td>
+      <td>4.5</td>
+      <td>1.5</td>
+      <td>6.0</td>
+      <td>2.9</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>80</td>
+      <td>Iris-versicolor</td>
+      <td>3.5</td>
+      <td>1.0</td>
+      <td>5.7</td>
+      <td>2.6</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>81</td>
+      <td>Iris-versicolor</td>
+      <td>3.8</td>
+      <td>1.1</td>
+      <td>5.5</td>
+      <td>2.4</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>82</td>
+      <td>Iris-versicolor</td>
+      <td>3.7</td>
+      <td>1.0</td>
+      <td>5.5</td>
+      <td>2.4</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>83</td>
+      <td>Iris-versicolor</td>
+      <td>3.9</td>
+      <td>1.2</td>
+      <td>5.8</td>
+      <td>2.7</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>84</td>
+      <td>Iris-versicolor</td>
+      <td>5.1</td>
+      <td>1.6</td>
+      <td>6.0</td>
+      <td>2.7</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>85</td>
+      <td>Iris-versicolor</td>
+      <td>4.5</td>
+      <td>1.5</td>
+      <td>5.4</td>
+      <td>3.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>86</td>
+      <td>Iris-versicolor</td>
+      <td>4.5</td>
+      <td>1.6</td>
+      <td>6.0</td>
+      <td>3.4</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>87</td>
+      <td>Iris-versicolor</td>
+      <td>4.7</td>
+      <td>1.5</td>
+      <td>6.7</td>
+      <td>3.1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>88</td>
+      <td>Iris-versicolor</td>
+      <td>4.4</td>
+      <td>1.3</td>
+      <td>6.3</td>
+      <td>2.3</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>89</td>
+      <td>Iris-versicolor</td>
+      <td>4.1</td>
+      <td>1.3</td>
+      <td>5.6</td>
+      <td>3.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>90</td>
+      <td>Iris-versicolor</td>
+      <td>4.0</td>
+      <td>1.3</td>
+      <td>5.5</td>
+      <td>2.5</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>91</td>
+      <td>Iris-versicolor</td>
+      <td>4.4</td>
+      <td>1.2</td>
+      <td>5.5</td>
+      <td>2.6</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>92</td>
+      <td>Iris-versicolor</td>
+      <td>4.6</td>
+      <td>1.4</td>
+      <td>6.1</td>
+      <td>3.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>93</td>
+      <td>Iris-versicolor</td>
+      <td>4.0</td>
+      <td>1.2</td>
+      <td>5.8</td>
+      <td>2.6</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>94</td>
+      <td>Iris-versicolor</td>
+      <td>33.0</td>
+      <td>10.0</td>
+      <td>50.0</td>
+      <td>23.0</td>
+      <td>-1</td>
+    </tr>
+    <tr>
+      <td>95</td>
+      <td>Iris-versicolor</td>
+      <td>4.2</td>
+      <td>1.3</td>
+      <td>5.6</td>
+      <td>2.7</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>96</td>
+      <td>Iris-versicolor</td>
+      <td>4.2</td>
+      <td>1.2</td>
+      <td>5.7</td>
+      <td>3.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>97</td>
+      <td>Iris-versicolor</td>
+      <td>4.2</td>
+      <td>1.3</td>
+      <td>5.7</td>
+      <td>2.9</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>98</td>
+      <td>Iris-versicolor</td>
+      <td>4.3</td>
+      <td>1.3</td>
+      <td>6.2</td>
+      <td>2.9</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>99</td>
+      <td>Iris-versicolor</td>
+      <td>3.0</td>
+      <td>1.1</td>
+      <td>5.1</td>
+      <td>2.5</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>100</td>
+      <td>Iris-versicolor</td>
+      <td>4.1</td>
+      <td>1.3</td>
+      <td>5.7</td>
+      <td>2.8</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>101</td>
+      <td>Iris-virginica</td>
+      <td>6.0</td>
+      <td>2.5</td>
+      <td>6.3</td>
+      <td>3.3</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>102</td>
+      <td>Iris-virginica</td>
+      <td>5.1</td>
+      <td>1.9</td>
+      <td>5.8</td>
+      <td>2.7</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>103</td>
+      <td>Iris-virginica</td>
+      <td>5.9</td>
+      <td>2.1</td>
+      <td>7.1</td>
+      <td>3.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>104</td>
+      <td>Iris-virginica</td>
+      <td>5.6</td>
+      <td>1.8</td>
+      <td>6.3</td>
+      <td>2.9</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>105</td>
+      <td>Iris-virginica</td>
+      <td>5.8</td>
+      <td>2.2</td>
+      <td>6.5</td>
+      <td>3.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>106</td>
+      <td>Iris-virginica</td>
+      <td>66.0</td>
+      <td>21.0</td>
+      <td>76.0</td>
+      <td>30.0</td>
+      <td>-1</td>
+    </tr>
+    <tr>
+      <td>107</td>
+      <td>Iris-virginica</td>
+      <td>4.5</td>
+      <td>1.7</td>
+      <td>4.9</td>
+      <td>2.5</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>108</td>
+      <td>Iris-virginica</td>
+      <td>6.3</td>
+      <td>1.8</td>
+      <td>7.3</td>
+      <td>2.9</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>109</td>
+      <td>Iris-virginica</td>
+      <td>5.8</td>
+      <td>1.8</td>
+      <td>6.7</td>
+      <td>2.5</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>110</td>
+      <td>Iris-virginica</td>
+      <td>61.0</td>
+      <td>25.0</td>
+      <td>72.0</td>
+      <td>36.0</td>
+      <td>-1</td>
+    </tr>
+    <tr>
+      <td>111</td>
+      <td>Iris-virginica</td>
+      <td>5.1</td>
+      <td>2.0</td>
+      <td>6.5</td>
+      <td>3.2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>112</td>
+      <td>Iris-virginica</td>
+      <td>5.3</td>
+      <td>1.9</td>
+      <td>6.4</td>
+      <td>2.7</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>113</td>
+      <td>Iris-virginica</td>
+      <td>5.5</td>
+      <td>2.1</td>
+      <td>6.8</td>
+      <td>3.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>114</td>
+      <td>Iris-virginica</td>
+      <td>5.0</td>
+      <td>2.0</td>
+      <td>5.7</td>
+      <td>2.5</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>115</td>
+      <td>Iris-virginica</td>
+      <td>5.1</td>
+      <td>2.4</td>
+      <td>5.8</td>
+      <td>2.8</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>116</td>
+      <td>Iris-virginica</td>
+      <td>5.3</td>
+      <td>2.3</td>
+      <td>6.4</td>
+      <td>3.2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>117</td>
+      <td>Iris-virginica</td>
+      <td>5.5</td>
+      <td>1.8</td>
+      <td>6.5</td>
+      <td>3.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>118</td>
+      <td>Iris-virginica</td>
+      <td>67.0</td>
+      <td>22.0</td>
+      <td>77.0</td>
+      <td>38.0</td>
+      <td>-1</td>
+    </tr>
+    <tr>
+      <td>119</td>
+      <td>Iris-virginica</td>
+      <td>6.9</td>
+      <td>2.3</td>
+      <td>7.7</td>
+      <td>2.6</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>120</td>
+      <td>Iris-virginica</td>
+      <td>5.0</td>
+      <td>1.5</td>
+      <td>6.0</td>
+      <td>2.2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>121</td>
+      <td>Iris-virginica</td>
+      <td>5.7</td>
+      <td>2.3</td>
+      <td>6.9</td>
+      <td>3.2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>122</td>
+      <td>Iris-virginica</td>
+      <td>4.9</td>
+      <td>2.0</td>
+      <td>5.6</td>
+      <td>2.8</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>123</td>
+      <td>Iris-virginica</td>
+      <td>6.7</td>
+      <td>2.0</td>
+      <td>7.7</td>
+      <td>2.8</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>124</td>
+      <td>Iris-virginica</td>
+      <td>4.9</td>
+      <td>1.8</td>
+      <td>6.3</td>
+      <td>2.7</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>125</td>
+      <td>Iris-virginica</td>
+      <td>5.7</td>
+      <td>2.1</td>
+      <td>6.7</td>
+      <td>3.3</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>126</td>
+      <td>Iris-virginica</td>
+      <td>6.0</td>
+      <td>1.8</td>
+      <td>7.2</td>
+      <td>3.2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>127</td>
+      <td>Iris-virginica</td>
+      <td>48.0</td>
+      <td>18.0</td>
+      <td>62.0</td>
+      <td>28.0</td>
+      <td>-1</td>
+    </tr>
+    <tr>
+      <td>128</td>
+      <td>Iris-virginica</td>
+      <td>4.9</td>
+      <td>1.8</td>
+      <td>6.1</td>
+      <td>3.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>129</td>
+      <td>Iris-virginica</td>
+      <td>5.6</td>
+      <td>2.1</td>
+      <td>6.4</td>
+      <td>2.8</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>130</td>
+      <td>Iris-virginica</td>
+      <td>5.8</td>
+      <td>1.6</td>
+      <td>7.2</td>
+      <td>3.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>131</td>
+      <td>Iris-virginica</td>
+      <td>6.1</td>
+      <td>1.9</td>
+      <td>7.4</td>
+      <td>2.8</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>132</td>
+      <td>Iris-virginica</td>
+      <td>64.0</td>
+      <td>20.0</td>
+      <td>79.0</td>
+      <td>38.0</td>
+      <td>-1</td>
+    </tr>
+    <tr>
+      <td>133</td>
+      <td>Iris-virginica</td>
+      <td>5.6</td>
+      <td>2.2</td>
+      <td>6.4</td>
+      <td>2.8</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>134</td>
+      <td>Iris-virginica</td>
+      <td>5.1</td>
+      <td>1.5</td>
+      <td>6.3</td>
+      <td>2.8</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>135</td>
+      <td>Iris-virginica</td>
+      <td>5.6</td>
+      <td>1.4</td>
+      <td>6.1</td>
+      <td>2.6</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>136</td>
+      <td>Iris-virginica</td>
+      <td>6.1</td>
+      <td>2.3</td>
+      <td>7.7</td>
+      <td>3.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>137</td>
+      <td>Iris-virginica</td>
+      <td>5.6</td>
+      <td>2.4</td>
+      <td>6.3</td>
+      <td>3.4</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>138</td>
+      <td>Iris-virginica</td>
+      <td>5.5</td>
+      <td>1.8</td>
+      <td>6.4</td>
+      <td>3.1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>139</td>
+      <td>Iris-virginica</td>
+      <td>4.8</td>
+      <td>1.8</td>
+      <td>6.0</td>
+      <td>3.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>140</td>
+      <td>Iris-virginica</td>
+      <td>5.4</td>
+      <td>2.1</td>
+      <td>6.9</td>
+      <td>3.1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>141</td>
+      <td>Iris-virginica</td>
+      <td>5.6</td>
+      <td>2.4</td>
+      <td>6.7</td>
+      <td>3.1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>142</td>
+      <td>Iris-virginica</td>
+      <td>5.1</td>
+      <td>2.3</td>
+      <td>6.9</td>
+      <td>3.1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>143</td>
+      <td>Iris-virginica</td>
+      <td>5.1</td>
+      <td>1.9</td>
+      <td>5.8</td>
+      <td>2.7</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>144</td>
+      <td>Iris-virginica</td>
+      <td>5.9</td>
+      <td>2.3</td>
+      <td>6.8</td>
+      <td>3.2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>145</td>
+      <td>Iris-virginica</td>
+      <td>5.7</td>
+      <td>2.5</td>
+      <td>6.7</td>
+      <td>3.3</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>146</td>
+      <td>Iris-virginica</td>
+      <td>5.2</td>
+      <td>2.3</td>
+      <td>6.7</td>
+      <td>3.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>147</td>
+      <td>Iris-virginica</td>
+      <td>5.0</td>
+      <td>1.9</td>
+      <td>6.3</td>
+      <td>2.5</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>148</td>
+      <td>Iris-virginica</td>
+      <td>5.2</td>
+      <td>2.0</td>
+      <td>6.5</td>
+      <td>3.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>149</td>
+      <td>Iris-virginica</td>
+      <td>5.4</td>
+      <td>2.3</td>
+      <td>6.2</td>
+      <td>3.4</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>150</td>
+      <td>Iris-virginica</td>
+      <td>5.1</td>
+      <td>1.8</td>
+      <td>5.9</td>
+      <td>3.0</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah outlier: 15
+
+Data Outlier:
+</pre></div>
+</div>
+<div class="output text_html"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>id</th>
+      <th>class</th>
+      <th>petal_length</th>
+      <th>petal_width</th>
+      <th>sepal_length</th>
+      <th>sepal_width</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>2</td>
+      <td>Iris-setosa</td>
+      <td>14.0</td>
+      <td>2.0</td>
+      <td>40.9</td>
+      <td>30.0</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>Iris-setosa</td>
+      <td>15.0</td>
+      <td>20.0</td>
+      <td>46.0</td>
+      <td>31.0</td>
+    </tr>
+    <tr>
+      <td>12</td>
+      <td>Iris-setosa</td>
+      <td>16.0</td>
+      <td>2.0</td>
+      <td>48.0</td>
+      <td>34.0</td>
+    </tr>
+    <tr>
+      <td>21</td>
+      <td>Iris-setosa</td>
+      <td>17.0</td>
+      <td>2.0</td>
+      <td>54.0</td>
+      <td>34.0</td>
+    </tr>
+    <tr>
+      <td>22</td>
+      <td>Iris-setosa</td>
+      <td>15.0</td>
+      <td>4.0</td>
+      <td>51.0</td>
+      <td>37.0</td>
+    </tr>
+    <tr>
+      <td>59</td>
+      <td>Iris-versicolor</td>
+      <td>46.0</td>
+      <td>13.0</td>
+      <td>66.0</td>
+      <td>29.0</td>
+    </tr>
+    <tr>
+      <td>61</td>
+      <td>Iris-versicolor</td>
+      <td>35.0</td>
+      <td>10.0</td>
+      <td>50.0</td>
+      <td>20.0</td>
+    </tr>
+    <tr>
+      <td>67</td>
+      <td>Iris-versicolor</td>
+      <td>45.0</td>
+      <td>15.0</td>
+      <td>56.0</td>
+      <td>30.0</td>
+    </tr>
+    <tr>
+      <td>78</td>
+      <td>Iris-versicolor</td>
+      <td>50.0</td>
+      <td>17.0</td>
+      <td>67.0</td>
+      <td>30.0</td>
+    </tr>
+    <tr>
+      <td>94</td>
+      <td>Iris-versicolor</td>
+      <td>33.0</td>
+      <td>10.0</td>
+      <td>50.0</td>
+      <td>23.0</td>
+    </tr>
+    <tr>
+      <td>106</td>
+      <td>Iris-virginica</td>
+      <td>66.0</td>
+      <td>21.0</td>
+      <td>76.0</td>
+      <td>30.0</td>
+    </tr>
+    <tr>
+      <td>110</td>
+      <td>Iris-virginica</td>
+      <td>61.0</td>
+      <td>25.0</td>
+      <td>72.0</td>
+      <td>36.0</td>
+    </tr>
+    <tr>
+      <td>118</td>
+      <td>Iris-virginica</td>
+      <td>67.0</td>
+      <td>22.0</td>
+      <td>77.0</td>
+      <td>38.0</td>
+    </tr>
+    <tr>
+      <td>127</td>
+      <td>Iris-virginica</td>
+      <td>48.0</td>
+      <td>18.0</td>
+      <td>62.0</td>
+      <td>28.0</td>
+    </tr>
+    <tr>
+      <td>132</td>
+      <td>Iris-virginica</td>
+      <td>64.0</td>
+      <td>20.0</td>
+      <td>79.0</td>
+      <td>38.0</td>
+    </tr>
+  </tbody>
+</table></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah data setelah dihapus :  135
+
+Data tidak outlier :
+</pre></div>
+</div>
+<div class="output text_html"><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>id</th>
+      <th>class</th>
+      <th>petal_length</th>
+      <th>petal_width</th>
+      <th>sepal_length</th>
+      <th>sepal_width</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>Iris-setosa</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>5.1</td>
+      <td>3.5</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>Iris-setosa</td>
+      <td>1.3</td>
+      <td>0.2</td>
+      <td>4.7</td>
+      <td>3.2</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>Iris-setosa</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>5.0</td>
+      <td>3.6</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>Iris-setosa</td>
+      <td>1.7</td>
+      <td>0.4</td>
+      <td>5.4</td>
+      <td>3.9</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>Iris-setosa</td>
+      <td>1.4</td>
+      <td>0.3</td>
+      <td>4.6</td>
+      <td>3.4</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>Iris-setosa</td>
+      <td>1.5</td>
+      <td>0.2</td>
+      <td>5.0</td>
+      <td>3.4</td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td>Iris-setosa</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>4.4</td>
+      <td>2.9</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>Iris-setosa</td>
+      <td>1.5</td>
+      <td>0.1</td>
+      <td>4.9</td>
+      <td>3.1</td>
+    </tr>
+    <tr>
+      <td>11</td>
+      <td>Iris-setosa</td>
+      <td>1.5</td>
+      <td>0.2</td>
+      <td>5.4</td>
+      <td>3.7</td>
+    </tr>
+    <tr>
+      <td>13</td>
+      <td>Iris-setosa</td>
+      <td>1.4</td>
+      <td>0.1</td>
+      <td>4.8</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <td>14</td>
+      <td>Iris-setosa</td>
+      <td>1.1</td>
+      <td>0.1</td>
+      <td>4.3</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <td>15</td>
+      <td>Iris-setosa</td>
+      <td>1.2</td>
+      <td>0.2</td>
+      <td>5.8</td>
+      <td>4.0</td>
+    </tr>
+    <tr>
+      <td>16</td>
+      <td>Iris-setosa</td>
+      <td>1.5</td>
+      <td>0.4</td>
+      <td>5.7</td>
+      <td>4.4</td>
+    </tr>
+    <tr>
+      <td>17</td>
+      <td>Iris-setosa</td>
+      <td>1.3</td>
+      <td>0.4</td>
+      <td>5.4</td>
+      <td>3.9</td>
+    </tr>
+    <tr>
+      <td>18</td>
+      <td>Iris-setosa</td>
+      <td>1.4</td>
+      <td>0.3</td>
+      <td>5.1</td>
+      <td>3.5</td>
+    </tr>
+    <tr>
+      <td>19</td>
+      <td>Iris-setosa</td>
+      <td>1.7</td>
+      <td>0.3</td>
+      <td>5.7</td>
+      <td>3.8</td>
+    </tr>
+    <tr>
+      <td>20</td>
+      <td>Iris-setosa</td>
+      <td>1.5</td>
+      <td>0.3</td>
+      <td>5.1</td>
+      <td>3.8</td>
+    </tr>
+    <tr>
+      <td>23</td>
+      <td>Iris-setosa</td>
+      <td>1.0</td>
+      <td>0.2</td>
+      <td>4.6</td>
+      <td>3.6</td>
+    </tr>
+    <tr>
+      <td>24</td>
+      <td>Iris-setosa</td>
+      <td>1.7</td>
+      <td>0.5</td>
+      <td>5.1</td>
+      <td>3.3</td>
+    </tr>
+    <tr>
+      <td>25</td>
+      <td>Iris-setosa</td>
+      <td>1.9</td>
+      <td>0.2</td>
+      <td>4.8</td>
+      <td>3.4</td>
+    </tr>
+    <tr>
+      <td>26</td>
+      <td>Iris-setosa</td>
+      <td>1.6</td>
+      <td>0.2</td>
+      <td>5.0</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <td>27</td>
+      <td>Iris-setosa</td>
+      <td>1.6</td>
+      <td>0.4</td>
+      <td>5.0</td>
+      <td>3.4</td>
+    </tr>
+    <tr>
+      <td>28</td>
+      <td>Iris-setosa</td>
+      <td>1.5</td>
+      <td>0.2</td>
+      <td>5.2</td>
+      <td>3.5</td>
+    </tr>
+    <tr>
+      <td>29</td>
+      <td>Iris-setosa</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>5.2</td>
+      <td>3.4</td>
+    </tr>
+    <tr>
+      <td>30</td>
+      <td>Iris-setosa</td>
+      <td>1.6</td>
+      <td>0.2</td>
+      <td>4.7</td>
+      <td>3.2</td>
+    </tr>
+    <tr>
+      <td>31</td>
+      <td>Iris-setosa</td>
+      <td>1.6</td>
+      <td>0.2</td>
+      <td>4.8</td>
+      <td>3.1</td>
+    </tr>
+    <tr>
+      <td>32</td>
+      <td>Iris-setosa</td>
+      <td>1.5</td>
+      <td>0.4</td>
+      <td>5.4</td>
+      <td>3.4</td>
+    </tr>
+    <tr>
+      <td>33</td>
+      <td>Iris-setosa</td>
+      <td>1.5</td>
+      <td>0.1</td>
+      <td>5.2</td>
+      <td>4.1</td>
+    </tr>
+    <tr>
+      <td>34</td>
+      <td>Iris-setosa</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>5.5</td>
+      <td>4.2</td>
+    </tr>
+    <tr>
+      <td>35</td>
+      <td>Iris-setosa</td>
+      <td>1.5</td>
+      <td>0.1</td>
+      <td>4.9</td>
+      <td>3.1</td>
+    </tr>
+    <tr>
+      <td>36</td>
+      <td>Iris-setosa</td>
+      <td>1.2</td>
+      <td>0.2</td>
+      <td>5.0</td>
+      <td>3.2</td>
+    </tr>
+    <tr>
+      <td>37</td>
+      <td>Iris-setosa</td>
+      <td>1.3</td>
+      <td>0.2</td>
+      <td>5.5</td>
+      <td>3.5</td>
+    </tr>
+    <tr>
+      <td>38</td>
+      <td>Iris-setosa</td>
+      <td>1.5</td>
+      <td>0.1</td>
+      <td>4.9</td>
+      <td>3.1</td>
+    </tr>
+    <tr>
+      <td>39</td>
+      <td>Iris-setosa</td>
+      <td>1.3</td>
+      <td>0.2</td>
+      <td>4.4</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <td>40</td>
+      <td>Iris-setosa</td>
+      <td>1.5</td>
+      <td>0.2</td>
+      <td>5.1</td>
+      <td>3.4</td>
+    </tr>
+    <tr>
+      <td>41</td>
+      <td>Iris-setosa</td>
+      <td>1.3</td>
+      <td>0.3</td>
+      <td>5.0</td>
+      <td>3.5</td>
+    </tr>
+    <tr>
+      <td>42</td>
+      <td>Iris-setosa</td>
+      <td>1.3</td>
+      <td>0.3</td>
+      <td>4.5</td>
+      <td>2.3</td>
+    </tr>
+    <tr>
+      <td>43</td>
+      <td>Iris-setosa</td>
+      <td>1.3</td>
+      <td>0.2</td>
+      <td>4.4</td>
+      <td>3.2</td>
+    </tr>
+    <tr>
+      <td>44</td>
+      <td>Iris-setosa</td>
+      <td>1.6</td>
+      <td>0.6</td>
+      <td>5.0</td>
+      <td>3.5</td>
+    </tr>
+    <tr>
+      <td>45</td>
+      <td>Iris-setosa</td>
+      <td>1.9</td>
+      <td>0.4</td>
+      <td>5.1</td>
+      <td>3.8</td>
+    </tr>
+    <tr>
+      <td>46</td>
+      <td>Iris-setosa</td>
+      <td>1.4</td>
+      <td>0.3</td>
+      <td>4.8</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <td>47</td>
+      <td>Iris-setosa</td>
+      <td>1.6</td>
+      <td>0.2</td>
+      <td>5.1</td>
+      <td>3.8</td>
+    </tr>
+    <tr>
+      <td>48</td>
+      <td>Iris-setosa</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>4.6</td>
+      <td>3.2</td>
+    </tr>
+    <tr>
+      <td>49</td>
+      <td>Iris-setosa</td>
+      <td>1.5</td>
+      <td>0.2</td>
+      <td>5.3</td>
+      <td>3.7</td>
+    </tr>
+    <tr>
+      <td>50</td>
+      <td>Iris-setosa</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>5.0</td>
+      <td>3.3</td>
+    </tr>
+    <tr>
+      <td>51</td>
+      <td>Iris-versicolor</td>
+      <td>4.7</td>
+      <td>1.4</td>
+      <td>7.0</td>
+      <td>3.2</td>
+    </tr>
+    <tr>
+      <td>52</td>
+      <td>Iris-versicolor</td>
+      <td>4.5</td>
+      <td>1.5</td>
+      <td>6.4</td>
+      <td>3.2</td>
+    </tr>
+    <tr>
+      <td>53</td>
+      <td>Iris-versicolor</td>
+      <td>4.9</td>
+      <td>1.5</td>
+      <td>6.9</td>
+      <td>3.1</td>
+    </tr>
+    <tr>
+      <td>54</td>
+      <td>Iris-versicolor</td>
+      <td>4.0</td>
+      <td>1.3</td>
+      <td>5.5</td>
+      <td>2.3</td>
+    </tr>
+    <tr>
+      <td>55</td>
+      <td>Iris-versicolor</td>
+      <td>4.6</td>
+      <td>1.5</td>
+      <td>6.5</td>
+      <td>2.8</td>
+    </tr>
+    <tr>
+      <td>56</td>
+      <td>Iris-versicolor</td>
+      <td>4.5</td>
+      <td>1.3</td>
+      <td>5.7</td>
+      <td>2.8</td>
+    </tr>
+    <tr>
+      <td>57</td>
+      <td>Iris-versicolor</td>
+      <td>4.7</td>
+      <td>1.6</td>
+      <td>6.3</td>
+      <td>3.3</td>
+    </tr>
+    <tr>
+      <td>58</td>
+      <td>Iris-versicolor</td>
+      <td>3.3</td>
+      <td>1.0</td>
+      <td>4.9</td>
+      <td>2.4</td>
+    </tr>
+    <tr>
+      <td>60</td>
+      <td>Iris-versicolor</td>
+      <td>3.9</td>
+      <td>1.4</td>
+      <td>5.2</td>
+      <td>2.7</td>
+    </tr>
+    <tr>
+      <td>62</td>
+      <td>Iris-versicolor</td>
+      <td>4.2</td>
+      <td>1.5</td>
+      <td>5.9</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <td>63</td>
+      <td>Iris-versicolor</td>
+      <td>4.0</td>
+      <td>1.0</td>
+      <td>6.0</td>
+      <td>2.2</td>
+    </tr>
+    <tr>
+      <td>64</td>
+      <td>Iris-versicolor</td>
+      <td>4.7</td>
+      <td>1.4</td>
+      <td>6.1</td>
+      <td>2.9</td>
+    </tr>
+    <tr>
+      <td>65</td>
+      <td>Iris-versicolor</td>
+      <td>3.6</td>
+      <td>1.3</td>
+      <td>5.6</td>
+      <td>2.9</td>
+    </tr>
+    <tr>
+      <td>66</td>
+      <td>Iris-versicolor</td>
+      <td>4.4</td>
+      <td>1.4</td>
+      <td>6.7</td>
+      <td>3.1</td>
+    </tr>
+    <tr>
+      <td>68</td>
+      <td>Iris-versicolor</td>
+      <td>4.1</td>
+      <td>1.0</td>
+      <td>5.8</td>
+      <td>2.7</td>
+    </tr>
+    <tr>
+      <td>69</td>
+      <td>Iris-versicolor</td>
+      <td>4.5</td>
+      <td>1.5</td>
+      <td>6.2</td>
+      <td>2.2</td>
+    </tr>
+    <tr>
+      <td>70</td>
+      <td>Iris-versicolor</td>
+      <td>3.9</td>
+      <td>1.1</td>
+      <td>5.6</td>
+      <td>2.5</td>
+    </tr>
+    <tr>
+      <td>71</td>
+      <td>Iris-versicolor</td>
+      <td>4.8</td>
+      <td>1.8</td>
+      <td>5.9</td>
+      <td>3.2</td>
+    </tr>
+    <tr>
+      <td>72</td>
+      <td>Iris-versicolor</td>
+      <td>4.0</td>
+      <td>1.3</td>
+      <td>6.1</td>
+      <td>2.8</td>
+    </tr>
+    <tr>
+      <td>73</td>
+      <td>Iris-versicolor</td>
+      <td>4.9</td>
+      <td>1.5</td>
+      <td>6.3</td>
+      <td>2.5</td>
+    </tr>
+    <tr>
+      <td>74</td>
+      <td>Iris-versicolor</td>
+      <td>4.7</td>
+      <td>1.2</td>
+      <td>6.1</td>
+      <td>2.8</td>
+    </tr>
+    <tr>
+      <td>75</td>
+      <td>Iris-versicolor</td>
+      <td>4.3</td>
+      <td>1.3</td>
+      <td>6.4</td>
+      <td>2.9</td>
+    </tr>
+    <tr>
+      <td>76</td>
+      <td>Iris-versicolor</td>
+      <td>4.4</td>
+      <td>1.4</td>
+      <td>6.6</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <td>77</td>
+      <td>Iris-versicolor</td>
+      <td>4.8</td>
+      <td>1.4</td>
+      <td>6.8</td>
+      <td>2.8</td>
+    </tr>
+    <tr>
+      <td>79</td>
+      <td>Iris-versicolor</td>
+      <td>4.5</td>
+      <td>1.5</td>
+      <td>6.0</td>
+      <td>2.9</td>
+    </tr>
+    <tr>
+      <td>80</td>
+      <td>Iris-versicolor</td>
+      <td>3.5</td>
+      <td>1.0</td>
+      <td>5.7</td>
+      <td>2.6</td>
+    </tr>
+    <tr>
+      <td>81</td>
+      <td>Iris-versicolor</td>
+      <td>3.8</td>
+      <td>1.1</td>
+      <td>5.5</td>
+      <td>2.4</td>
+    </tr>
+    <tr>
+      <td>82</td>
+      <td>Iris-versicolor</td>
+      <td>3.7</td>
+      <td>1.0</td>
+      <td>5.5</td>
+      <td>2.4</td>
+    </tr>
+    <tr>
+      <td>83</td>
+      <td>Iris-versicolor</td>
+      <td>3.9</td>
+      <td>1.2</td>
+      <td>5.8</td>
+      <td>2.7</td>
+    </tr>
+    <tr>
+      <td>84</td>
+      <td>Iris-versicolor</td>
+      <td>5.1</td>
+      <td>1.6</td>
+      <td>6.0</td>
+      <td>2.7</td>
+    </tr>
+    <tr>
+      <td>85</td>
+      <td>Iris-versicolor</td>
+      <td>4.5</td>
+      <td>1.5</td>
+      <td>5.4</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <td>86</td>
+      <td>Iris-versicolor</td>
+      <td>4.5</td>
+      <td>1.6</td>
+      <td>6.0</td>
+      <td>3.4</td>
+    </tr>
+    <tr>
+      <td>87</td>
+      <td>Iris-versicolor</td>
+      <td>4.7</td>
+      <td>1.5</td>
+      <td>6.7</td>
+      <td>3.1</td>
+    </tr>
+    <tr>
+      <td>88</td>
+      <td>Iris-versicolor</td>
+      <td>4.4</td>
+      <td>1.3</td>
+      <td>6.3</td>
+      <td>2.3</td>
+    </tr>
+    <tr>
+      <td>89</td>
+      <td>Iris-versicolor</td>
+      <td>4.1</td>
+      <td>1.3</td>
+      <td>5.6</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <td>90</td>
+      <td>Iris-versicolor</td>
+      <td>4.0</td>
+      <td>1.3</td>
+      <td>5.5</td>
+      <td>2.5</td>
+    </tr>
+    <tr>
+      <td>91</td>
+      <td>Iris-versicolor</td>
+      <td>4.4</td>
+      <td>1.2</td>
+      <td>5.5</td>
+      <td>2.6</td>
+    </tr>
+    <tr>
+      <td>92</td>
+      <td>Iris-versicolor</td>
+      <td>4.6</td>
+      <td>1.4</td>
+      <td>6.1</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <td>93</td>
+      <td>Iris-versicolor</td>
+      <td>4.0</td>
+      <td>1.2</td>
+      <td>5.8</td>
+      <td>2.6</td>
+    </tr>
+    <tr>
+      <td>95</td>
+      <td>Iris-versicolor</td>
+      <td>4.2</td>
+      <td>1.3</td>
+      <td>5.6</td>
+      <td>2.7</td>
+    </tr>
+    <tr>
+      <td>96</td>
+      <td>Iris-versicolor</td>
+      <td>4.2</td>
+      <td>1.2</td>
+      <td>5.7</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <td>97</td>
+      <td>Iris-versicolor</td>
+      <td>4.2</td>
+      <td>1.3</td>
+      <td>5.7</td>
+      <td>2.9</td>
+    </tr>
+    <tr>
+      <td>98</td>
+      <td>Iris-versicolor</td>
+      <td>4.3</td>
+      <td>1.3</td>
+      <td>6.2</td>
+      <td>2.9</td>
+    </tr>
+    <tr>
+      <td>99</td>
+      <td>Iris-versicolor</td>
+      <td>3.0</td>
+      <td>1.1</td>
+      <td>5.1</td>
+      <td>2.5</td>
+    </tr>
+    <tr>
+      <td>100</td>
+      <td>Iris-versicolor</td>
+      <td>4.1</td>
+      <td>1.3</td>
+      <td>5.7</td>
+      <td>2.8</td>
+    </tr>
+    <tr>
+      <td>101</td>
+      <td>Iris-virginica</td>
+      <td>6.0</td>
+      <td>2.5</td>
+      <td>6.3</td>
+      <td>3.3</td>
+    </tr>
+    <tr>
+      <td>102</td>
+      <td>Iris-virginica</td>
+      <td>5.1</td>
+      <td>1.9</td>
+      <td>5.8</td>
+      <td>2.7</td>
+    </tr>
+    <tr>
+      <td>103</td>
+      <td>Iris-virginica</td>
+      <td>5.9</td>
+      <td>2.1</td>
+      <td>7.1</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <td>104</td>
+      <td>Iris-virginica</td>
+      <td>5.6</td>
+      <td>1.8</td>
+      <td>6.3</td>
+      <td>2.9</td>
+    </tr>
+    <tr>
+      <td>105</td>
+      <td>Iris-virginica</td>
+      <td>5.8</td>
+      <td>2.2</td>
+      <td>6.5</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <td>107</td>
+      <td>Iris-virginica</td>
+      <td>4.5</td>
+      <td>1.7</td>
+      <td>4.9</td>
+      <td>2.5</td>
+    </tr>
+    <tr>
+      <td>108</td>
+      <td>Iris-virginica</td>
+      <td>6.3</td>
+      <td>1.8</td>
+      <td>7.3</td>
+      <td>2.9</td>
+    </tr>
+    <tr>
+      <td>109</td>
+      <td>Iris-virginica</td>
+      <td>5.8</td>
+      <td>1.8</td>
+      <td>6.7</td>
+      <td>2.5</td>
+    </tr>
+    <tr>
+      <td>111</td>
+      <td>Iris-virginica</td>
+      <td>5.1</td>
+      <td>2.0</td>
+      <td>6.5</td>
+      <td>3.2</td>
+    </tr>
+    <tr>
+      <td>112</td>
+      <td>Iris-virginica</td>
+      <td>5.3</td>
+      <td>1.9</td>
+      <td>6.4</td>
+      <td>2.7</td>
+    </tr>
+    <tr>
+      <td>113</td>
+      <td>Iris-virginica</td>
+      <td>5.5</td>
+      <td>2.1</td>
+      <td>6.8</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <td>114</td>
+      <td>Iris-virginica</td>
+      <td>5.0</td>
+      <td>2.0</td>
+      <td>5.7</td>
+      <td>2.5</td>
+    </tr>
+    <tr>
+      <td>115</td>
+      <td>Iris-virginica</td>
+      <td>5.1</td>
+      <td>2.4</td>
+      <td>5.8</td>
+      <td>2.8</td>
+    </tr>
+    <tr>
+      <td>116</td>
+      <td>Iris-virginica</td>
+      <td>5.3</td>
+      <td>2.3</td>
+      <td>6.4</td>
+      <td>3.2</td>
+    </tr>
+    <tr>
+      <td>117</td>
+      <td>Iris-virginica</td>
+      <td>5.5</td>
+      <td>1.8</td>
+      <td>6.5</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <td>119</td>
+      <td>Iris-virginica</td>
+      <td>6.9</td>
+      <td>2.3</td>
+      <td>7.7</td>
+      <td>2.6</td>
+    </tr>
+    <tr>
+      <td>120</td>
+      <td>Iris-virginica</td>
+      <td>5.0</td>
+      <td>1.5</td>
+      <td>6.0</td>
+      <td>2.2</td>
+    </tr>
+    <tr>
+      <td>121</td>
+      <td>Iris-virginica</td>
+      <td>5.7</td>
+      <td>2.3</td>
+      <td>6.9</td>
+      <td>3.2</td>
+    </tr>
+    <tr>
+      <td>122</td>
+      <td>Iris-virginica</td>
+      <td>4.9</td>
+      <td>2.0</td>
+      <td>5.6</td>
+      <td>2.8</td>
+    </tr>
+    <tr>
+      <td>123</td>
+      <td>Iris-virginica</td>
+      <td>6.7</td>
+      <td>2.0</td>
+      <td>7.7</td>
+      <td>2.8</td>
+    </tr>
+    <tr>
+      <td>124</td>
+      <td>Iris-virginica</td>
+      <td>4.9</td>
+      <td>1.8</td>
+      <td>6.3</td>
+      <td>2.7</td>
+    </tr>
+    <tr>
+      <td>125</td>
+      <td>Iris-virginica</td>
+      <td>5.7</td>
+      <td>2.1</td>
+      <td>6.7</td>
+      <td>3.3</td>
+    </tr>
+    <tr>
+      <td>126</td>
+      <td>Iris-virginica</td>
+      <td>6.0</td>
+      <td>1.8</td>
+      <td>7.2</td>
+      <td>3.2</td>
+    </tr>
+    <tr>
+      <td>128</td>
+      <td>Iris-virginica</td>
+      <td>4.9</td>
+      <td>1.8</td>
+      <td>6.1</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <td>129</td>
+      <td>Iris-virginica</td>
+      <td>5.6</td>
+      <td>2.1</td>
+      <td>6.4</td>
+      <td>2.8</td>
+    </tr>
+    <tr>
+      <td>130</td>
+      <td>Iris-virginica</td>
+      <td>5.8</td>
+      <td>1.6</td>
+      <td>7.2</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <td>131</td>
+      <td>Iris-virginica</td>
+      <td>6.1</td>
+      <td>1.9</td>
+      <td>7.4</td>
+      <td>2.8</td>
+    </tr>
+    <tr>
+      <td>133</td>
+      <td>Iris-virginica</td>
+      <td>5.6</td>
+      <td>2.2</td>
+      <td>6.4</td>
+      <td>2.8</td>
+    </tr>
+    <tr>
+      <td>134</td>
+      <td>Iris-virginica</td>
+      <td>5.1</td>
+      <td>1.5</td>
+      <td>6.3</td>
+      <td>2.8</td>
+    </tr>
+    <tr>
+      <td>135</td>
+      <td>Iris-virginica</td>
+      <td>5.6</td>
+      <td>1.4</td>
+      <td>6.1</td>
+      <td>2.6</td>
+    </tr>
+    <tr>
+      <td>136</td>
+      <td>Iris-virginica</td>
+      <td>6.1</td>
+      <td>2.3</td>
+      <td>7.7</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <td>137</td>
+      <td>Iris-virginica</td>
+      <td>5.6</td>
+      <td>2.4</td>
+      <td>6.3</td>
+      <td>3.4</td>
+    </tr>
+    <tr>
+      <td>138</td>
+      <td>Iris-virginica</td>
+      <td>5.5</td>
+      <td>1.8</td>
+      <td>6.4</td>
+      <td>3.1</td>
+    </tr>
+    <tr>
+      <td>139</td>
+      <td>Iris-virginica</td>
+      <td>4.8</td>
+      <td>1.8</td>
+      <td>6.0</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <td>140</td>
+      <td>Iris-virginica</td>
+      <td>5.4</td>
+      <td>2.1</td>
+      <td>6.9</td>
+      <td>3.1</td>
+    </tr>
+    <tr>
+      <td>141</td>
+      <td>Iris-virginica</td>
+      <td>5.6</td>
+      <td>2.4</td>
+      <td>6.7</td>
+      <td>3.1</td>
+    </tr>
+    <tr>
+      <td>142</td>
+      <td>Iris-virginica</td>
+      <td>5.1</td>
+      <td>2.3</td>
+      <td>6.9</td>
+      <td>3.1</td>
+    </tr>
+    <tr>
+      <td>143</td>
+      <td>Iris-virginica</td>
+      <td>5.1</td>
+      <td>1.9</td>
+      <td>5.8</td>
+      <td>2.7</td>
+    </tr>
+    <tr>
+      <td>144</td>
+      <td>Iris-virginica</td>
+      <td>5.9</td>
+      <td>2.3</td>
+      <td>6.8</td>
+      <td>3.2</td>
+    </tr>
+    <tr>
+      <td>145</td>
+      <td>Iris-virginica</td>
+      <td>5.7</td>
+      <td>2.5</td>
+      <td>6.7</td>
+      <td>3.3</td>
+    </tr>
+    <tr>
+      <td>146</td>
+      <td>Iris-virginica</td>
+      <td>5.2</td>
+      <td>2.3</td>
+      <td>6.7</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <td>147</td>
+      <td>Iris-virginica</td>
+      <td>5.0</td>
+      <td>1.9</td>
+      <td>6.3</td>
+      <td>2.5</td>
+    </tr>
+    <tr>
+      <td>148</td>
+      <td>Iris-virginica</td>
+      <td>5.2</td>
+      <td>2.0</td>
+      <td>6.5</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <td>149</td>
+      <td>Iris-virginica</td>
+      <td>5.4</td>
+      <td>2.3</td>
+      <td>6.2</td>
+      <td>3.4</td>
+    </tr>
+    <tr>
+      <td>150</td>
+      <td>Iris-virginica</td>
+      <td>5.1</td>
+      <td>1.8</td>
+      <td>5.9</td>
+      <td>3.0</td>
+    </tr>
+  </tbody>
+</table></div></div>
 </div>
 </section>
 <section id="menghitung-akurasi-dari-data">
@@ -1156,6 +4671,230 @@ Iris-versicolor       1.00      1.00      1.00         7
 </div>
 </div>
 </section>
+<section id="visualisasi-data">
+<h2>Visualisasi Data<a class="headerlink" href="#visualisasi-data" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Ambil dua fitur utama untuk visualisasi decision boundary</span>
+<span class="n">feature_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;petal_length&quot;</span><span class="p">,</span> <span class="s2">&quot;petal_width&quot;</span><span class="p">]</span>
+<span class="c1"># df_cleaned is likely meant to be the DataFrame after outlier removal</span>
+<span class="c1"># Ensure df_cleaned is the correct DataFrame from previous steps</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">df_cleaned</span><span class="p">[</span><span class="n">feature_columns</span><span class="p">]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">df_cleaned</span><span class="p">[</span><span class="s2">&quot;class&quot;</span><span class="p">]</span>
+
+<span class="c1"># Encode label kelas ke numerik</span>
+<span class="n">label_encoder</span> <span class="o">=</span> <span class="n">LabelEncoder</span><span class="p">()</span>
+<span class="n">y_encoded</span> <span class="o">=</span> <span class="n">label_encoder</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>  <span class="c1"># Ubah nama kelas jadi angka</span>
+
+<span class="c1"># Membagi data menjadi training (80%) dan testing (20%)</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">y_encoded</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
+<span class="p">)</span>
+
+<span class="c1"># Pipeline dengan KNN dan StandardScaler</span>
+<span class="n">clf</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([</span>
+    <span class="p">(</span><span class="s2">&quot;scaler&quot;</span><span class="p">,</span> <span class="n">StandardScaler</span><span class="p">()),</span>
+    <span class="p">(</span><span class="s2">&quot;knn&quot;</span><span class="p">,</span> <span class="n">KNeighborsClassifier</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">11</span><span class="p">))</span>
+<span class="p">])</span>
+
+<span class="c1"># Pelatihan model KNN</span>
+<span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="c1"># Evaluasi model</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Akurasi: </span><span class="si">{</span><span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span><span class="w"> </span><span class="n">y_pred</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">target_names</span><span class="o">=</span><span class="n">label_encoder</span><span class="o">.</span><span class="n">classes_</span><span class="p">))</span>
+
+<span class="c1"># Visualisasi Decision Boundary</span>
+<span class="n">_</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="n">weights</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">axs</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;uniform&quot;</span><span class="p">,</span> <span class="s2">&quot;distance&quot;</span><span class="p">)):</span>
+    <span class="n">clf</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span><span class="n">knn__weights</span><span class="o">=</span><span class="n">weights</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+    <span class="n">disp</span> <span class="o">=</span> <span class="n">DecisionBoundaryDisplay</span><span class="o">.</span><span class="n">from_estimator</span><span class="p">(</span>
+        <span class="n">clf</span><span class="p">,</span>
+        <span class="n">X_test</span><span class="p">,</span>
+        <span class="n">response_method</span><span class="o">=</span><span class="s2">&quot;predict&quot;</span><span class="p">,</span>
+        <span class="n">plot_method</span><span class="o">=</span><span class="s2">&quot;pcolormesh&quot;</span><span class="p">,</span>
+        <span class="n">xlabel</span><span class="o">=</span><span class="n">feature_columns</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+        <span class="n">ylabel</span><span class="o">=</span><span class="n">feature_columns</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+        <span class="n">shading</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span>
+        <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+        <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">scatter</span> <span class="o">=</span> <span class="n">disp</span><span class="o">.</span><span class="n">ax_</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
+        <span class="n">X_train</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X_train</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span>
+        <span class="n">c</span><span class="o">=</span><span class="n">y_train</span><span class="p">,</span> <span class="n">edgecolors</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;viridis&quot;</span>
+    <span class="p">)</span>
+    <span class="n">disp</span><span class="o">.</span><span class="n">ax_</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span>
+        <span class="n">scatter</span><span class="o">.</span><span class="n">legend_elements</span><span class="p">()[</span><span class="mi">0</span><span class="p">],</span>
+        <span class="n">label_encoder</span><span class="o">.</span><span class="n">classes_</span><span class="p">,</span>
+        <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;lower left&quot;</span><span class="p">,</span>
+        <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Classes&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">_</span> <span class="o">=</span> <span class="n">disp</span><span class="o">.</span><span class="n">ax_</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;3-Class classification</span><span class="se">\n</span><span class="s2">(k=</span><span class="si">{</span><span class="n">clf</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">n_neighbors</span><span class="si">}</span><span class="s2">, weights=</span><span class="si">{</span><span class="n">weights</span><span class="si">!r}</span><span class="s2">)&quot;</span>
+    <span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Akurasi: 0.9629629629629629
+                 precision    recall  f1-score   support
+
+    Iris-setosa       1.00      1.00      1.00        12
+Iris-versicolor       1.00      0.86      0.92         7
+ Iris-virginica       0.89      1.00      0.94         8
+
+       accuracy                           0.96        27
+      macro avg       0.96      0.95      0.95        27
+   weighted avg       0.97      0.96      0.96        27
+</pre></div>
+</div>
+<img alt="_images/2d5bf422c072dcdf0d8205589b7a6a0e4814c55febc734acaa3f590f81366a35.png" src="_images/2d5bf422c072dcdf0d8205589b7a6a0e4814c55febc734acaa3f590f81366a35.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Ambil dua fitur utama untuk visualisasi decision boundary</span>
+<span class="n">feature_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;sepal_length&quot;</span><span class="p">,</span> <span class="s2">&quot;sepal_width&quot;</span><span class="p">]</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">df_merged</span><span class="p">[</span><span class="n">feature_columns</span><span class="p">]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">df_merged</span><span class="p">[</span><span class="s2">&quot;class&quot;</span><span class="p">]</span>
+
+<span class="c1"># Encode label kelas ke numerik</span>
+<span class="n">label_encoder</span> <span class="o">=</span> <span class="n">LabelEncoder</span><span class="p">()</span>
+<span class="n">y_encoded</span> <span class="o">=</span> <span class="n">label_encoder</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>  <span class="c1"># Mengubah nama kelas menjadi angka</span>
+
+<span class="c1"># Menerapkan LOF untuk deteksi outlier</span>
+<span class="n">lof</span> <span class="o">=</span> <span class="n">LocalOutlierFactor</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">contamination</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="n">outlier_labels</span> <span class="o">=</span> <span class="n">lof</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="n">df_merged</span><span class="p">[</span><span class="s2">&quot;outlier&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">outlier_labels</span>
+
+<span class="c1"># Menghapus data yang terdeteksi sebagai outlier</span>
+<span class="n">df_cleaned</span> <span class="o">=</span> <span class="n">df_merged</span><span class="p">[</span><span class="n">df_merged</span><span class="p">[</span><span class="s2">&quot;outlier&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;outlier&quot;</span><span class="p">])</span>
+
+<span class="c1"># Membagi data menjadi training (80%) dan testing (20%)</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">df_cleaned</span><span class="p">[</span><span class="n">feature_columns</span><span class="p">],</span>
+    <span class="n">label_encoder</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">df_cleaned</span><span class="p">[</span><span class="s2">&quot;class&quot;</span><span class="p">]),</span>  <span class="c1"># Pastikan target dalam bentuk numerik</span>
+    <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
+    <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
+<span class="p">)</span>
+
+<span class="c1"># Pipeline dengan KNN dan StandardScaler</span>
+<span class="n">clf</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([</span>
+    <span class="p">(</span><span class="s2">&quot;scaler&quot;</span><span class="p">,</span> <span class="n">StandardScaler</span><span class="p">()),</span>
+    <span class="p">(</span><span class="s2">&quot;knn&quot;</span><span class="p">,</span> <span class="n">KNeighborsClassifier</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">11</span><span class="p">))</span>
+<span class="p">])</span>
+
+<span class="c1"># Pelatihan model KNN</span>
+<span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="c1"># Evaluasi model</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Akurasi: </span><span class="si">{</span><span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span><span class="w"> </span><span class="n">y_pred</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">target_names</span><span class="o">=</span><span class="n">label_encoder</span><span class="o">.</span><span class="n">classes_</span><span class="p">))</span>
+
+<span class="c1"># Visualisasi Decision Boundary</span>
+<span class="n">_</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="n">weights</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">axs</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;uniform&quot;</span><span class="p">,</span> <span class="s2">&quot;distance&quot;</span><span class="p">)):</span>
+    <span class="n">clf</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span><span class="n">knn__weights</span><span class="o">=</span><span class="n">weights</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+    <span class="n">disp</span> <span class="o">=</span> <span class="n">DecisionBoundaryDisplay</span><span class="o">.</span><span class="n">from_estimator</span><span class="p">(</span>
+        <span class="n">clf</span><span class="p">,</span>
+        <span class="n">X_test</span><span class="p">,</span>
+        <span class="n">response_method</span><span class="o">=</span><span class="s2">&quot;predict&quot;</span><span class="p">,</span>
+        <span class="n">plot_method</span><span class="o">=</span><span class="s2">&quot;pcolormesh&quot;</span><span class="p">,</span>
+        <span class="n">xlabel</span><span class="o">=</span><span class="n">feature_columns</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+        <span class="n">ylabel</span><span class="o">=</span><span class="n">feature_columns</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+        <span class="n">shading</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span>
+        <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+        <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">scatter</span> <span class="o">=</span> <span class="n">disp</span><span class="o">.</span><span class="n">ax_</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
+        <span class="n">X_train</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X_train</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span>
+        <span class="n">c</span><span class="o">=</span><span class="n">y_train</span><span class="p">,</span> <span class="n">edgecolors</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;viridis&quot;</span>
+    <span class="p">)</span>
+    <span class="n">disp</span><span class="o">.</span><span class="n">ax_</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span>
+        <span class="n">scatter</span><span class="o">.</span><span class="n">legend_elements</span><span class="p">()[</span><span class="mi">0</span><span class="p">],</span>
+        <span class="n">label_encoder</span><span class="o">.</span><span class="n">classes_</span><span class="p">,</span>
+        <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;lower left&quot;</span><span class="p">,</span>
+        <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Classes&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">_</span> <span class="o">=</span> <span class="n">disp</span><span class="o">.</span><span class="n">ax_</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;3-Class classification</span><span class="se">\n</span><span class="s2">(k=</span><span class="si">{</span><span class="n">clf</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">n_neighbors</span><span class="si">}</span><span class="s2">, weights=</span><span class="si">{</span><span class="n">weights</span><span class="si">!r}</span><span class="s2">)&quot;</span>
+    <span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Akurasi: 0.8148148148148148
+                 precision    recall  f1-score   support
+
+    Iris-setosa       1.00      1.00      1.00        12
+Iris-versicolor       0.75      0.43      0.55         7
+ Iris-virginica       0.64      0.88      0.74         8
+
+       accuracy                           0.81        27
+      macro avg       0.80      0.77      0.76        27
+   weighted avg       0.83      0.81      0.80        27
+</pre></div>
+</div>
+<img alt="_images/f10bb0309fc2a07499bf905da6172dc120ec69ff48bf4ebbf2ecb155aaabc2da.png" src="_images/f10bb0309fc2a07499bf905da6172dc120ec69ff48bf4ebbf2ecb155aaabc2da.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Pilih dua fitur untuk scatter plot</span>
+<span class="n">x_feature</span> <span class="o">=</span> <span class="s2">&quot;petal_length&quot;</span>
+<span class="n">y_feature</span> <span class="o">=</span> <span class="s2">&quot;petal_width&quot;</span>
+
+<span class="c1"># Warna berdasarkan kelas</span>
+<span class="n">colors</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Iris-setosa&quot;</span><span class="p">:</span> <span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="s2">&quot;Iris-versicolor&quot;</span><span class="p">:</span> <span class="s2">&quot;orange&quot;</span><span class="p">,</span> <span class="s2">&quot;Iris-virginica&quot;</span><span class="p">:</span> <span class="s2">&quot;green&quot;</span><span class="p">}</span>
+<span class="n">df_cleaned</span><span class="p">[</span><span class="s2">&quot;color&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_cleaned</span><span class="p">[</span><span class="s2">&quot;class&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">colors</span><span class="p">)</span>
+
+<span class="c1"># Plot scatter dengan ukuran (s) dan warna (c)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df_cleaned</span><span class="p">[</span><span class="n">x_feature</span><span class="p">],</span> <span class="n">df_cleaned</span><span class="p">[</span><span class="n">y_feature</span><span class="p">],</span> <span class="n">s</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">df_cleaned</span><span class="p">[</span><span class="s2">&quot;color&quot;</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">edgecolors</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="n">x_feature</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="n">y_feature</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Scatter Plot dengan Warna Berdasarkan Class&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/57de227ae56cb517686bf5c82d795d2170fa06eaf85c1118d0ca6258919959db.png" src="_images/57de227ae56cb517686bf5c82d795d2170fa06eaf85c1118d0ca6258919959db.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Pilih dua fitur untuk scatter plot</span>
+<span class="n">x_feature</span> <span class="o">=</span> <span class="s2">&quot;sepal_length&quot;</span>
+<span class="n">y_feature</span> <span class="o">=</span> <span class="s2">&quot;sepal_width&quot;</span>
+
+<span class="c1"># Warna berdasarkan kelas</span>
+<span class="n">colors</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Iris-setosa&quot;</span><span class="p">:</span> <span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="s2">&quot;Iris-versicolor&quot;</span><span class="p">:</span> <span class="s2">&quot;orange&quot;</span><span class="p">,</span> <span class="s2">&quot;Iris-virginica&quot;</span><span class="p">:</span> <span class="s2">&quot;green&quot;</span><span class="p">}</span>
+<span class="n">df_cleaned</span><span class="p">[</span><span class="s2">&quot;color&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_cleaned</span><span class="p">[</span><span class="s2">&quot;class&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">colors</span><span class="p">)</span>
+
+<span class="c1"># Plot scatter dengan ukuran (s) dan warna (c)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df_cleaned</span><span class="p">[</span><span class="n">x_feature</span><span class="p">],</span> <span class="n">df_cleaned</span><span class="p">[</span><span class="n">y_feature</span><span class="p">],</span> <span class="n">s</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">df_cleaned</span><span class="p">[</span><span class="s2">&quot;color&quot;</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">edgecolors</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="n">x_feature</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="n">y_feature</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Scatter Plot dengan Warna Berdasarkan Class&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/7a2c69f2083c71ab91fc924b3539b8c214390dd06b3d309c0752d789443e7aa4.png" src="_images/7a2c69f2083c71ab91fc924b3539b8c214390dd06b3d309c0752d789443e7aa4.png" />
+</div>
+</div>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -1226,6 +4965,7 @@ Iris-versicolor       1.00      1.00      1.00         7
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-langkah-deteksi-outlier-dengan-knn">2. Langkah-Langkah Deteksi Outlier dengan KNN</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#memisahkan-outlier-dari-data"><strong>Memisahkan outlier dari data</strong></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#menghitung-akurasi-dari-data"><strong>Menghitung Akurasi dari data</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisasi-data">Visualisasi Data</a></li>
 </ul>
   </nav></div>
 
