@@ -189,7 +189,7 @@
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="naivebayes.html">Klasifikasi Data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="UTS.html">UTS PENAMBANGAN DATA</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#"><strong>Algoritma <em>K-Means</em></strong></a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Algoritma K-Means</a></li>
 </ul>
 
     </div>
@@ -385,8 +385,7 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pengertian-k-means-clustering"><strong>Pengertian <em>K-Means Clustering</em></strong></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#manfaat-clustering"><strong>Manfaat <em>Clustering</em></strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pengertian-k-means-clustering">Pengertian K-Means Clustering</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inertia-sum-square-error-sse"><strong>Inertia (Sum Square error/SSE)</strong></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#silhouette-analysis"><strong>Silhouette Analysis</strong></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementasi-dengan-menggunakan-data-iris"><strong>Implementasi dengan menggunakan data Iris</strong></a></li>
@@ -409,18 +408,11 @@ document.write(`
                 <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="algoritma-k-means">
-<h1><strong>Algoritma <em>K-Means</em></strong><a class="headerlink" href="#algoritma-k-means" title="Link to this heading">#</a></h1>
+<h1>Algoritma K-Means<a class="headerlink" href="#algoritma-k-means" title="Link to this heading">#</a></h1>
 <section id="pengertian-k-means-clustering">
-<h2><strong>Pengertian <em>K-Means Clustering</em></strong><a class="headerlink" href="#pengertian-k-means-clustering" title="Link to this heading">#</a></h2>
-<p><em>K-Means Clustering</em>  adalah teknik pengelompokan data yang memisahkan data ke dalam cluster, mengelompokkan data dengan fitur yang sama bersama-sama dan mengelompokkan data dengan karakteristik yang berbeda ke dalam kelompok yang berbeda dengan centroid sebagai acuannya. Metode k-means membagi data menjadi beberapa kelompok sehingga data dengan karakteristik yang sama berada pada cluster yang sama dan data dengan karakteristik yang berbeda berada pada cluster yang berbeda</p>
-</section>
-<section id="manfaat-clustering">
-<h2><strong>Manfaat <em>Clustering</em></strong><a class="headerlink" href="#manfaat-clustering" title="Link to this heading">#</a></h2>
-<ul class="simple">
-<li><p>Clustering merupakan metode segmentasi data yang sangat berguna dalam prediksi dan analisa masalah bisnis tertentu. Misalnya Segmentasi pasar, marketing dan pemetaan zonasi wilayah.</p></li>
-<li><p>Identifikasi obyek dalam bidang berbagai bidang seperti computer vision dan image processing.</p></li>
-</ul>
-<p>Hasil clustering yang baik akan menghasilkan tingkat kesamaan yang tinggi dalam satu kelas dan tingkat kesamaan yang rendah antar kelas. Kesamaan yang dimaksud merupakan pengukuran secaranumeric terhadap dua buah objek. Nilai kesamaan antar kedua objek akan semakin tinggi jika kedua objek yang dibandingkan memiliki kemiripan yang tinggi. Begitu juga dengan sebaliknya. Kualitas hasil clustering sangat bergantung pada metode yang dipakai</p>
+<h2>Pengertian K-Means Clustering<a class="headerlink" href="#pengertian-k-means-clustering" title="Link to this heading">#</a></h2>
+<p>K-Means Clustering merupakan salah satu metode pengelompokan data yang bekerja dengan memisahkan data ke dalam beberapa cluster berdasarkan kemiripan fitur. Data yang memiliki karakteristik serupa akan dikelompokkan dalam cluster yang sama, sementara data yang berbeda cirinya akan ditempatkan dalam cluster yang berbeda. Proses ini menggunakan titik pusat (centroid) sebagai acuan dalam pembentukan cluster.</p>
+<p>Clustering yang efektif akan menghasilkan kelompok dengan tingkat kemiripan tinggi di dalam cluster dan perbedaan yang signifikan antar cluster. Kemiripan yang dimaksud diukur secara numerik antara dua objek, di mana semakin mirip dua objek tersebut, maka nilai kesamaannya akan semakin tinggi. Sebaliknya, semakin berbeda dua objek, semakin rendah nilai kesamaannya. Oleh karena itu, kualitas hasil clustering sangat ditentukan oleh metode yang digunakan.</p>
 </section>
 <section id="inertia-sum-square-error-sse">
 <h2><strong>Inertia (Sum Square error/SSE)</strong><a class="headerlink" href="#inertia-sum-square-error-sse" title="Link to this heading">#</a></h2>
@@ -482,7 +474,16 @@ S = \frac{1}{n} \sum_{i=1}^{n} s(i)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: pymysql in /usr/local/lib/python3.11/dist-packages (1.1.1)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Collecting pymysql
+  Downloading PyMySQL-1.1.1-py3-none-any.whl.metadata (4.4 kB)
+Downloading PyMySQL-1.1.1-py3-none-any.whl (44 kB)
+?25l   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">0.0/45.0 kB</span> <span class=" -Color -Color-Red">?</span> eta <span class=" -Color -Color-Cyan">-:--:--</span>
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">45.0/45.0 kB</span> <span class=" -Color -Color-Red">2.9 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
+?25h
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Installing collected packages: pymysql
+Successfully installed pymysql-1.1.1
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: psycopg2 in /usr/local/lib/python3.11/dist-packages (2.9.10)
@@ -2374,7 +2375,9 @@ Titik data 103 (Fitur: [-0.24727697 -0.33265889 -0.1129751  -0.04742089]), Klast
 Titik data 104 (Fitur: [-0.29543999 -0.34428219 -0.137001   -0.11855222]), Klaster: 0, Centroid: [-0.32411482 -0.32723468 -0.28613953 -0.26169305], Jarak kuadrat: 0.044, Inertia sementara: 11.756
 Titik data 105 (Fitur: [-0.28339923 -0.33265889 -0.12098374 -0.02371044]), Klaster: 0, Centroid: [-0.32411482 -0.32723468 -0.28613953 -0.26169305], Jarak kuadrat: 0.086, Inertia sementara: 11.842
 Titik data 106 (Fitur: [3.90076309 2.8056325  4.7002128  4.43385311]), Klaster: 1, Centroid: [3.90076309 3.44491407 4.58008332 4.67095756], Jarak kuadrat: 0.479, Inertia sementara: 12.321
-Titik data 107 (Fitur: [-0.37972527 -0.39077539 -0.22509595 -0.14226267]), Klaster: 0, Centroid: [-0.32411482 -0.32723468 -0.28613953 -0.26169305], Jarak kuadrat: 0.025, Inertia sementara: 12.346
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Titik data 107 (Fitur: [-0.37972527 -0.39077539 -0.22509595 -0.14226267]), Klaster: 0, Centroid: [-0.32411482 -0.32723468 -0.28613953 -0.26169305], Jarak kuadrat: 0.025, Inertia sementara: 12.346
 Titik data 108 (Fitur: [-0.23523621 -0.34428219 -0.08094058 -0.11855222]), Klaster: 0, Centroid: [-0.32411482 -0.32723468 -0.28613953 -0.26169305], Jarak kuadrat: 0.071, Inertia sementara: 12.417
 Titik data 109 (Fitur: [-0.27135848 -0.39077539 -0.12098374 -0.11855222]), Klaster: 0, Centroid: [-0.32411482 -0.32723468 -0.28613953 -0.26169305], Jarak kuadrat: 0.055, Inertia sementara: 12.472
 Titik data 110 (Fitur: [3.65994799 3.50303058 4.29978119 5.38227089]), Klaster: 1, Centroid: [3.90076309 3.44491407 4.58008332 4.67095756], Jarak kuadrat: 0.646, Inertia sementara: 13.117
@@ -2615,8 +2618,7 @@ Silhouette Score untuk 4 klaster: 0.904
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pengertian-k-means-clustering"><strong>Pengertian <em>K-Means Clustering</em></strong></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#manfaat-clustering"><strong>Manfaat <em>Clustering</em></strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pengertian-k-means-clustering">Pengertian K-Means Clustering</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inertia-sum-square-error-sse"><strong>Inertia (Sum Square error/SSE)</strong></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#silhouette-analysis"><strong>Silhouette Analysis</strong></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementasi-dengan-menggunakan-data-iris"><strong>Implementasi dengan menggunakan data Iris</strong></a></li>
