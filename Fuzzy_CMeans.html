@@ -389,15 +389,15 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#konsep-dasar-fuzzy-c-means-clustering">Konsep Dasar Fuzzy C-Means Clustering</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#algoritma-fuzzy-c-means-clustering">Algoritma Fuzzy C-Means Clustering</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contoh-manual-perhitungan-fuzzy-c-means-clustering">Contoh Manual Perhitungan Fuzzy C-Means Clustering</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-1-inisialisasi-matriks-keanggotaan-u">Langkah 1: Inisialisasi Matriks Keanggotaan $U$</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-1-inisialisasi-matriks-keanggotaan-u">Langkah 1: Inisialisasi Matriks Keanggotaan <span class="math notranslate nohighlight">\(U\)</span></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-2-hitung-pusat-cluster-centroid">Langkah 2: Hitung Pusat Cluster (Centroid)</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#untuk-cluster-1">Untuk cluster 1:</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#untuk-cluster-2">Untuk cluster 2:</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-3-update-matriks-keanggotaan-u">Langkah 3: Update Matriks Keanggotaan $U$</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-3-update-matriks-keanggotaan-u">Langkah 3: Update Matriks Keanggotaan <span class="math notranslate nohighlight">\(U\)</span></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-4-cek-konvergensi">Langkah 4: Cek Konvergensi</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fungsi-objektif-j-m">Fungsi Objektif $J_m$</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fungsi-objektif-j-m">Fungsi Objektif <span class="math notranslate nohighlight">\(J_m\)</span></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#iterasi-detail">Iterasi Detail:</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#konvergensi-tercapai-pada-iterasi-ke-4">Konvergensi tercapai pada Iterasi ke-4</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretasi">Interpretasi:</a></li>
@@ -420,9 +420,9 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#clustering-menggunakan-fuzzy-c-means">Clustering menggunakan Fuzzy C-Means</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#clustering-dengan-2-cluster-dan-visualisasi-data">Clustering dengan 2 cluster dan Visualisasi data</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#clustering-dengan-3-cluster-dan-visualisasi-data">Clustering dengan 3 cluster dan Visualisasi data</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#clustering-dengan-4-cluster-dan-visualisasi-data">Clustering dengan 4 cluster dan Visualisasi data</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#clustering-dengan-4-cluster-dan-visualisasi-data">Clustering dengan 4 cluster dan Visualisasi data</a></li>
 </ul>
 </li>
 </ul>
@@ -501,15 +501,14 @@ document.write(`
 <p>Misalnya kita punya <strong>4 data satu dimensi</strong> berikut:</p>
 <div class="math notranslate nohighlight">
 \[
-X = \{2, 4, 7, 9\}
+X = {2, 4, 7, 9}
 \]</div>
 <p>Jumlah Cluster (c): 2</p>
 <p>Tingkat Fuzziness (m): 2</p>
 <p>Kriteria Konvergensi: perubahan pusat cluster &lt; 0.01</p>
-<hr class="docutils" />
 <section id="langkah-1-inisialisasi-matriks-keanggotaan-u">
-<h3>Langkah 1: Inisialisasi Matriks Keanggotaan $U$<a class="headerlink" href="#langkah-1-inisialisasi-matriks-keanggotaan-u" title="Link to this heading">#</a></h3>
-<p>Ukuran matriks: $2 \times 4$</p>
+<h3>Langkah 1: Inisialisasi Matriks Keanggotaan <span class="math notranslate nohighlight">\(U\)</span><a class="headerlink" href="#langkah-1-inisialisasi-matriks-keanggotaan-u" title="Link to this heading">#</a></h3>
+<p>Ukuran matriks: <span class="math notranslate nohighlight">\(2 \times 4\)</span></p>
 <p>Misalkan kita mulai dari:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
@@ -521,9 +520,8 @@ U^{(0)} =
 \end{split}\]</div>
 <p>Sudah memenuhi syarat:</p>
 <p>Jumlah keanggotaan tiap data = 1</p>
-<p>Contoh: $0.7 + 0.3 = 1$, $0.6 + 0.4 = 1$, dst.</p>
+<p>Contoh: <span class="math notranslate nohighlight">\(0.7 + 0.3 = 1\)</span>, <span class="math notranslate nohighlight">\(0.6 + 0.4 = 1\)</span>, dst.</p>
 </section>
-<hr class="docutils" />
 <section id="langkah-2-hitung-pusat-cluster-centroid">
 <h3>Langkah 2: Hitung Pusat Cluster (Centroid)<a class="headerlink" href="#langkah-2-hitung-pusat-cluster-centroid" title="Link to this heading">#</a></h3>
 <p>Rumus:</p>
@@ -550,10 +548,9 @@ v_2 = \frac{(0.3^2 \cdot 2) + (0.4^2 \cdot 4) + (0.6^2 \cdot 7) + (0.8^2 \cdot 9
 \end{split}\]</div>
 </section>
 </section>
-<hr class="docutils" />
 <section id="langkah-3-update-matriks-keanggotaan-u">
-<h3>Langkah 3: Update Matriks Keanggotaan $U$<a class="headerlink" href="#langkah-3-update-matriks-keanggotaan-u" title="Link to this heading">#</a></h3>
-<p>Misal untuk data $x_1 = 2$:</p>
+<h3>Langkah 3: Update Matriks Keanggotaan <span class="math notranslate nohighlight">\(U\)</span><a class="headerlink" href="#langkah-3-update-matriks-keanggotaan-u" title="Link to this heading">#</a></h3>
+<p>Misal untuk data <span class="math notranslate nohighlight">\(x_1 = 2\)</span>:</p>
 <ul class="simple">
 <li><p>$d(x_1, v_1) = |2 - 3.714| = 1.714$</p></li>
 <li><p>$d(x_1, v_2) = |2 - 7.280| = 5.280$</p></li>
@@ -571,14 +568,12 @@ u_{2,1} = 1 - u_{1,1} \approx 0.096
 \]</div>
 <p>Lakukan hal serupa untuk data lainnya.</p>
 </section>
-<hr class="docutils" />
 <section id="langkah-4-cek-konvergensi">
 <h3>Langkah 4: Cek Konvergensi<a class="headerlink" href="#langkah-4-cek-konvergensi" title="Link to this heading">#</a></h3>
 <p>Bandingkan perubahan nilai centroid dari iterasi sebelumnya. Jika perubahan semua centroid &lt; 0.01, maka konvergen.</p>
 </section>
-<hr class="docutils" />
 <section id="fungsi-objektif-j-m">
-<h3>Fungsi Objektif $J_m$<a class="headerlink" href="#fungsi-objektif-j-m" title="Link to this heading">#</a></h3>
+<h3>Fungsi Objektif <span class="math notranslate nohighlight">\(J_m\)</span><a class="headerlink" href="#fungsi-objektif-j-m" title="Link to this heading">#</a></h3>
 <p>Rumus:</p>
 <div class="math notranslate nohighlight">
 \[
@@ -591,7 +586,6 @@ J_m = (0.7^2 \cdot (2 - 3.714)^2) + (0.6^2 \cdot (4 - 3.714)^2) + \dots
 \]</div>
 <p>Jumlahkan semua nilai dari kedua cluster dan seluruh data. Nilai $J_m$ akan menurun tiap iterasi.</p>
 </section>
-<hr class="docutils" />
 <section id="iterasi-detail">
 <h3>Iterasi Detail:<a class="headerlink" href="#iterasi-detail" title="Link to this heading">#</a></h3>
 <div class="pst-scrollable-table-container"><table class="table">
@@ -667,12 +661,10 @@ J_m = (0.7^2 \cdot (2 - 3.714)^2) + (0.6^2 \cdot (4 - 3.714)^2) + \dots
 </table>
 </div>
 </section>
-<hr class="docutils" />
 <section id="konvergensi-tercapai-pada-iterasi-ke-4">
 <h3>Konvergensi tercapai pada Iterasi ke-4<a class="headerlink" href="#konvergensi-tercapai-pada-iterasi-ke-4" title="Link to this heading">#</a></h3>
-<p>Perubahan centroid sudah lebih kecil dari ambang batas $\epsilon = 0.01$</p>
+<p>Perubahan centroid sudah lebih kecil dari ambang batas <span class="math notranslate nohighlight">\(\epsilon = 0.01\)</span></p>
 </section>
-<hr class="docutils" />
 <section id="interpretasi">
 <h3>Interpretasi:<a class="headerlink" href="#interpretasi" title="Link to this heading">#</a></h3>
 <ul class="simple">
@@ -682,7 +674,7 @@ J_m = (0.7^2 \cdot (2 - 3.714)^2) + (0.6^2 \cdot (4 - 3.714)^2) + \dots
 <li><p>Cluster 2: ~8.3090 → (mewakili data 7 &amp; 9)</p></li>
 </ul>
 </li>
-<li><p><strong>Fungsi Objektif $J_m$</strong> menunjukkan penurunan yang stabil:
+<li><p>Fungsi Objektif <span class="math notranslate nohighlight">\(J_m\)</span> menunjukkan penurunan yang stabil:
 8.42 → 2.78 → 1.00 → 0.99</p></li>
 </ul>
 </section>
@@ -768,7 +760,7 @@ J_m = (0.7^2 \cdot (2 - 3.714)^2) + (0.6^2 \cdot (4 - 3.714)^2) + \dots
 </div>
 <div class="cell_output docutils container">
 <div class="output text_html">
-  <div id="df-65a15f5c-5582-42cd-b9f9-c7a9e9151a74" class="colab-df-container">
+  <div id="df-67b912ee-a726-4e52-bdff-7f7d577d1462" class="colab-df-container">
     <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -868,7 +860,7 @@ J_m = (0.7^2 \cdot (2 - 3.714)^2) + (0.6^2 \cdot (4 - 3.714)^2) + \dots
     <div class="colab-df-buttons">
       
   <div class="colab-df-container">
-    <button class="colab-df-convert" onclick="convertToInteractive('df-65a15f5c-5582-42cd-b9f9-c7a9e9151a74')"
+    <button class="colab-df-convert" onclick="convertToInteractive('df-67b912ee-a726-4e52-bdff-7f7d577d1462')"
             title="Convert this dataframe to an interactive table."
             style="display:none;">
       
@@ -920,12 +912,12 @@ J_m = (0.7^2 \cdot (2 - 3.714)^2) + (0.6^2 \cdot (4 - 3.714)^2) + \dots
 
     <script>
       const buttonEl =
-        document.querySelector('#df-65a15f5c-5582-42cd-b9f9-c7a9e9151a74 button.colab-df-convert');
+        document.querySelector('#df-67b912ee-a726-4e52-bdff-7f7d577d1462 button.colab-df-convert');
       buttonEl.style.display =
         google.colab.kernel.accessAllowed ? 'block' : 'none';
 
       async function convertToInteractive(key) {
-        const element = document.querySelector('#df-65a15f5c-5582-42cd-b9f9-c7a9e9151a74');
+        const element = document.querySelector('#df-67b912ee-a726-4e52-bdff-7f7d577d1462');
         const dataTable =
           await google.colab.kernel.invokeFunction('convertToInteractive',
                                                     [key], {});
@@ -964,7 +956,7 @@ J_m = (0.7^2 \cdot (2 - 3.714)^2) + (0.6^2 \cdot (4 - 3.714)^2) + \dots
   Downloading PyMySQL-1.1.1-py3-none-any.whl.metadata (4.4 kB)
 Downloading PyMySQL-1.1.1-py3-none-any.whl (44 kB)
 ?25l   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">0.0/45.0 kB</span> <span class=" -Color -Color-Red">?</span> eta <span class=" -Color -Color-Cyan">-:--:--</span>
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">45.0/45.0 kB</span> <span class=" -Color -Color-Red">1.6 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">45.0/45.0 kB</span> <span class=" -Color -Color-Red">1.9 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
 ?25h
 </pre></div>
 </div>
@@ -979,16 +971,16 @@ Successfully installed pymysql-1.1.1
   Downloading scikit_fuzzy-0.5.0-py2.py3-none-any.whl.metadata (2.6 kB)
 Downloading scikit_fuzzy-0.5.0-py2.py3-none-any.whl (920 kB)
 ?25l   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">0.0/920.8 kB</span> <span class=" -Color -Color-Red">?</span> eta <span class=" -Color -Color-Cyan">-:--:--</span>
-   ━━━━╺━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">92.2/920.8 kB</span> <span class=" -Color -Color-Red">3.5 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:01</span>
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╺━━━━━━━━━ <span class=" -Color -Color-Green">696.3/920.8 kB</span> <span class=" -Color -Color-Red">10.0 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:01</span>
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">920.8/920.8 kB</span> <span class=" -Color -Color-Red">10.3 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
+   ━━━━━╸━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">133.1/920.8 kB</span> <span class=" -Color -Color-Red">3.7 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:01</span>
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸ <span class=" -Color -Color-Green">911.4/920.8 kB</span> <span class=" -Color -Color-Red">13.5 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:01</span>
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">920.8/920.8 kB</span> <span class=" -Color -Color-Red">11.1 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
 ?25h
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Installing collected packages: scikit-fuzzy
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Successfully installed scikit-fuzzy-0.5.0
+Successfully installed scikit-fuzzy-0.5.0
 </pre></div>
 </div>
 </div>
@@ -4328,9 +4320,8 @@ Iterasi 12: 4.7715
 </div>
 </div>
 </section>
-</section>
 <section id="clustering-dengan-4-cluster-dan-visualisasi-data">
-<h3>Clustering dengan 4 cluster dan Visualisasi data<a class="headerlink" href="#clustering-dengan-4-cluster-dan-visualisasi-data" title="Link to this heading">#</a></h3>
+<h4>Clustering dengan 4 cluster dan Visualisasi data<a class="headerlink" href="#clustering-dengan-4-cluster-dan-visualisasi-data" title="Link to this heading">#</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Transpose fitur agar sesuai dengan input skfuzzy (fitur x sample)</span>
@@ -4498,6 +4489,7 @@ Iterasi 19: 3.5026
 </section>
 </section>
 </section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -4557,15 +4549,15 @@ Iterasi 19: 3.5026
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#konsep-dasar-fuzzy-c-means-clustering">Konsep Dasar Fuzzy C-Means Clustering</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#algoritma-fuzzy-c-means-clustering">Algoritma Fuzzy C-Means Clustering</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contoh-manual-perhitungan-fuzzy-c-means-clustering">Contoh Manual Perhitungan Fuzzy C-Means Clustering</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-1-inisialisasi-matriks-keanggotaan-u">Langkah 1: Inisialisasi Matriks Keanggotaan $U$</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-1-inisialisasi-matriks-keanggotaan-u">Langkah 1: Inisialisasi Matriks Keanggotaan <span class="math notranslate nohighlight">\(U\)</span></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-2-hitung-pusat-cluster-centroid">Langkah 2: Hitung Pusat Cluster (Centroid)</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#untuk-cluster-1">Untuk cluster 1:</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#untuk-cluster-2">Untuk cluster 2:</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-3-update-matriks-keanggotaan-u">Langkah 3: Update Matriks Keanggotaan $U$</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-3-update-matriks-keanggotaan-u">Langkah 3: Update Matriks Keanggotaan <span class="math notranslate nohighlight">\(U\)</span></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-4-cek-konvergensi">Langkah 4: Cek Konvergensi</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fungsi-objektif-j-m">Fungsi Objektif $J_m$</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fungsi-objektif-j-m">Fungsi Objektif <span class="math notranslate nohighlight">\(J_m\)</span></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#iterasi-detail">Iterasi Detail:</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#konvergensi-tercapai-pada-iterasi-ke-4">Konvergensi tercapai pada Iterasi ke-4</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretasi">Interpretasi:</a></li>
@@ -4588,9 +4580,9 @@ Iterasi 19: 3.5026
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#clustering-menggunakan-fuzzy-c-means">Clustering menggunakan Fuzzy C-Means</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#clustering-dengan-2-cluster-dan-visualisasi-data">Clustering dengan 2 cluster dan Visualisasi data</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#clustering-dengan-3-cluster-dan-visualisasi-data">Clustering dengan 3 cluster dan Visualisasi data</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#clustering-dengan-4-cluster-dan-visualisasi-data">Clustering dengan 4 cluster dan Visualisasi data</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#clustering-dengan-4-cluster-dan-visualisasi-data">Clustering dengan 4 cluster dan Visualisasi data</a></li>
 </ul>
 </li>
 </ul>
